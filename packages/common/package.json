@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json.schemastore.org/package",
+  "name": "@reika/common",
+  "description": "Common stuff for reika",
+  "main": "./bin/index.js",
+  "types": "./typings/index.d.ts",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "lint": "eslint lib --ext .ts",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weeb-cafe/reika.git"
+  },
+  "contributors": [
+    "didinele <didinele.dev@gmail.com> (https://github.com/didinele)"
+  ],
+  "bugs": {
+    "url": "https://github.com/weeb-cafe/reika/issues"
+  },
+  "homepage": "https://github.com/weeb-cafe/reika#readme",
+  "devDependencies": {
+    "@types/node": "^13.11.1",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "tslib": "^1.11.1",
+    "typeorm": "^0.2.24",
+    "winston": "^3.2.1",
+    "winston-daily-rotate-file": "^4.4.2"
+  }
+}

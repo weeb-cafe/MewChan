@@ -1,0 +1,97 @@
+{
+  "name": "@weeb-cafe/reika",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A modular Discord bot",
+  "main": "./bin/index.js",
+  "scripts": {
+    "lint": "pnpm recursive run lint --filter ./packages",
+    "build": "pnpm recursive run build --filter ./packages"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weeb-cafe/reika.git"
+  },
+  "contributors": [
+    "didinele <didinele.dev@gmail.com> (https://github.com/didinele)"
+  ],
+  "author": "didinele",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/weeb-cafe/reika/issues"
+  },
+  "homepage": "https://github.com/weeb-cafe/reika#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-angular": "^8.3.4",
+    "@typescript-eslint/eslint-plugin": "^2.24.0",
+    "@typescript-eslint/parser": "^2.24.0", 
+    "eslint": "^6.8.0",
+    "eslint-config-marine": "^6.0.0",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.8",
+    "typescript": "^3.8.3"
+  },
+  "renovate": {
+    "extends": ["teal"]
+  },
+  "eslintConfig": {
+    "extends": "marine/node",
+    "rules": {
+      "@typescript-eslint/indent": [
+        "error",
+        2
+      ],
+      "@typescript-eslint/no-require-imports": "off",
+      "one-var": "off",
+      "no-eq-null": "off",
+      "no-useless-constructor": "off",
+      "no-negated-condition": "off",
+      "promise/prefer-await-to-then": "off",
+      "promise/prefer-await-to-callbacks": "off",
+      "radix": "off"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-angular"
+    ],
+    "rules": {
+      "scope-case": [
+        2,
+        "always",
+        "pascal-case"
+      ],
+      "type-enum": [
+        2,
+        "always",
+        [
+          "chore",
+          "build",
+          "ci",
+          "docs",
+          "feat",
+          "fix",
+          "perf",
+          "refactor",
+          "revert",
+          "style",
+          "test",
+          "types",
+          "wip"
+        ]
+      ]
+    }
+  }
+}
