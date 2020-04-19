@@ -3,6 +3,7 @@ import { join } from 'path';
 
 export { ms } from './ms';
 export { default as createLogger } from './logger';
+export * from './Queue';
 
 export const halt = (time: number) => new Promise<void>(r => setTimeout(r, time));
 export const resolveFromESModule = (mod: any) => {
