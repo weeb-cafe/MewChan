@@ -7,6 +7,7 @@ import {
 import {
   Setting,
   Case,
+  Blacklist,
   Scheduler,
   createLogger,
   Actions
@@ -30,6 +31,7 @@ declare module 'discord-akairo' {
     db: Connection;
     settings: SettingsProvider;
     cases: Repository<Case<Actions>>;
+    blacklist: Repository<Blacklist>;
     logger: typeof logger;
     redis: Redis;
   }
@@ -124,6 +126,7 @@ export default class ChikaClient extends AkairoClient {
     this.logger.info('Settings loaded', { topic: 'BOT INIT' });
 
     this.cases = this.db.getRepository(Case);
+    this.blacklist = this.db.getRepository(Blacklist);
 
     this.logger.info('Repository shortcuts defined', { topic: 'BOT INIT' });
   }

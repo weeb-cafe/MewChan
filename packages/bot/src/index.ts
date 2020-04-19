@@ -3,6 +3,7 @@ process.env = Object.assign(process.env, parseEnv());
 
 process.env.NODE_ENV = process.env.NODE_ENV ?? 'DEVELOPMENT';
 
+import './struct/extend';
 import ReikaClient from './client/ReikaClient';
 const client = new ReikaClient();
 

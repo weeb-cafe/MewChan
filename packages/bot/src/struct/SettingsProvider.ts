@@ -1,13 +1,21 @@
-
 import { Provider } from 'discord-akairo';
-import { Repository } from 'typeorm';
-import { Setting } from '@reika/common';
+import { Connection, Repository } from 'typeorm';
+import { Setting, Blacklist } from '@reika/common';
 import { Collection } from 'discord.js';
 
 export default class SettingsProvider extends Provider {
-  public constructor(public repo: Repository<Setting>) { super(); }
+  public readonly repo: Repository<Setting>;
+  public readonly blacklistRepo: Repository<Blacklist>;
 
-  public items!: Collection<string, Setting>;
+  public readonly items!: Collection<string, Setting>;
+  public readonly blacklist = new Set<string>();
+
+  public constructor(connection: Connection) {
+    super();
+
+    this.repo = connection.getRepository(Setting);
+    this.blacklistRepo = connection.getRepository(Blacklist);
+  }
 
   public get(id: string): Setting | null;
   public get<K extends keyof Setting>(id: string, key: K): Setting[K] | null;
@@ -74,6 +82,11 @@ export default class SettingsProvider extends Provider {
     const settings = await this.repo.find();
     for (const setting of settings) {
       this.items.set(setting.id, setting);
+    }
+
+    const blacklist = await this.blacklistRepo.find();
+    for (const blacklisted of blacklist) {
+      this.blacklist.add(blacklisted.id);
     }
   }
 }
