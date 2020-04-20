@@ -34,7 +34,7 @@ export class Case<A extends Actions> {
   @Column('bigint', { nullable: true })
   public modID!: string | null;
 
-  @Column('tinyint')
+  @Column('smallint')
   public action!: A;
 
   @Column('text', { nullable: true })
