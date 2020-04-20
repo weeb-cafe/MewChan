@@ -22,7 +22,6 @@ export default class BanAction extends Action<Actions.BAN> {
     if (this.target instanceof GuildMember && !this.target.manageable) return 'I cannot ban this person, sad';
 
     const embed = await Action.logCase(this.mod, this.target instanceof GuildMember ? this.target.user : this.target, this.case);
-    await this.msg.util!.sendNew(`Are you absolutely sure you want to do this? [y/n]`, embed);
     const confirmation = this.force
       ? null
       : await confirm(
