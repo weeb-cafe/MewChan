@@ -28,7 +28,7 @@ export default class BanAction extends Action<Actions.BAN> {
       : await confirm(
         this.msg,
         'My advice? You should be more decisive. (ban cancelled)',
-        'You sure you got the right [gender]? [y/n]',
+        'You sure you want to ban this [gender]? [y/n]',
         { embed }
       );
 
