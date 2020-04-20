@@ -1,3 +1,6 @@
+import { Message, PermissionResolvable } from 'discord.js';
+import { Permissions } from './Util';
+
 export const PRODUCTION = process.env.NODE_ENV === 'production';
 
 export const MESSAGES = {
@@ -20,7 +23,22 @@ export const MESSAGES = {
     PING: {
       content: 'Posts the current response time of the bot'
     }
+  },
+
+  CASES: {
+    DEFAULTS: {
+      REASON: (prefix: string, id: string | number) =>
+        `No reason has been set for this action, highly recommend setting one with ${prefix}cases reason ${id} <...>`
+    }
   }
+};
+
+export const PERMISSIONS = {
+  0: 'NONE',
+  1: 'MOD',
+  2: 'ADMIN',
+  3: 'OWNER',
+  4: 'DEV'
 };
 
 export const TOPICS = {
@@ -30,14 +48,22 @@ export const TOPICS = {
   },
   UNHANDLED_REJECTION: 'UNHANDLED_REJECTION',
   BOT: {
-    INIT: 'BOT INIT'
+    INIT: 'BOT INIT',
+    WARN: 'BOT WARN'
   }
 };
 
 export const LOGS = {
   LOADED: (str: string): [string, object] => [`${str} loaded`, { topic: TOPICS.BOT.INIT }],
   LOGIN: ['Client logged in', { topic: TOPICS.BOT.INIT }] as [string, object],
-  UNHANDLED_REJECTION: (e: string): [string, object] => [e, { topic: TOPICS.UNHANDLED_REJECTION }]
+  UNHANDLED_REJECTION: (e: string): [string, object] => [e, { topic: TOPICS.UNHANDLED_REJECTION }],
+  WEIRD_CAN: (meta: { msg: Message; level: Permissions; permission?: PermissionResolvable | PermissionResolvable[]}): [string, object] => [
+    'Odd permission verification occured, aborting',
+    {
+      topic: TOPICS.BOT.WARN,
+      ...meta
+    }
+  ]
 };
 
 export const QUERIES = {

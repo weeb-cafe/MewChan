@@ -16,7 +16,8 @@ export default class ReadyListener extends Listener {
     for (const guild of this.client.guilds.cache.values()) {
       guild.lastCase = await this.client.cases
         .query(QUERIES.INIT_LAST_CASE, [guild.id])
-        .then(d => d[0]?.max ?? 0);
+        .then(d => d[0]?.max ?? 0)
+        .catch(() => 0);
     }
   }
 }
