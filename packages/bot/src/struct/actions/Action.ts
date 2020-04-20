@@ -1,6 +1,6 @@
 import ReikaClient from '../../client/ReikaClient';
 import { Case, Actions, ms } from '@reika/common';
-import { Message, GuildMember, User, TextChannel, MessageEmbed, Constants as DjsConstants } from 'discord.js';
+import { Message, GuildMember, User, TextChannel, MessageEmbed, Constants as DjsConstants, Guild } from 'discord.js';
 import { permissionLevel } from '../../util/Util';
 import { MESSAGES } from '../../util/Constants';
 
@@ -27,6 +27,49 @@ export default abstract class Action<T extends Actions> {
     5: 'BAN',
     6: 'UNBAN'
   };
+
+  public static async history(target: User, guild: Guild) {
+    const history = new MessageEmbed();
+
+    const cases = await (target.client as ReikaClient).cases.find({
+      where: {
+        guildID: guild.id,
+        targetID: target.id
+      }
+    });
+
+    let severity = 0;
+    const actions = [0, 0, 0, 0, 0];
+
+    for (const cs of cases) {
+      switch (cs.action) {
+        case Actions.WARN:
+          severity += 0.25;
+          break;
+        case Actions.KICK:
+          severity += 0.5;
+          break;
+        case Actions.SOFTBAN:
+          severity += 0.5;
+          break;
+        case Actions.MUTE:
+          severity += 1;
+          break;
+        case Actions.BAN:
+          severity += 2;
+          break;
+      }
+
+      actions[cs.action]++;
+    }
+
+    severity = Math.round(severity);
+    if (severity > 4) severity = 4;
+
+    return history
+      .setColor(Action.SEVERITY[severity])
+      .setFooter(`Warns ${actions[0]} | Kicks ${actions[1]} | Softbans ${actions[2]} | Mutes ${actions[3]} | Bans ${actions[4]}`);
+  }
 
   public static async logCase(mod: GuildMember, target: User, cs: Case<Actions>) {
     const log = new MessageEmbed()
@@ -55,38 +98,38 @@ export default abstract class Action<T extends Actions> {
     return log;
   }
 
-  protected readonly _client = this._msg.client as ReikaClient;
-  protected readonly _guild = this._msg.guild!;
-  protected readonly _mod = this._msg.member!;
-  protected readonly _case: Case<T>;
+  public readonly mod = this.msg.member!;
+  public readonly case: Case<T>;
+  public readonly client = this.msg.client as ReikaClient;
+  public readonly guild = this.msg.guild!;
 
   protected _dead = false;
 
   public constructor(
     action: T,
-    protected readonly _msg: Message,
-    protected readonly _target: GuildMember | User,
+    public readonly msg: Message,
+    public readonly target: GuildMember | User,
     optional?: OptionalData
   ) {
     const cs = new Case<T>();
 
-    if (!_msg.guild!.lastCase) {
-      _msg.util!.send('Something went wrong here, for some reason this server does not have a set last case ID, please inform developer.');
+    if (!msg.guild!.lastCase) {
+      msg.util!.sendNew('Something went wrong here, for some reason this server does not have a set last case ID, please inform developer.');
       this._dead = true;
     }
 
-    cs.caseID = (_msg.guild!.lastCase ?? 0) + 1;
+    cs.caseID = (msg.guild!.lastCase ?? 0) + 1;
     cs.action = action;
-    cs.guildID = _msg.guild!.id;
+    cs.guildID = msg.guild!.id;
     cs.createdAt = new Date();
 
-    const prefix = this._client.settings
-      .get(_msg.guild!.id, 'prefix', process.env.COMMAND_PREFIX!);
+    const prefix = this.client.settings
+      .get(msg.guild!.id, 'prefix', process.env.COMMAND_PREFIX!);
     cs.reason = optional?.reason
       ? optional.reason
       : MESSAGES.CASES.DEFAULTS.REASON(prefix, cs.caseID);
 
-    if (action === Actions.MUTE) cs.unmuteRoles = (_target as GuildMember).roles.cache.map(r => r.id);
+    if (action === Actions.MUTE) cs.unmuteRoles = (target as GuildMember).roles.cache.map(r => r.id);
 
     if (optional?.duration) {
       cs.resolved = false;
@@ -97,33 +140,33 @@ export default abstract class Action<T extends Actions> {
       cs.refID = optional.refID;
     }
 
-    cs.modID = _msg.author.id;
-    cs.targetID = _target.id;
+    cs.modID = msg.author.id;
+    cs.targetID = target.id;
 
-    this._case = cs;
+    this.case = cs;
   }
 
   public async execute(): Promise<any> {
     try {
       const failure = await this.prepare();
-      if (failure !== null) return this._msg.util!.send(failure);
+      if (failure !== null) return this.msg.util!.sendNew(failure);
       await this.run();
       await this.finish();
-      this._guild.lastCase!++;
+      this.guild.lastCase!++;
       return null;
     } catch (err) {
-      return this._msg.util!.send(`Uh-oh, something went wrong, go talk to someone about this error:\n${err}`);
+      return this.msg.util!.sendNew(`Uh-oh, something went wrong, go talk to someone about this error:\n${err}`);
     }
   }
 
   protected async prepare(): Promise<any> {
     if (this._dead) return 'Something went wrong at some point, there\'s likely more output above';
-    if (!(this._target instanceof GuildMember)) return null;
+    if (!(this.target instanceof GuildMember)) return null;
 
-    const targetCan = Number(permissionLevel(this._target));
-    const modCan = Number(permissionLevel(this._mod));
+    const targetCan = Number(permissionLevel(this.target));
+    const modCan = Number(permissionLevel(this.mod));
 
-    if (targetCan >= modCan) return `You can't ${Action.ACTIONS[this._case.action].toLowerCase()} that user, what are you doing?`;
+    if (targetCan >= modCan) return `You can't ${Action.ACTIONS[this.case.action].toLowerCase()} that user, what are you doing?`;
 
     return null;
   }
@@ -131,21 +174,21 @@ export default abstract class Action<T extends Actions> {
   protected abstract async run(): Promise<any>;
 
   protected async finish(): Promise<any> {
-    const settings = this._client.settings.get(this._guild.id);
+    const settings = this.client.settings.get(this.guild.id);
     const { modLogsChannel } = settings || {};
 
     if (modLogsChannel) {
-      const embed = Action.logCase(this._mod, (this._target instanceof GuildMember ? this._target.user : this._target), this._case);
-      const channel = this._guild.channels.cache.get(modLogsChannel) as TextChannel | undefined;
+      const embed = Action.logCase(this.mod, (this.target instanceof GuildMember ? this.target.user : this.target), this.case);
+      const channel = this.guild.channels.cache.get(modLogsChannel) as TextChannel | undefined;
 
       const id = await channel?.send(embed)
         .then(m => m.id)
         .catch(() => null);
       if (id) {
-        this._case.message = id;
+        this.case.message = id;
       }
     }
 
-    return this._client.cases.save(this._case);
+    return this.client.cases.save(this.case);
   }
 }

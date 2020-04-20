@@ -1,17 +1,14 @@
 import {
   GuildChannel,
   User,
-  Guild,
   ClientUser,
   PermissionResolvable,
   GuildMember,
   Message,
-  MessageEmbed
+  MessageOptions
 } from 'discord.js';
 import ReikaClient from '../client/ReikaClient';
-import { Actions } from '@reika/common';
 import { LOGS } from './Constants';
-import Action from '../struct/actions/Action';
 
 export enum Permissions {
   NONE,
@@ -42,49 +39,6 @@ export const missingPermissions = (
     : missingPerms[0];
 };
 
-export const userHistory = async (target: User, guild: Guild) => {
-  const history = new MessageEmbed();
-
-  const cases = await (target.client as ReikaClient).cases.find({
-    where: {
-      guildID: guild.id,
-      targetID: target.id
-    }
-  });
-
-  let severity = 0;
-  const actions = [0, 0, 0, 0, 0];
-
-  for (const cs of cases) {
-    switch (cs.action) {
-      case Actions.WARN:
-        severity += 0.25;
-        break;
-      case Actions.KICK:
-        severity += 0.5;
-        break;
-      case Actions.SOFTBAN:
-        severity += 0.5;
-        break;
-      case Actions.MUTE:
-        severity += 1;
-        break;
-      case Actions.BAN:
-        severity += 2;
-        break;
-    }
-
-    actions[cs.action]++;
-  }
-
-  severity = Math.round(severity);
-  if (severity > 4) severity = 4;
-
-  return history
-    .setColor(Action.SEVERITY[severity])
-    .setFooter(`Warns ${actions[0]} | Kicks ${actions[1]} | Softbans ${actions[2]} | Mutes ${actions[3]} | Bans ${actions[4]}`);
-};
-
 export const permissionLevel = (member: GuildMember) => {
   const client = member.client as ReikaClient;
   if (client.isOwner(member)) return Permissions.DEV;
@@ -113,4 +67,21 @@ export const can = (
   const has = permissionLevel(member);
 
   return has >= level;
+};
+
+export const confirm = async (msg: Message, no: string, content?: string, extra?: MessageOptions): Promise<null | string> => {
+  await msg.util!.send(content ?? 'Are you absolutely sure you want to do this? [y/n]', extra);
+  const responses = await msg.channel.awaitMessages(
+    (m: Message) => msg.author.id === m.author.id,
+    {
+      max: 1,
+      time: 10000
+    }
+  );
+
+  const response = responses.first();
+
+  if (!response) return 'I don\'t have time for this, either reply in time or don\'t run the command';
+  if (!/^y(?:e(?:a|s)?)?$/i.test(response.content)) return no;
+  return null;
 };
