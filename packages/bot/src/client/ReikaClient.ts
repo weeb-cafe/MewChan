@@ -1,3 +1,5 @@
+// TODO: REDIS
+
 import {
   AkairoClient,
   CommandHandler,
@@ -5,7 +7,6 @@ import {
   ListenerHandler
 } from 'discord-akairo';
 import {
-  Setting,
   Case,
   Blacklist,
   Scheduler,
@@ -17,8 +18,9 @@ import database from '../struct/Database';
 import { Connection, Repository } from 'typeorm';
 import { Message } from 'discord.js';
 import { join } from 'path';
-import redisClient from '../struct/Redis';
-import { Redis } from 'ioredis';
+// import redisClient from '../struct/Redis';
+// import { Redis } from 'ioredis';
+import { LOGS, PRODUCTION, MESSAGES } from '../util/Constants';
 
 const logger = createLogger('bot');
 
@@ -33,14 +35,14 @@ declare module 'discord-akairo' {
     cases: Repository<Case<Actions>>;
     blacklist: Repository<Blacklist>;
     logger: typeof logger;
-    redis: Redis;
+    // redis: Redis;
   }
 }
 
-export default class ChikaClient extends AkairoClient {
+export default class ReikaClient extends AkairoClient {
   public logger = logger;
 
-  public redis = redisClient;
+  // public redis = redisClient;
 
   public scheduler: Scheduler = new Scheduler(
     [this],
@@ -59,11 +61,7 @@ export default class ChikaClient extends AkairoClient {
 
   public commandHandler: CommandHandler = new CommandHandler(this, {
     directory: join(__dirname, '..', 'commands'),
-    prefix: (msg: Message) => this.settings.get(
-      msg.guild!.id,
-      'prefix',
-      process.env.COMMAND_PREFIX!
-    ),
+    prefix: (msg: Message) => this.settings.get(msg.guild!.id, 'prefix', process.env.COMMAND_PREFIX!),
     aliasReplacement: /-/g,
     allowMention: true,
     handleEdits: true,
@@ -72,15 +70,15 @@ export default class ChikaClient extends AkairoClient {
     defaultCooldown: 3000,
     argumentDefaults: {
       prompt: {
-        modifyStart: (_, str) => `${str}\n\nType \`cancel\` to cancel the command.`,
-        modifyRetry: (_, str) => `${str}\n\nType \`cancel\` to cancel the command.`,
-        timeout: 'You\'re a little bit too slow, the command has been cancelled.',
-        ended: 'I\'ll give you a Cola if you get it right next time.',
-        cancel: 'Alright! I won\'t run the commmand.',
+        modifyStart: (_, str) => MESSAGES.COMMANDS.DEFAULTS.PROMPT.MODIFY_START_OR_RETRY(str),
+        modifyRetry: (_, str) => MESSAGES.COMMANDS.DEFAULTS.PROMPT.MODIFY_START_OR_RETRY(str),
+        timeout: MESSAGES.COMMANDS.DEFAULTS.PROMPT.TIMEOUT,
+        ended: MESSAGES.COMMANDS.DEFAULTS.PROMPT.ENDED,
+        cancel: MESSAGES.COMMANDS.DEFAULTS.PROMPT.CANCEL,
         retries: 3,
         time: 30000
       },
-      otherwise: ''
+      otherwise: MESSAGES.COMMANDS.DEFAULTS.OTHERWISE
     }
   });
 
@@ -91,9 +89,7 @@ export default class ChikaClient extends AkairoClient {
       disableMentions: 'everyone'
     });
 
-    if (process.env.NODE_ENV !== 'PRODUCTION') {
-      process.on('unhandledRejection', (err: any) => this.logger.error(err.stack, { topic: 'UNHANDLED REJECTION' }));
-    }
+    if (PRODUCTION) process.on('unhandledRejection', (err: any) => this.logger.info(...LOGS.UNHANDLED_REJECTION(err.stack)));
   }
 
   private async init() {
@@ -107,28 +103,30 @@ export default class ChikaClient extends AkairoClient {
     });
 
     this.commandHandler.loadAll();
-    this.logger.info('CommandHandler loaded', { topic: 'BOT INIT' });
+    this.logger.info(...LOGS.LOADED('CommandHandler'));
     this.inhibitorHandler.loadAll();
-    this.logger.info('InhibitorHandler loaded', { topic: 'BOT INIT' });
+    this.logger.info(...LOGS.LOADED('InhibitorHandler'));
     this.listenerHandler.loadAll();
-    this.logger.info('ListenerHandler loaded', { topic: 'BOT INIT' });
+    this.logger.info(...LOGS.LOADED('ListenerHandler'));
     await this.scheduler.init();
-    this.logger.info('Scheduler loaded', { topic: 'BOT INIT' });
+    this.logger.info(...LOGS.LOADED('Scheduler'));
 
-    this.db = database.get('chika');
+    this.db = database.get('reika');
 
     await this.db.connect();
     await this.db.synchronize();
 
-    this.settings = new SettingsProvider(this.db.getRepository(Setting));
+    this.logger.info(...LOGS.LOADED('Database'));
+
+    this.settings = new SettingsProvider(this.db);
     await this.settings.init();
 
-    this.logger.info('Settings loaded', { topic: 'BOT INIT' });
+    this.logger.info(...LOGS.LOADED('Settings'));
 
     this.cases = this.db.getRepository(Case);
     this.blacklist = this.db.getRepository(Blacklist);
 
-    this.logger.info('Repository shortcuts defined', { topic: 'BOT INIT' });
+    this.logger.info(...LOGS.LOADED('Database shortcuts'));
   }
 
   public async start() {

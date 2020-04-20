@@ -1,0 +1,14 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\Users\\Didinele\\Documents\\Code\\weeb-cafe\\reika\\logs\\.8c72d6ac1787040db8e26ee5714573db88c61d91-audit.json",
+    "files": [
+        {
+            "date": 1587380946503,
+            "name": "C:\\Users\\Didinele\\Documents\\Code\\weeb-cafe\\reika\\logs\\bot-2020-04-20.log",
+            "hash": "3d9a674f0301375c8f437dc1a0af917b"
+        }
+    ]
+}

@@ -1,4 +1,5 @@
 import { Listener } from 'discord-akairo';
+import { LOGS, QUERIES } from '../util/Constants';
 
 export default class ReadyListener extends Listener {
   public constructor() {
@@ -10,11 +11,11 @@ export default class ReadyListener extends Listener {
   }
 
   public async exec() {
-    this.client.logger.info('Client logged in', { topic: 'BOT INIT' });
+    this.client.logger.info(...LOGS.LOGIN);
 
     for (const guild of this.client.guilds.cache.values()) {
       guild.lastCase = await this.client.cases
-        .query('SELECT MAX(\'caseID\') FROM cases WHERE \'guildID\'=($1)', [guild.id])
+        .query(QUERIES.INIT_LAST_CASE, [guild.id])
         .then(d => d[0]?.max ?? 0);
     }
   }

@@ -10,6 +10,6 @@ export class Blacklist {
   @PrimaryColumn('bigint')
   public id!: string;
 
-  @Column('tinyint')
+  @Column('smallint')
   public type!: BlacklistType;
 }

@@ -8,14 +8,8 @@ export default class EvalCommand extends Command {
   public constructor() {
     super('eval', {
       aliases: ['eval', 'evaluate'],
-      description: {
-        content: 'Evaluates given JavaScript expression',
-        usage: '<code>',
-        examples: ['this.client']
-      },
       category: 'dev',
       ownerOnly: true,
-      ratelimit: 2,
       args: [
         {
           id: 'code',
@@ -30,13 +24,8 @@ export default class EvalCommand extends Command {
   }
 
   private async _clean(text: any) {
-    if (text && text.then && text.catch) {
-      text = await text;
-    }
-
-    if (typeof text !== 'string') {
-      text = inspect(text, { depth: 0 });
-    }
+    if (text && text.then && text.catch) text = await text;
+    if (typeof text !== 'string') text = inspect(text, { depth: 0 });
 
     return (text as string)
       .replace(/`/g, `\`${String.fromCharCode(8203)}`)

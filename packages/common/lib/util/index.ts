@@ -23,7 +23,10 @@ export function parseEnv(path?: string): { [key: string]: string } | never {
   let items;
 
   try {
-    items = readFileSync(path, 'utf8').replace(/ /g, '').split('\n');
+    items = readFileSync(path, 'utf8')
+      .replace(/ /g, '')
+      .split('\n')
+      .filter(e => e.includes('='));
   } catch {
     throw new Error(`Path "${path}" is invalid.`);
   }
