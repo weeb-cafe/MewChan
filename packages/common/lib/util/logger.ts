@@ -11,7 +11,7 @@ export default (name: string, path?: string) => {
   return createLogger({
     format: format.combine(
       format.errors({ stack: true }),
-      format.label({ label: name.toUpperCase() }),
+      format.label({ label: `Reika ${name.toUpperCase()}` }),
       format.timestamp({ format: 'DD/MM/YYYY HH:mm:ss' }),
       format.printf(info => {
         const { timestamp, label, level, message, topic, ...rest } = info;
