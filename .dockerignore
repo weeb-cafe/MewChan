@@ -1,0 +1,25 @@
+# Packages
+./**/node_modules/
+./**/bin
+./**/typings
+
+# Log files
+logs/
+*.log
+npm-debug.log*
+
+.vscode/
+
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+.env
+.env.example
+
+LICENSE
+
+.github
+.git
+.gitattributes
+.gitignore
