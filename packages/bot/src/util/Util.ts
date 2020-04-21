@@ -11,7 +11,7 @@ import {
 import ReikaClient from '../client/ReikaClient';
 import { Actions } from '@reika/common';
 import { LOGS } from './Constants';
-import Action from '../struct/actions/Action';
+// import Action from '../struct/actions/Action';
 
 export enum Permissions {
   NONE,
@@ -81,7 +81,7 @@ export const userHistory = async (target: User, guild: Guild) => {
   if (severity > 4) severity = 4;
 
   return history
-    .setColor(Action.SEVERITY[severity])
+    // .setColor(Action.SEVERITY[severity])
     .setFooter(`Warns ${actions[0]} | Kicks ${actions[1]} | Softbans ${actions[2]} | Mutes ${actions[3]} | Bans ${actions[4]}`);
 };
 

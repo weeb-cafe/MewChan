@@ -1,5 +1,6 @@
 import { parseEnv } from '@reika/common';
-process.env = Object.assign(process.env, parseEnv());
+// Env probs loaded in a different way
+if (!process.env.DISCORD_TOKEN) process.env = Object.assign(process.env, parseEnv());
 process.env.NODE_ENV = process.env.NODE_ENV ?? 'production';
 
 import './struct/extend';

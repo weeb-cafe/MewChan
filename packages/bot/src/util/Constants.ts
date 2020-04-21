@@ -49,7 +49,8 @@ export const TOPICS = {
   UNHANDLED_REJECTION: 'UNHANDLED_REJECTION',
   BOT: {
     INIT: 'BOT INIT',
-    WARN: 'BOT WARN'
+    WARN: 'BOT WARN',
+    ERROR: 'BOT ERROR'
   }
 };
 
