@@ -89,7 +89,7 @@ export default class ReikaClient extends AkairoClient {
       disableMentions: 'everyone'
     });
 
-    if (PRODUCTION) process.on('unhandledRejection', (err: any) => this.logger.info(...LOGS.UNHANDLED_REJECTION(err.stack)));
+    if (!PRODUCTION) process.on('unhandledRejection', (err: any) => this.logger.info(...LOGS.UNHANDLED_REJECTION(err.stack)));
   }
 
   private async init() {

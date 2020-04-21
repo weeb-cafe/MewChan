@@ -8,8 +8,6 @@
     "module": "CommonJS",
     "target": "es2019",
     "lib": ["ESNext"],
-    "sourceMap": true,
-    "inlineSources": true,
     "incremental": true,
     "skipLibCheck": true,
     "noEmitHelpers": true,
