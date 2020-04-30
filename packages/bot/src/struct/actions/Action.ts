@@ -114,7 +114,7 @@ export default abstract class Action<T extends Actions> {
     const cs = new Case<T>();
 
     if (!msg.guild!.lastCase) {
-      msg.util!.sendNew('Something went wrong here, for some reason this server does not have a set last case ID, please inform developer.');
+      msg.channel.send('Something went wrong here, for some reason this server does not have a set last case ID, please inform developer.');
       this._dead = true;
     }
 
@@ -123,8 +123,7 @@ export default abstract class Action<T extends Actions> {
     cs.guildID = msg.guild!.id;
     cs.createdAt = new Date();
 
-    const prefix = this.client.settings
-      .get(msg.guild!.id, 'prefix', process.env.COMMAND_PREFIX!);
+    const prefix = this.client.settings.get(msg.guild!.id, 'prefix', process.env.COMMAND_PREFIX!);
     cs.reason = optional?.reason
       ? optional.reason
       : MESSAGES.CASES.DEFAULTS.REASON(prefix, cs.caseID);
@@ -136,9 +135,7 @@ export default abstract class Action<T extends Actions> {
       cs.actionExpires = new Date(optional.duration + Date.now());
     }
 
-    if (optional?.refID) {
-      cs.refID = optional.refID;
-    }
+    if (optional?.refID) cs.refID = optional.refID;
 
     cs.modID = msg.author.id;
     cs.targetID = target.id;
@@ -146,16 +143,20 @@ export default abstract class Action<T extends Actions> {
     this.case = cs;
   }
 
+  public get targetUser() {
+    return this.target instanceof GuildMember ? this.target.user : this.target;
+  }
+
   public async execute(): Promise<any> {
     try {
       const failure = await this.prepare();
-      if (failure !== null) return this.msg.util!.sendNew(failure);
+      if (failure !== null) return this.msg.channel.send(failure);
       await this.run();
       await this.finish();
       this.guild.lastCase!++;
       return null;
     } catch (err) {
-      return this.msg.util!.sendNew(`Uh-oh, something went wrong, go talk to someone about this error:\n${err}`);
+      return this.msg.channel.send(`Uh-oh, something went wrong, go talk to someone about this error:\n${err}`);
     }
   }
 
@@ -178,15 +179,14 @@ export default abstract class Action<T extends Actions> {
     const { modLogsChannel } = settings || {};
 
     if (modLogsChannel) {
-      const embed = Action.logCase(this.mod, (this.target instanceof GuildMember ? this.target.user : this.target), this.case);
+      const embed = Action.logCase(this.mod, this.targetUser, this.case);
       const channel = this.guild.channels.cache.get(modLogsChannel) as TextChannel | undefined;
 
       const id = await channel?.send(embed)
         .then(m => m.id)
         .catch(() => null);
-      if (id) {
-        this.case.message = id;
-      }
+
+      if (id) this.case.message = id;
     }
 
     return this.client.cases.save(this.case);

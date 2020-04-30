@@ -18,7 +18,7 @@ export default class BanAction extends Action<Actions.BAN> {
   }
 
   protected async prepare() {
-    if (!this.guild.me!.hasPermission('BAN_MEMBERS')) return `I am lacking the \`BAN_MEMBERS\` permission`;
+    if (!this.guild.me!.hasPermission('BAN_MEMBERS')) return 'I am lacking the `BAN_MEMBERS` permission';
     if (this.target instanceof GuildMember && !this.target.manageable) return 'I cannot ban this person, sad';
 
     const embed = await Action.logCase(this.mod, this.target instanceof GuildMember ? this.target.user : this.target, this.case);
@@ -31,15 +31,16 @@ export default class BanAction extends Action<Actions.BAN> {
         { embed }
       );
 
-    if (confirmation !== null) return this.msg.util!.sendNew(confirmation);
+    if (confirmation !== null) return this.msg.channel.send(confirmation);
     return super.prepare();
   }
 
   protected async run() {
-    const user = this.target instanceof GuildMember ? this.target.user : this.target;
-    const msg = await this.msg.util!.sendNew(`Okay, ${user.tag} will be thrown out`);
+    const { targetUser: user } = this;
+    const msg = await this.msg.channel.send(`Okay, ${user.tag} will be thrown out`);
 
-    return this.guild.members.ban(user, { reason: `${this.mod.user.tag} | ${this.case.reason!}`, days: this.days })
-      .then(() => msg.util!.edit('I hope you\'re happy now'));
+    return this.guild.members
+      .ban(user, { reason: `${this.mod.user.tag} | ${this.case.reason!}`, days: this.days })
+      .then(() => msg.edit('I hope you\'re happy now'));
   }
 }
