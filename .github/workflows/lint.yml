@@ -19,5 +19,8 @@ jobs:
       - name: Install deps
         run: pnpm i
 
+      - name: Build the code
+        run: pnpm run build
+
       - name: Run ESLint
         run: pnpm run lint
