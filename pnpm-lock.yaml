@@ -42,10 +42,10 @@ importers:
     specifiers:
       '@reika/common': 'workspace:0.1.0'
       '@types/common-tags': ^1.8.0
-      '@types/ioredis': ^4.16.0
-      '@types/node': ^13.13.4
-      '@types/node-fetch': ^2.5.7
-      '@types/ws': ^5.1.2
+      '@types/ioredis': ^4.14.9
+      '@types/node': ^13.11.1
+      '@types/node-fetch': ^2.5.6
+      '@types/ws': ^5.1.0
       common-tags: ^1.8.0
       discord-akairo: ^8.0.0
       discord.js: ^12.2.0
@@ -1705,7 +1705,6 @@ packages:
     resolution:
       integrity: sha1-/S2INUXEa6xaYz57mgnof6LLUGk=
   /is-stream/1.1.0:
-    dev: false
     engines:
       node: '>=0.10.0'
     resolution:
