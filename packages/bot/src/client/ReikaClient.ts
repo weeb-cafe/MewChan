@@ -18,11 +18,10 @@ import database from '../struct/Database';
 import { Connection, Repository } from 'typeorm';
 import { Message } from 'discord.js';
 import { join } from 'path';
+import { Logger } from 'winston';
 // import redisClient from '../struct/Redis';
 // import { Redis } from 'ioredis';
 import { LOGS, PRODUCTION, MESSAGES } from '../util/Constants';
-
-const logger = createLogger('bot');
 
 declare module 'discord-akairo' {
   export interface AkairoClient {
@@ -34,14 +33,12 @@ declare module 'discord-akairo' {
     settings: SettingsProvider;
     cases: Repository<Case<Actions>>;
     blacklist: Repository<Blacklist>;
-    logger: typeof logger;
+    logger: Logger;
     // redis: Redis;
   }
 }
 
 export default class ReikaClient extends AkairoClient {
-  public logger = logger;
-
   // public redis = redisClient;
 
   public scheduler: Scheduler = new Scheduler(
@@ -93,6 +90,8 @@ export default class ReikaClient extends AkairoClient {
   }
 
   private async init() {
+    this.logger = await createLogger('MewChan BOT');
+
     this.commandHandler
       .useInhibitorHandler(this.inhibitorHandler)
       .useListenerHandler(this.listenerHandler);

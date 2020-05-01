@@ -28,7 +28,8 @@
     "@types/node": "^13.11.1",
     "@types/node-fetch": "^2.5.6",
     "@types/ws": "^5.1.0",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "winston": "^3.2.1"
   },
   "dependencies": {
     "@reika/common": "0.1.0",
