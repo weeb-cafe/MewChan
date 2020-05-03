@@ -85,12 +85,12 @@ export default class ReikaClient extends AkairoClient {
     }, {
       disableMentions: 'everyone'
     });
-
-    if (!PRODUCTION) process.on('unhandledRejection', (err: any) => this.logger.info(...LOGS.UNHANDLED_REJECTION(err.stack)));
   }
 
   private async init() {
     this.logger = await createLogger('MewChan BOT');
+
+    if (!PRODUCTION) process.on('unhandledRejection', (err: any) => this.logger.info(...LOGS.UNHANDLED_REJECTION(err.stack)));
 
     this.commandHandler
       .useInhibitorHandler(this.inhibitorHandler)

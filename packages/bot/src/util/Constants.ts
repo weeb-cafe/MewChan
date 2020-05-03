@@ -1,7 +1,15 @@
 import { Message, PermissionResolvable } from 'discord.js';
 import { Permissions } from './Util';
+import { stripIndents } from 'common-tags';
 
 export const PRODUCTION = process.env.NODE_ENV === 'production';
+
+interface Help {
+  content: string;
+  usage?: string;
+  examples?: string[];
+  parent?: string;
+}
 
 export const MESSAGES = {
   COMMANDS: {
@@ -15,13 +23,106 @@ export const MESSAGES = {
       OTHERWISE: ''
     },
 
-    EVAL: {
-      content: 'Evaluates given Javascript expression',
-      usage: '<code>',
-      examples: ['this.client', 'msg.channel.send(\'boop da scoot\');']
-    },
-    PING: {
-      content: 'Posts the current response time of the bot'
+    HELP: {
+      // #DEV
+      EVAL: {
+        content: 'Evaluates given Javascript expression',
+        usage: '<code>',
+        examples: ['this.client', 'msg.channel.send(\'boop da scoot\');']
+      },
+
+      // #INFO
+      PING: {
+        content: 'Posts the current response time of the bot'
+      },
+
+      // #CONFIG
+      SET: {
+        content: stripIndents`Possible variables:
+          • prefix <new prefix>
+          • autodel
+          • starThreshold <amount>
+          • starChannel <channel>
+          • modLogsChannel <channel>
+          • adminRole <role>
+          • modRole <role>
+          • muteRole <role>
+        `,
+        usage: '<variable> <value>',
+        examples: [
+          'prefix !',
+          'autodel',
+          'starThreshold 5',
+          'starChannel #starboard',
+          'modLogsChannel 3491827389127312',
+          'adminRole @Admins',
+          'modRole 23489721389721321',
+          'muteRole muted'
+        ]
+      },
+      PREFIX: {
+        content: 'Sets the prefix for the server',
+        usage: '<new prefix>',
+        parent: 'set'
+      },
+      AUTODEL: {
+        content: 'Toggles command auto deletion'
+      },
+      STAR_THRESHOLD: {
+        content: 'Sets the star threshold'
+      },
+      STAR_CHANNEL: {
+        content: 'Sets the starboard channel'
+      },
+      MOD_LOGS_CHANNEL: {
+        content: 'Sets the mod logs channel'
+      },
+      ADMIN_ROLE: {
+        content: 'Sets the admin role for the bot'
+      },
+      MOD_ROLE: {
+        content: 'Sets the mod role for the bot'
+      },
+      MUTE_ROLE: {
+        content: 'Sets the mute role the bot is going to use'
+      }
+    } as { [key: string]: Help },
+
+    PROMPTS: {
+      // #DEV
+      EVAL: {
+        start: 'What do you wanna run?'
+      },
+
+      // #CONFIG
+      PREFIX: {
+        start: 'What should be the new prefix?',
+        retry: 'Please enter a valid prefix'
+      },
+      STAR_THRESHOLD: {
+        start: 'What should be the new star threshold?',
+        retry: 'That doesn\'t look like a valid number, could you try again?'
+      },
+      STAR_CHANNEL: {
+        start: 'What should be the new star channel?',
+        retry: 'That doesn\'t seem like a valid text channel, try again, please'
+      },
+      MOD_LOGS_CHANNEL: {
+        start: 'What should be the new mod logs channel?',
+        retry: 'Please provide a valid text channel'
+      },
+      ADMIN_ROLE: {
+        start: 'What role do you want to represent your admins?',
+        retry: 'Please provide a valid role'
+      },
+      MOD_ROLE: {
+        start: 'What role do you want to represent your mods?',
+        retry: 'Please provide a valid role'
+      },
+      MUTE_ROLE: {
+        start: 'What role do you want me to use for mutes?',
+        retry: 'Please provide a valid role'
+      }
     }
   },
 

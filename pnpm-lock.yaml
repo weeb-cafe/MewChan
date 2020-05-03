@@ -8,7 +8,7 @@ importers:
       eslint: 6.8.0
       eslint-config-marine: 6.0.0_eslint@6.8.0
       husky: 4.2.5
-      lint-staged: 10.2.1
+      lint-staged: 10.2.2
       typescript: 3.8.3
     specifiers:
       '@commitlint/cli': ^8.3.5
@@ -18,7 +18,7 @@ importers:
       eslint: ^6.8.0
       eslint-config-marine: ^6.0.0
       husky: ^4.2.5
-      lint-staged: ^10.2.1
+      lint-staged: ^10.2.2
       typescript: ^3.8.3
   packages/bot:
     dependencies:
@@ -42,10 +42,10 @@ importers:
     specifiers:
       '@reika/common': 'workspace:0.1.0'
       '@types/common-tags': ^1.8.0
-      '@types/ioredis': ^4.14.9
-      '@types/node': ^13.11.1
-      '@types/node-fetch': ^2.5.6
-      '@types/ws': ^5.1.0
+      '@types/ioredis': ^4.16.0
+      '@types/node': ^13.13.4
+      '@types/node-fetch': ^2.5.7
+      '@types/ws': ^5.1.2
       common-tags: ^1.8.0
       discord-akairo: ^8.0.0
       discord.js: ^12.2.0
@@ -58,7 +58,7 @@ importers:
       winston: ^3.2.1
   packages/common:
     dependencies:
-      '@weeb-cafe/winston-ws': github.com/weeb-cafe/winston-ws/7f500d9f1ae8f98a4d8d08c0d635e3426a101f35
+      '@weeb-cafe/winston-ws': github.com/weeb-cafe/winston-ws/846b3ef056291d31f5d0cd6c482699c88b606738
       tslib: 1.11.1
       typeorm: 0.2.24
       winston: 3.2.1
@@ -1777,7 +1777,7 @@ packages:
     dev: true
     resolution:
       integrity: sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
-  /lint-staged/10.2.1:
+  /lint-staged/10.2.2:
     dependencies:
       chalk: 4.0.0
       commander: 5.1.0
@@ -1795,7 +1795,7 @@ packages:
     dev: true
     hasBin: true
     resolution:
-      integrity: sha512-UPeqH0z+WzM5Gd2Ip/YfqA16SLiX3fCiC/in9hKioMDDMUUTN8YQbj0hupgQpyR5YZN35KCW9d4kjvH9XGN+3Q==
+      integrity: sha512-78kNqNdDeKrnqWsexAmkOU3Z5wi+1CsQmUmfCuYgMTE8E4rAIX8RHW7xgxwAZ+LAayb7Cca4uYX4P3LlevzjVg==
   /listr2/1.3.8:
     dependencies:
       '@samverschueren/stream-to-observable': 0.3.0
@@ -3259,7 +3259,7 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-92O1HWEjw27sBfgmXiixJWT5hRBp2eobqXicLtPBIDBhYB+1HpwZlXmbW2luivBJHBzki+7VyCLRtAkScbTBQA==
-  github.com/weeb-cafe/winston-ws/7f500d9f1ae8f98a4d8d08c0d635e3426a101f35:
+  github.com/weeb-cafe/winston-ws/846b3ef056291d31f5d0cd6c482699c88b606738:
     dependencies:
       tslib: 1.11.1
       typeorm: 0.2.24
@@ -3269,6 +3269,5 @@ packages:
     dev: false
     name: '@weeb-cafe/winston-ws'
     resolution:
-      registry: 'https://registry.npmjs.org/'
-      tarball: 'https://codeload.github.com/weeb-cafe/winston-ws/tar.gz/7f500d9f1ae8f98a4d8d08c0d635e3426a101f35'
+      tarball: 'https://codeload.github.com/weeb-cafe/winston-ws/tar.gz/846b3ef056291d31f5d0cd6c482699c88b606738'
     version: 0.1.1

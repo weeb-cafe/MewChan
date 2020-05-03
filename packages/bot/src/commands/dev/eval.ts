@@ -3,6 +3,7 @@ import fetch from 'node-fetch';
 import { Message } from 'discord.js';
 import { inspect } from 'util';
 import { stripIndents } from 'common-tags';
+import { MESSAGES } from '../../util/Constants';
 
 export default class EvalCommand extends Command {
   public constructor() {
@@ -15,9 +16,7 @@ export default class EvalCommand extends Command {
           id: 'code',
           match: 'content',
           type: 'string',
-          prompt: {
-            start: 'What do you wanna run?'
-          }
+          prompt: MESSAGES.COMMANDS.PROMPTS.EVAL
         }
       ]
     });

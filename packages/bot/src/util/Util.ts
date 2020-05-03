@@ -60,13 +60,13 @@ export const can = (
   const member = msgOrMember instanceof Message ? msgOrMember.member : msgOrMember;
   if (!member) {
     (msgOrMember.client as ReikaClient).logger.warn(...LOGS.WEIRD_CAN({ msg: msgOrMember as Message, level, permission }));
-    return false;
+    return ' Internal issue';
   }
 
-  if (permission && member.hasPermission(permission)) return true;
+  if (permission && member.hasPermission(permission)) return null;
   const has = permissionLevel(member);
 
-  return has >= level;
+  return has >= level ? null : 'Permission denied';
 };
 
 export const confirm = async (msg: Message, no: string, content?: string, extra?: MessageOptions): Promise<null | string> => {
