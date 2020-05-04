@@ -35,7 +35,10 @@ export function parseEnv(path?: string): { [key: string]: string } | never {
 
   for (const item of items) {
     const data = item.split('=');
-    final[data[0]] = data[1];
+    const name = data.splice(0, 1)[0];
+    const value = data.join('=');
+
+    final[name] = value;
   }
 
   return final;

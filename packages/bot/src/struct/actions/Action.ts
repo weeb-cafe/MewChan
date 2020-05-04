@@ -8,6 +8,7 @@ export interface OptionalData {
   reason?: string;
   duration?: number;
   refID?: number;
+  nsfw?: boolean;
 }
 
 export default abstract class Action<T extends Actions> {
@@ -28,7 +29,7 @@ export default abstract class Action<T extends Actions> {
     6: 'UNBAN'
   };
 
-  public static async history(target: User, guild: Guild) {
+  public static async history(target: User, guild: Guild, nsfw = false) {
     const history = new MessageEmbed();
 
     const cases = await (target.client as ReikaClient).cases.find({
@@ -68,17 +69,16 @@ export default abstract class Action<T extends Actions> {
 
     return history
       .setColor(Action.SEVERITY[severity])
+      .setAuthor(`${target.tag} (${target.id})`, nsfw ? undefined : target.displayAvatarURL())
       .setFooter(`Warns ${actions[0]} | Kicks ${actions[1]} | Softbans ${actions[2]} | Mutes ${actions[3]} | Bans ${actions[4]}`);
   }
 
-  public static async logCase(mod: GuildMember, target: User, cs: Case<Actions>) {
+  public static async logCase(mod: GuildMember, target: User, cs: Case<Actions>, nsfw = false) {
     const log = new MessageEmbed()
       .setAuthor(`${mod.user.tag} (${mod.id})`, mod.user.displayAvatarURL());
 
     let ref: Case<any> | undefined;
-    if (cs.refID) {
-      ref = await (mod.client as ReikaClient).cases.findOne({ caseID: cs.refID, guildID: mod.guild.id });
-    }
+    if (cs.refID) ref = await (mod.client as ReikaClient).cases.findOne({ caseID: cs.refID, guildID: mod.guild.id });
 
     log
       .addField('Member', `${target.tag} (${target.id})`)
@@ -91,9 +91,10 @@ export default abstract class Action<T extends Actions> {
     }
 
     log
-      .setThumbnail(target.displayAvatarURL())
       .setFooter(`Case ${cs.caseID}`)
       .setTimestamp();
+
+    if (!nsfw) log.setThumbnail(target.displayAvatarURL());
 
     return log;
   }
@@ -103,6 +104,8 @@ export default abstract class Action<T extends Actions> {
   public readonly client = this.msg.client as ReikaClient;
   public readonly guild = this.msg.guild!;
 
+  public readonly nsfw: boolean;
+
   protected _dead = false;
 
   public constructor(
@@ -111,9 +114,11 @@ export default abstract class Action<T extends Actions> {
     public readonly target: GuildMember | User,
     optional?: OptionalData
   ) {
+    this.nsfw = optional?.nsfw ?? false;
+
     const cs = new Case<T>();
 
-    if (!msg.guild!.lastCase) {
+    if (msg.guild!.lastCase == null) {
       msg.channel.send('Something went wrong here, for some reason this server does not have a set last case ID, please inform developer.');
       this._dead = true;
     }
@@ -147,16 +152,16 @@ export default abstract class Action<T extends Actions> {
     return this.target instanceof GuildMember ? this.target.user : this.target;
   }
 
-  public async execute(): Promise<any> {
+  public async execute(): Promise<string | null> {
     try {
       const failure = await this.prepare();
-      if (failure !== null) return this.msg.channel.send(failure);
+      if (failure !== null) return failure;
       await this.run();
       await this.finish();
       this.guild.lastCase!++;
       return null;
     } catch (err) {
-      return this.msg.channel.send(`Uh-oh, something went wrong, go talk to someone about this error:\n${err}`);
+      return err.toString();
     }
   }
 
@@ -164,10 +169,12 @@ export default abstract class Action<T extends Actions> {
     if (this._dead) return 'Something went wrong at some point, there\'s likely more output above';
     if (!(this.target instanceof GuildMember)) return null;
 
-    const targetCan = Number(permissionLevel(this.target));
-    const modCan = Number(permissionLevel(this.mod));
+    const targetCan = permissionLevel(this.target);
+    const modCan = permissionLevel(this.mod);
 
-    if (targetCan >= modCan) return `You can't ${Action.ACTIONS[this.case.action].toLowerCase()} that user, what are you doing?`;
+    if (targetCan >= modCan) {
+      return `You can't ${Action.ACTIONS[this.case.action].toLowerCase()} ${this.targetUser.tag}, what are you doing?`;
+    }
 
     return null;
   }
@@ -179,7 +186,7 @@ export default abstract class Action<T extends Actions> {
     const { modLogsChannel } = settings || {};
 
     if (modLogsChannel) {
-      const embed = Action.logCase(this.mod, this.targetUser, this.case);
+      const embed = Action.logCase(this.mod, this.targetUser, this.case, this.nsfw);
       const channel = this.guild.channels.cache.get(modLogsChannel) as TextChannel | undefined;
 
       const id = await channel?.send(embed)

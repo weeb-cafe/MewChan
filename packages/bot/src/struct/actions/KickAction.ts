@@ -12,15 +12,15 @@ export default class KickAction extends Action<Actions.KICK> {
   }
 
   protected async prepare() {
-    if (!(this.target as GuildMember).kickable) return 'I cannot kick this member.';
+    if (!(this.target as GuildMember).kickable) return 'I cannot kick this member';
     return super.prepare();
   }
 
   protected async run() {
-    const msg = await this.msg.channel.send(`Alright, booting ${this.targetUser.tag}.`);
+    const msg = await this.msg.channel.send(`Alright, booting ${this.targetUser.tag}`);
 
     return (this.target as GuildMember)
-      .kick(`${this.mod.user.tag} | ${this.case.reason || 'No reason provided.'}`)
-      .then(() => msg.edit(`Boop, ${this.targetUser.tag} is gone.`));
+      .kick(`${this.mod.user.tag} | ${this.case.reason!}`)
+      .then(() => msg.edit(`Boop, ${this.targetUser.tag} is gone`));
   }
 }

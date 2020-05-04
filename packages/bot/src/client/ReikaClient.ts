@@ -88,7 +88,7 @@ export default class ReikaClient extends AkairoClient {
   }
 
   private async init() {
-    this.logger = await createLogger('MewChan BOT');
+    this.logger = await createLogger('MewChan BOT', process.env.LOGGER_HOST!, process.env.LOGGER_ID!, process.env.LOGGER_TOKEN!);
 
     if (!PRODUCTION) process.on('unhandledRejection', (err: any) => this.logger.info(...LOGS.UNHANDLED_REJECTION(err.stack)));
 

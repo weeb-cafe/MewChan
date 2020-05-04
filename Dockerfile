@@ -18,7 +18,10 @@ ENV DISCORD_TOKEN= \
 	COMMAND_PREFIX= \
 	OWNER= \
 	DB_URL= \
-	NODE_ENV=
+	NODE_ENV= \
+  LOGGER_HOST= \
+  LOGGER_ID= \
+  LOGGER_TOKEN=
 WORKDIR /usr/reika
 COPY --from=0 /opt/appbuild/package.json /opt/appbuild/pnpm-lock.yaml /opt/appbuild/pnpm-workspace.yaml ./
 COPY --from=0 /opt/appbuild/packages/bot ./packages/bot

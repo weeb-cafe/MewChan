@@ -1006,7 +1006,7 @@ packages:
       '@discordjs/form-data': 3.0.1
       abort-controller: 3.0.0
       node-fetch: 2.6.0
-      prism-media: 1.2.1
+      prism-media: 1.2.2
       setimmediate: 1.0.5
       tweetnacl: 1.0.3
       ws: 7.2.5
@@ -2377,7 +2377,7 @@ packages:
       node: '>= 0.8.0'
     resolution:
       integrity: sha1-IZMqVJ9eUv/ZqCf1cOBL5iqX2lQ=
-  /prism-media/1.2.1:
+  /prism-media/1.2.2:
     dev: false
     peerDependencies:
       '@discordjs/opus': ^0.1.0
@@ -2394,7 +2394,7 @@ packages:
       opusscript:
         optional: true
     resolution:
-      integrity: sha512-R3EbKwJiYlTvGwcG1DpUt+06DsxOGS5W4AMEHT7oVOjG93MjpdhGX1whHyjnqknylLMupKAsKMEXcTNRbPe6Vw==
+      integrity: sha512-I+nkWY212lJ500jLe4tN9tWO7nRiBAVdMv76P9kffZjYhw20raMlW1HSSvS+MLXC9MmbNZCazMrAr+5jEEgTuw==
   /process-nextick-args/2.0.1:
     resolution:
       integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==
@@ -3269,5 +3269,6 @@ packages:
     dev: false
     name: '@weeb-cafe/winston-ws'
     resolution:
+      registry: 'https://registry.npmjs.org/'
       tarball: 'https://codeload.github.com/weeb-cafe/winston-ws/tar.gz/846b3ef056291d31f5d0cd6c482699c88b606738'
     version: 0.1.1

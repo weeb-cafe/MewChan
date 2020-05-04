@@ -85,6 +85,18 @@ export const MESSAGES = {
       },
       MUTE_ROLE: {
         content: 'Sets the mute role the bot is going to use'
+      },
+
+      // #MOD
+      BAM: {
+        content: 'Bans one more people from the server',
+        usage: '<...users> [--days=number] [--ref=number] [--nsfw] [...reason]',
+        exmaples: ['@didinele', '@Plushie dumb', '@Plushie @didinele plebs', '471289471289471 --days=1 uwu']
+      },
+      KICK: {
+        content: 'Kicks someone from the server',
+        usage: '<user> [--ref=number] [--nsfw] [...reason]',
+        exmaples: ['@didinele', '@Plushie dumb']
       }
     } as { [key: string]: Help },
 
@@ -122,6 +134,12 @@ export const MESSAGES = {
       MUTE_ROLE: {
         start: 'What role do you want me to use for mutes?',
         retry: 'Please provide a valid role'
+      },
+
+      // #MOD
+      KICK: {
+        start: 'Who do you want me to kick?',
+        retry: 'Please provide a valid member'
       }
     }
   },
