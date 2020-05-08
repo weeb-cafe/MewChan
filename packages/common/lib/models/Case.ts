@@ -7,7 +7,6 @@ export enum Actions {
   KICK,
   SOFTBAN,
   BAN,
-  UNMUTE,
   UNBAN
 }
 

@@ -14,6 +14,8 @@ export default class UnbanAction extends Action<Actions.UNBAN> {
 
   protected async prepare() {
     if (!this.guild.me!.hasPermission('BAN_MEMBERS')) return 'I am lacking the `BAN_MEMBERS` permission';
+    const bans = await this.guild.fetchBans();
+    if (!bans.has(this.targetUser.id)) return 'That user is not currently banned';
 
     return super.prepare();
   }

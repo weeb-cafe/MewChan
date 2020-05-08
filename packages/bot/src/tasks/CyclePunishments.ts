@@ -2,6 +2,7 @@ import { Task, Case, Actions } from '@reika/common';
 import ReikaClient from '../client/ReikaClient';
 import { Guild, TextChannel } from 'discord.js';
 import { stripIndent } from 'common-tags';
+import { TOPICS } from '../util/Constants';
 
 export default class CyclePunishments extends Task {
   public constructor() {
@@ -35,7 +36,7 @@ export default class CyclePunishments extends Task {
         );
 
         if (res !== null) {
-          client.logger.warn(`${cs.caseID}: ${cs.guildID} failed to resolve due to ${res}`, { topic: 'TASK WARN' });
+          client.logger.warn(`${cs.caseID}: ${cs.guildID} failed to resolve due to ${res}`, { topic: TOPICS.TASK.WARN });
           const modLogsChannel = (guild.client as ReikaClient).settings.get(guild.id, 'modLogsChannel');
 
           if (res.length && modLogsChannel) {

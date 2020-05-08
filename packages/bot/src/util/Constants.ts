@@ -102,6 +102,21 @@ export const MESSAGES = {
         content: 'Mute someone',
         usage: '<member> <duration> [--ref=number] [--nsfw] [...reason]',
         exmaples: ['@didinele 20m', '@Plushie 1d5h dumb']
+      },
+      SOFTBAN: {
+        content: 'Bans, pruning messages, then unbans someone',
+        usage: '<member> [--days=number] [--ref=number] [--nsfw] [...reason]',
+        examples: ['@SpaceCats --days=5 naughty', '@Plushie bad boye']
+      },
+      UNBAN: {
+        content: 'Unbans someone',
+        usage: '<user> [--ref=number] [...reason]',
+        examples: ['@Plushie uwu good boi', '@spaceCats --ref=10 reformed']
+      },
+      WARN: {
+        content: 'Warns someone',
+        usage: '<member> [--ref=number] [--nsfw] [...reason]',
+        examples: ['@didinele yeah boi', '@Plushie --ref=1 --nsfw l-lewd']
       }
     } as { [key: string]: Help },
 
@@ -153,6 +168,18 @@ export const MESSAGES = {
       MUTE_DURATION: {
         start: 'How long would you like me to mute this user for?',
         retry: 'Please provide a valid amount of 5 minutes or more'
+      },
+      SOFTBAN: {
+        start: 'Who do you want me to softban?',
+        retry: 'Please provide a valid member'
+      },
+      UNBAN: {
+        start: 'Who do you want me to unban?',
+        retry: 'Please provide a valid user'
+      },
+      WARN: {
+        start: 'Who do you want me to warn?',
+        retry: 'Please provide a valid member'
       }
     }
   },
@@ -183,6 +210,9 @@ export const TOPICS = {
     INIT: 'BOT INIT',
     WARN: 'BOT WARN',
     ERROR: 'BOT ERROR'
+  },
+  TASK: {
+    WARN: 'TASK WARN'
   }
 };
 
@@ -197,8 +227,4 @@ export const LOGS = {
       ...meta
     }
   ]
-};
-
-export const QUERIES = {
-  INIT_LAST_CASE: 'SELECT \'caseID\' FROM cases WHERE \'guildID\'=($1)'
 };

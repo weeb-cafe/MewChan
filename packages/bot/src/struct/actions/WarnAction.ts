@@ -1,4 +1,4 @@
-import Action from './Action';
+import Action, { OptionalData } from './Action';
 import { Actions } from '@reika/common';
 import { Message, GuildMember, User } from 'discord.js';
 
@@ -6,10 +6,7 @@ export default class WarnAction extends Action<Actions.WARN> {
   public constructor(
     msg: Message,
     target: GuildMember | User,
-    optional?: {
-      reason?: string;
-      refID?: number;
-    }
+    optional?: OptionalData
   ) {
     super(Actions.WARN, msg, target, optional);
   }
