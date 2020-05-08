@@ -22,11 +22,10 @@ export default abstract class Action<T extends Actions> {
   public static readonly ACTIONS = {
     0: 'WARN',
     1: 'MUTE',
-    2: 'UNMUTE',
-    3: 'KICK',
-    4: 'SOFTBAN',
-    5: 'BAN',
-    6: 'UNBAN'
+    2: 'KICK',
+    3: 'SOFTBAN',
+    4: 'BAN',
+    5: 'UNBAN'
   };
 
   public static async history(target: User, guild: Guild, nsfw = false) {
@@ -90,10 +89,30 @@ export default abstract class Action<T extends Actions> {
       if (chan) log.addField('Reference', `[${ref.caseID}](https://discordapp.com/channels/${ref.guildID}/${chan}/${ref.message})`);
     }
 
+    let color!: number;
+    switch (cs.action) {
+      case Actions.WARN:
+        color = DjsConstants.Colors.YELLOW;
+        break;
+      case Actions.MUTE:
+        color = DjsConstants.Colors.YELLOW;
+        break;
+      case Actions.KICK:
+      case Actions.SOFTBAN:
+        color = DjsConstants.Colors.ORANGE;
+        break;
+      case Actions.BAN:
+        color = DjsConstants.Colors.RED;
+        break;
+      case Actions.UNBAN:
+        color = DjsConstants.Colors.GREEN;
+        break;
+    }
+
     log
       .setFooter(`Case ${cs.caseID}`)
       .setTimestamp()
-      .setColor(Action.SEVERITY[cs.action > 4 ? 4 : cs.action]);
+      .setColor(color);
 
     if (!nsfw) log.setThumbnail(target.displayAvatarURL());
 

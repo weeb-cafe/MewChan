@@ -112,6 +112,7 @@ export default class BanCommand extends Command {
     for (const user of users) {
       const error = await new BanAction(msg, user, { days, reason, refID: ref, nsfw, force }).execute();
       if (!force && error) return msg.util!.send(`Something went wrong: \`${error}\``);
+      else if (force) return;
 
       if (error !== null) lived.push(`${user.tag} (${user.id}): ${error}`);
       else died.push(user.tag);
