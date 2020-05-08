@@ -1,6 +1,6 @@
 import { Command, Argument, FailureData } from 'discord-akairo';
 import { can, Permissions, confirm } from '../../util/Util';
-import { User, GuildMember, Message } from 'discord.js';
+import { User, Message } from 'discord.js';
 import { stripIndents } from 'common-tags';
 import BanAction from '../../struct/actions/BanAction';
 
@@ -42,7 +42,7 @@ export default class BanCommand extends Command {
         current = null;
         reason += user;
       } else {
-        current = user instanceof GuildMember ? user.user : user;
+        current = user;
         users.push(current);
       }
     } while (current);

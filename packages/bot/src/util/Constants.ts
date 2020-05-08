@@ -97,6 +97,9 @@ export const MESSAGES = {
         content: 'Kicks someone from the server',
         usage: '<user> [--ref=number] [--nsfw] [...reason]',
         exmaples: ['@didinele', '@Plushie dumb']
+      },
+      MUTE: {
+        content: 'Mute someone'
       }
     } as { [key: string]: Help },
 
