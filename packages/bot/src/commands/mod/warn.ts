@@ -1,7 +1,7 @@
 import { Command } from 'discord-akairo';
 import { GuildMember, Message } from 'discord.js';
 import WarnAction from '../../struct/actions/WarnAction';
-import { MESSAGES } from '../../util/constants';
+import { MESSAGES } from '../../util/Constants';
 import { can, Permissions } from '../../util/Util';
 
 export default class WarnCommand extends Command {
