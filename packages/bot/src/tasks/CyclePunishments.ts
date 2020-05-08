@@ -7,7 +7,6 @@ export default class CyclePunishments extends Task {
   public constructor() {
     super('cyclePunishments', {
       period: 60000,
-      category: 'moderation',
       once: false
     });
   }
@@ -21,7 +20,7 @@ export default class CyclePunishments extends Task {
     const cases = await client.cases.find({ where: { resolved: false } });
 
     for (const cs of cases) {
-      if (cs.actionExpires!.getMilliseconds() >= Date.now()) {
+      if (cs.actionExpires! <= new Date()) {
         const guild = client.guilds.cache.get(cs.guildID);
 
         if (!guild) {
@@ -36,6 +35,7 @@ export default class CyclePunishments extends Task {
         );
 
         if (res !== null) {
+          client.logger.warn(`${cs.caseID}: ${cs.guildID} failed to resolve due to ${res}`, { topic: 'TASK WARN' });
           const modLogsChannel = (guild.client as ReikaClient).settings.get(guild.id, 'modLogsChannel');
 
           if (res.length && modLogsChannel) {
@@ -55,10 +55,10 @@ export default class CyclePunishments extends Task {
   }
 
   public async handleMute(guild: Guild, mute: Case<Actions.MUTE>): Promise<string | null> {
-    const member = await guild.members.fetch(mute.guildID).catch(() => null);
+    const member = await guild.members.fetch(mute.targetID).catch(() => null);
     const muteRole = (guild.client as ReikaClient).settings.get(guild.id, 'muteRole');
 
-    if (!muteRole || !member?.roles.cache.has(muteRole)) return '';
+    if (!muteRole || !member?.roles.cache.has(muteRole)) return null;
     if (!member.manageable) return 'Cannot manage user\'s roles';
 
     const res = await member.roles.set(mute.unmuteRoles ?? []).catch(e => e.toString() as string);

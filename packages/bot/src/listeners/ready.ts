@@ -1,5 +1,5 @@
 import { Listener } from 'discord-akairo';
-import { LOGS, QUERIES } from '../util/Constants';
+import { LOGS } from '../util/Constants';
 
 export default class ReadyListener extends Listener {
   public constructor() {
@@ -14,10 +14,14 @@ export default class ReadyListener extends Listener {
     this.client.logger.info(...LOGS.LOGIN);
 
     for (const guild of this.client.guilds.cache.values()) {
-      guild.lastCase = await this.client.cases
-        .query(QUERIES.INIT_LAST_CASE, [guild.id])
-        .then(d => d[0]?.max ?? 0)
-        .catch(() => 0);
+      guild.lastCase = await this.client.cases.findOne({
+        where: {
+          guildID: guild.id
+        },
+        order: {
+          caseID: 'DESC'
+        }
+      }).then(d => d?.caseID ?? 1).catch(() => 1);
     }
   }
 }

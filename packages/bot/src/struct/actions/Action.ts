@@ -70,10 +70,10 @@ export default abstract class Action<T extends Actions> {
     return history
       .setColor(Action.SEVERITY[severity])
       .setAuthor(`${target.tag} (${target.id})`, nsfw ? undefined : target.displayAvatarURL())
-      .setFooter(`Warns ${actions[0]} | Kicks ${actions[1]} | Softbans ${actions[2]} | Mutes ${actions[3]} | Bans ${actions[4]}`);
+      .setFooter(`Warns ${actions[0]} | Mutes ${actions[1]} | Kicks ${actions[2]} | Softbans ${actions[3]} | Bans ${actions[4]}`);
   }
 
-  public static async logCase(mod: GuildMember, target: User, cs: Case<Actions>, nsfw = false) {
+  public static async logCase(mod: GuildMember, target: User, cs: Case<Actions>, nsfw = false, duration?: number) {
     const log = new MessageEmbed()
       .setAuthor(`${mod.user.tag} (${mod.id})`, mod.user.displayAvatarURL());
 
@@ -83,7 +83,7 @@ export default abstract class Action<T extends Actions> {
     log
       .addField('Member', `${target.tag} (${target.id})`)
       .addField('Action', Action.ACTIONS[cs.action].toLowerCase());
-    if (cs.actionExpires) log.addField('Duration', ms(cs.actionExpires.getMilliseconds() - Date.now(), true));
+    if (duration) log.addField('Duration', ms(duration, true));
     log.addField('Reason', cs.reason!);
     if (ref) {
       const chan = (mod.client as ReikaClient).settings.get(mod.guild.id, 'modLogsChannel');
@@ -92,7 +92,8 @@ export default abstract class Action<T extends Actions> {
 
     log
       .setFooter(`Case ${cs.caseID}`)
-      .setTimestamp();
+      .setTimestamp()
+      .setColor(Action.SEVERITY[cs.action > 4 ? 4 : cs.action]);
 
     if (!nsfw) log.setThumbnail(target.displayAvatarURL());
 
@@ -103,6 +104,7 @@ export default abstract class Action<T extends Actions> {
   public readonly case: Case<T>;
   public readonly client = this.msg.client as ReikaClient;
   public readonly guild = this.msg.guild!;
+  public readonly duration?: number;
 
   public readonly nsfw: boolean;
 
@@ -115,6 +117,7 @@ export default abstract class Action<T extends Actions> {
     optional?: OptionalData
   ) {
     this.nsfw = optional?.nsfw ?? false;
+    this.duration = optional?.duration;
 
     const cs = new Case<T>();
 
@@ -133,7 +136,7 @@ export default abstract class Action<T extends Actions> {
       ? optional.reason
       : MESSAGES.CASES.DEFAULTS.REASON(prefix, cs.caseID);
 
-    if (action === Actions.MUTE) cs.unmuteRoles = (target as GuildMember).roles.cache.map(r => r.id);
+    if (action === Actions.MUTE) cs.unmuteRoles = (target as GuildMember).roles.cache.map(r => r.id).filter(r => r !== msg.guild!.id);
 
     if (optional?.duration) {
       cs.resolved = false;
@@ -186,7 +189,7 @@ export default abstract class Action<T extends Actions> {
     const { modLogsChannel } = settings || {};
 
     if (modLogsChannel) {
-      const embed = Action.logCase(this.mod, this.targetUser, this.case, this.nsfw);
+      const embed = await Action.logCase(this.mod, this.targetUser, this.case, this.nsfw, this.duration);
       const channel = this.guild.channels.cache.get(modLogsChannel) as TextChannel | undefined;
 
       const id = await channel?.send(embed)

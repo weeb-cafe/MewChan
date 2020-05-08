@@ -60,7 +60,7 @@ export const can = (
   const member = msgOrMember instanceof Message ? msgOrMember.member : msgOrMember;
   if (!member) {
     (msgOrMember.client as ReikaClient).logger.warn(...LOGS.WEIRD_CAN({ msg: msgOrMember as Message, level, permission }));
-    return ' Internal issue';
+    return 'Internal issue';
   }
 
   if (permission && member.hasPermission(permission)) return null;

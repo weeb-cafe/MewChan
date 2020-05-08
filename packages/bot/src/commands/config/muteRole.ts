@@ -28,7 +28,7 @@ export default class MuteRoleCommand extends Command {
     let output = `Okay, the mute role is now "${role.name}".`;
 
     if (msg.guild!.me!.hasPermission('MANAGE_CHANNELS')) {
-      output += `Oh! I also updated the permissions for your channels`;
+      output += ` Oh! I also updated the permissions for your channels`;
       const failed: GuildChannel[] = [];
 
       for (const channel of msg.guild!.channels.cache.values()) {
@@ -39,7 +39,6 @@ export default class MuteRoleCommand extends Command {
             if (channel.id === jail?.id) {
               overwrite.VIEW_CHANNEL = true;
               overwrite.SEND_MESSAGES = true;
-              overwrite.READ_MESSAGE_HISTORY = true;
             } else {
               overwrite.SEND_MESSAGES = false;
               overwrite.ADD_REACTIONS = false;
@@ -62,7 +61,7 @@ export default class MuteRoleCommand extends Command {
         output += ` besides: ${failed.map(c => c.type === 'text' ? c.toString() : c.name).join(', ')}, may wanna do those manually`;
       }
     } else {
-      output += `By the way, I'm missing the \`MANAGE_CHANNELS\` permission, so I couldn't set the permissions for any of your channels`;
+      output += ` By the way, I'm missing the \`MANAGE_CHANNELS\` permission, so I couldn't set the permissions for any of your channels`;
     }
 
     return m.edit(output);

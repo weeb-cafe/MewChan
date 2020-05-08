@@ -95,11 +95,13 @@ export const MESSAGES = {
       },
       KICK: {
         content: 'Kicks someone from the server',
-        usage: '<user> [--ref=number] [--nsfw] [...reason]',
+        usage: '<member> [--ref=number] [--nsfw] [...reason]',
         exmaples: ['@didinele', '@Plushie dumb']
       },
       MUTE: {
-        content: 'Mute someone'
+        content: 'Mute someone',
+        usage: '<member> <duration> [--ref=number] [--nsfw] [...reason]',
+        exmaples: ['@didinele 20m', '@Plushie 1d5h dumb']
       }
     } as { [key: string]: Help },
 
@@ -143,6 +145,14 @@ export const MESSAGES = {
       KICK: {
         start: 'Who do you want me to kick?',
         retry: 'Please provide a valid member'
+      },
+      MUTE_MEMBER: {
+        start: 'Who do you want me to mute?',
+        retry: 'Please provide a valid member'
+      },
+      MUTE_DURATION: {
+        start: 'How long would you like me to mute this user for?',
+        retry: 'Please provide a valid amount of 5 minutes or more'
       }
     }
   },
@@ -150,18 +160,18 @@ export const MESSAGES = {
   CASES: {
     DEFAULTS: {
       REASON: (prefix: string, id: string | number) =>
-        `No reason has been set for this action, highly recommend setting one with ${prefix}cases reason ${id} <...>`
+        `No reason has been set for this action, highly recommend setting one with \`${prefix}cases reason ${id} <...>\``
     }
   }
 };
 
-export const PERMISSIONS = {
-  0: 'NONE',
-  1: 'MOD',
-  2: 'ADMIN',
-  3: 'OWNER',
-  4: 'DEV'
-};
+export const PERMISSIONS = [
+  'NONE',
+  'MOD',
+  'ADMIN',
+  'OWNER',
+  'DEV'
+];
 
 export const TOPICS = {
   DISCORD: {
@@ -190,5 +200,5 @@ export const LOGS = {
 };
 
 export const QUERIES = {
-  INIT_LAST_CASE: 'SELECT MAX(\'caseID\') FROM cases WHERE \'guildID\'=($1)'
+  INIT_LAST_CASE: 'SELECT \'caseID\' FROM cases WHERE \'guildID\'=($1)'
 };

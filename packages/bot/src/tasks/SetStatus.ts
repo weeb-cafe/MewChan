@@ -12,7 +12,6 @@ export default class SetStatusTask extends Task {
   public constructor() {
     super('setStatus', {
       period: 3600000,
-      category: 'client',
       once: false
     });
   }

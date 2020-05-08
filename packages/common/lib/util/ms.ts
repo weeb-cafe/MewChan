@@ -149,17 +149,24 @@ function parse(str: string): number | null {
   return ms;
 }
 
+function ms(val: string): number | null;
+function ms(val: number, long?: boolean): string;
+
 /**
  * @param val The value to convert
  * @param long Wether or not the formatted date should be in long format
  * @returns Miliseconds equivelent to the time passed or a nicely formatted date for passed miliseconds.
  * @api public
  */
-export const ms = (val: string | number, long?: boolean): string | number | null | never => {
+function ms(val: string | number, long?: boolean): string | number | null | never {
   long = long ?? false;
 
   if (typeof val === 'string' && val.length > 0) return parse(val);
   else if (typeof val === 'number' && !isNaN(val)) return (long ? fmtLong(val) : fmtShort(val));
 
   throw new TypeError(`Value is not a non-empty string or a valid number. Value=${JSON.stringify(val)}`);
+}
+
+export {
+  ms
 };

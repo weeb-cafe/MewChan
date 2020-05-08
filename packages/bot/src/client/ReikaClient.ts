@@ -107,7 +107,7 @@ export default class ReikaClient extends AkairoClient {
     this.logger.info(...LOGS.LOADED('InhibitorHandler'));
     this.listenerHandler.loadAll();
     this.logger.info(...LOGS.LOADED('ListenerHandler'));
-    await this.scheduler.init();
+    await this.scheduler.loadAll();
     this.logger.info(...LOGS.LOADED('Scheduler'));
 
     this.db = database.get('reika');
