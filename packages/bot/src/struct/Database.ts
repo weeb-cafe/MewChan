@@ -3,7 +3,7 @@ import { models } from '@mewchan/common';
 
 const connectionManager = new ConnectionManager();
 connectionManager.create({
-  name: 'reika',
+  name: 'mewchan',
   type: 'postgres',
   url: process.env.DB_URL,
   // @ts-ignore

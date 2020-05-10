@@ -4,9 +4,9 @@ if (!process.env.DISCORD_TOKEN) process.env = Object.assign(process.env, parseEn
 process.env.NODE_ENV = process.env.NODE_ENV ?? 'production';
 
 import './struct/extend';
-import ReikaClient from './client/ReikaClient';
+import MewchanClient from './client/MewchanClient';
 import { TOPICS } from './util/Constants';
-const client = new ReikaClient();
+const client = new MewchanClient();
 
 client
   .on('error', err => client.logger.error(err.stack ?? err.message, { topic: TOPICS.DISCORD.ERROR() }))

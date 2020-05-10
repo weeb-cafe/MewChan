@@ -7,7 +7,7 @@ import {
   Message,
   MessageOptions
 } from 'discord.js';
-import ReikaClient from '../client/ReikaClient';
+import MewchanClient from '../client/MewchanClient';
 import { LOGS } from './Constants';
 
 export enum Permissions {
@@ -40,7 +40,7 @@ export const missingPermissions = (
 };
 
 export const permissionLevel = (member: GuildMember) => {
-  const client = member.client as ReikaClient;
+  const client = member.client as MewchanClient;
   if (client.isOwner(member)) return Permissions.DEV;
 
   const settings = client.settings.get(member.guild.id);
@@ -59,7 +59,7 @@ export const can = (
 ) => {
   const member = msgOrMember instanceof Message ? msgOrMember.member : msgOrMember;
   if (!member) {
-    (msgOrMember.client as ReikaClient).logger.warn(...LOGS.WEIRD_CAN({ msg: msgOrMember as Message, level, permission }));
+    (msgOrMember.client as MewchanClient).logger.warn(...LOGS.WEIRD_CAN({ msg: msgOrMember as Message, level, permission }));
     return 'Internal issue';
   }
 
