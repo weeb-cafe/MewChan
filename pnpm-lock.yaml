@@ -22,7 +22,7 @@ importers:
       typescript: ^3.8.3
   packages/bot:
     dependencies:
-      '@reika/common': 'link:../common'
+      '@mewchan/common': 'link:../common'
       common-tags: 1.8.0
       discord-akairo: 8.0.0_discord.js@12.2.0
       discord.js: 12.2.0
@@ -40,7 +40,7 @@ importers:
       typescript: 3.8.3
       winston: 3.2.1
     specifiers:
-      '@reika/common': 'workspace:0.1.0'
+      '@mewchan/common': 'workspace:0.1.0'
       '@types/common-tags': ^1.8.0
       '@types/ioredis': ^4.16.0
       '@types/node': ^13.13.4
