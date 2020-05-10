@@ -1,6 +1,6 @@
 import { Provider } from 'discord-akairo';
 import { Connection, Repository } from 'typeorm';
-import { Setting, Blacklist } from '@reika/common';
+import { Setting, Blacklist } from '@mewchan/common';
 import { Collection } from 'discord.js';
 
 export default class SettingsProvider extends Provider {

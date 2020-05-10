@@ -1,5 +1,5 @@
 import Action, { OptionalData } from './Action';
-import { Actions } from '@reika/common';
+import { Actions } from '@mewchan/common';
 import { Message, GuildMember } from 'discord.js';
 
 export default class MuteAction extends Action<Actions.MUTE> {

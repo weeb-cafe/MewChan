@@ -12,7 +12,7 @@ import {
   Scheduler,
   createLogger,
   Actions
-} from '@reika/common';
+} from '@mewchan/common';
 import SettingsProvider from '../struct/SettingsProvider';
 import database from '../struct/Database';
 import { Connection, Repository } from 'typeorm';

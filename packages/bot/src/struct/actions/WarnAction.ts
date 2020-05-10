@@ -1,5 +1,5 @@
 import Action, { OptionalData } from './Action';
-import { Actions } from '@reika/common';
+import { Actions } from '@mewchan/common';
 import { Message, GuildMember, User } from 'discord.js';
 
 export default class WarnAction extends Action<Actions.WARN> {

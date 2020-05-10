@@ -1,5 +1,5 @@
 import ReikaClient from '../../client/ReikaClient';
-import { Case, Actions, ms } from '@reika/common';
+import { Case, Actions, ms } from '@mewchan/common';
 import { Message, GuildMember, User, TextChannel, MessageEmbed, Constants as DjsConstants, Guild } from 'discord.js';
 import { permissionLevel } from '../../util/Util';
 import { MESSAGES } from '../../util/Constants';

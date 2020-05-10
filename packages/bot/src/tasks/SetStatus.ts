@@ -1,4 +1,4 @@
-import { Task } from '@reika/common';
+import { Task } from '@mewchan/common';
 import ReikaClient from '../client/ReikaClient';
 import { ActivityType } from 'discord.js';
 import { TOPICS } from '../util/Constants';

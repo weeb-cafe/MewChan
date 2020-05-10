@@ -1,5 +1,5 @@
 import { ConnectionManager } from 'typeorm';
-import { models } from '@reika/common';
+import { models } from '@mewchan/common';
 
 const connectionManager = new ConnectionManager();
 connectionManager.create({

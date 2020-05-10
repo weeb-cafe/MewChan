@@ -1,7 +1,7 @@
 import { Command } from 'discord-akairo';
 import { can, Permissions } from '../../util/Util';
 import { MESSAGES } from '../../util/Constants';
-import { ms } from '@reika/common';
+import { ms } from '@mewchan/common';
 import { Message, GuildMember } from 'discord.js';
 import MuteAction from '../../struct/actions/MuteAction';
 

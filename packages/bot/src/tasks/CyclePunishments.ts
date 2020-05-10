@@ -1,4 +1,4 @@
-import { Task, Case, Actions } from '@reika/common';
+import { Task, Case, Actions } from '@mewchan/common';
 import ReikaClient from '../client/ReikaClient';
 import { Guild, TextChannel } from 'discord.js';
 import { stripIndent } from 'common-tags';
