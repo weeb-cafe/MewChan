@@ -64,7 +64,7 @@ export default abstract class Action<T extends Actions> {
     }
 
     severity = Math.round(severity);
-    if (severity > 4) severity = 4;
+    if (severity > 3) severity = 3;
 
     return history
       .setColor(Action.SEVERITY[severity])
@@ -72,12 +72,20 @@ export default abstract class Action<T extends Actions> {
       .setFooter(`Warns ${actions[0]} | Mutes ${actions[1]} | Kicks ${actions[2]} | Softbans ${actions[3]} | Bans ${actions[4]}`);
   }
 
-  public static async logCase(mod: GuildMember, target: User, cs: Case<Actions>, nsfw = false, duration?: number) {
-    const log = new MessageEmbed()
-      .setAuthor(`${mod.user.tag} (${mod.id})`, mod.user.displayAvatarURL());
+  public static async logCase(
+    target: User,
+    guild: Guild,
+    cs: Case<Actions>,
+    mod?: GuildMember | null,
+    nsfw = false,
+    duration?: number | null
+  ) {
+    const log = new MessageEmbed();
+
+    if (mod) log.setAuthor(`${mod.user.tag} (${mod.id})`, mod.user.displayAvatarURL());
 
     let ref: Case<any> | undefined;
-    if (cs.refID) ref = await (mod.client as ReikaClient).cases.findOne({ caseID: cs.refID, guildID: mod.guild.id });
+    if (cs.refID) ref = await (target.client as ReikaClient).cases.findOne({ caseID: cs.refID, guildID: guild.id });
 
     log
       .addField('Member', `${target.tag} (${target.id})`)
@@ -85,7 +93,7 @@ export default abstract class Action<T extends Actions> {
     if (duration) log.addField('Duration', ms(duration, true));
     log.addField('Reason', cs.reason!);
     if (ref) {
-      const chan = (mod.client as ReikaClient).settings.get(mod.guild.id, 'modLogsChannel');
+      const chan = (target.client as ReikaClient).settings.get(guild.id, 'modLogsChannel');
       if (chan) log.addField('Reference', `[${ref.caseID}](https://discordapp.com/channels/${ref.guildID}/${chan}/${ref.message})`);
     }
 
@@ -180,7 +188,7 @@ export default abstract class Action<T extends Actions> {
       if (failure !== null) return failure;
       await this.run();
       await this.finish();
-      this.guild.lastCase!++;
+      this.guild.lastCase++;
       return null;
     } catch (err) {
       return err.toString();
@@ -208,7 +216,7 @@ export default abstract class Action<T extends Actions> {
     const { modLogsChannel } = settings || {};
 
     if (modLogsChannel) {
-      const embed = await Action.logCase(this.mod, this.targetUser, this.case, this.nsfw, this.duration);
+      const embed = await Action.logCase(this.targetUser, this.guild, this.case, this.mod, this.nsfw, this.duration);
       const channel = this.guild.channels.cache.get(modLogsChannel) as TextChannel | undefined;
 
       const id = await channel?.send(embed)

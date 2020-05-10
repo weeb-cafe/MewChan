@@ -30,6 +30,9 @@ export const MESSAGES = {
         usage: '<code>',
         examples: ['this.client', 'msg.channel.send(\'boop da scoot\');']
       },
+      RELOAD: {
+        content: 'Reloads the commandHandler, the listenerHandler & the inhibitorHandler'
+      },
 
       // #INFO
       PING: {
@@ -62,29 +65,35 @@ export const MESSAGES = {
       },
       PREFIX: {
         content: 'Sets the prefix for the server',
-        usage: '<new prefix>',
         parent: 'set'
       },
       AUTODEL: {
-        content: 'Toggles command auto deletion'
+        content: 'Toggles command auto deletion',
+        parent: 'set'
       },
       STAR_THRESHOLD: {
-        content: 'Sets the star threshold'
+        content: 'Sets the star threshold',
+        parent: 'set'
       },
       STAR_CHANNEL: {
-        content: 'Sets the starboard channel'
+        content: 'Sets the starboard channel',
+        parent: 'set'
       },
       MOD_LOGS_CHANNEL: {
-        content: 'Sets the mod logs channel'
+        content: 'Sets the mod logs channel',
+        parent: 'set'
       },
       ADMIN_ROLE: {
-        content: 'Sets the admin role for the bot'
+        content: 'Sets the admin role for the bot',
+        parent: 'set'
       },
       MOD_ROLE: {
-        content: 'Sets the mod role for the bot'
+        content: 'Sets the mod role for the bot',
+        parent: 'set'
       },
       MUTE_ROLE: {
-        content: 'Sets the mute role the bot is going to use'
+        content: 'Sets the mute role the bot is going to use',
+        parent: 'set'
       },
 
       // #MOD
@@ -117,6 +126,32 @@ export const MESSAGES = {
         content: 'Warns someone',
         usage: '<member> [--ref=number] [--nsfw] [...reason]',
         examples: ['@didinele yeah boi', '@Plushie --ref=1 --nsfw l-lewd']
+      },
+      HISTORY: {
+        content: 'Views the history for a user',
+        usage: '<user>',
+        examples: ['1231234124219412', '@Plushie']
+      },
+
+      CASE: {
+        content: stripIndents`Operates on a case. Current operations:
+          • show <id>
+          • delete <id>
+        `,
+        usage: '<operation> <id>',
+        examples: ['show 10', 'delete 50']
+      },
+      CASE_SHOW: {
+        content: 'Shows a case',
+        usage: '<id>',
+        examples: ['1000'],
+        parent: 'case'
+      },
+      CASE_DELETE: {
+        content: 'Deletes a case, reverting mutes and bans, cleansing said record off of users, so on',
+        usage: '<id>',
+        examples: ['latest', '10'],
+        parent: 'case'
       }
     } as { [key: string]: Help },
 
@@ -180,6 +215,15 @@ export const MESSAGES = {
       WARN: {
         start: 'Who do you want me to warn?',
         retry: 'Please provide a valid member'
+      },
+
+      CASE_SHOW: {
+        start: 'Which case would you like to see?',
+        rety: 'Please provide a valid case'
+      },
+      CASE_DELETE: {
+        start: 'Which case would you like to delete?',
+        retry: 'Please provide a valid case'
       }
     }
   },

@@ -21,6 +21,11 @@ export default class CyclePunishments extends Task {
     const cases = await client.cases.find({ where: { resolved: false } });
 
     for (const cs of cases) {
+      if (Date.now() - cs.createdAt.getTime() >= 86400000) {
+        await this.resolve(client, cs);
+        continue;
+      }
+
       if (cs.actionExpires! <= new Date()) {
         const guild = client.guilds.cache.get(cs.guildID);
 
@@ -59,7 +64,8 @@ export default class CyclePunishments extends Task {
     const member = await guild.members.fetch(mute.targetID).catch(() => null);
     const muteRole = (guild.client as ReikaClient).settings.get(guild.id, 'muteRole');
 
-    if (!muteRole || !member?.roles.cache.has(muteRole)) return null;
+    if (!muteRole || !member?.roles.cache.has(muteRole)) return 'Mute role does not exist anymore or user doesn\'t have it';
+
     if (!member.manageable) return 'Cannot manage user\'s roles';
 
     const res = await member.roles.set(mute.unmuteRoles ?? []).catch(e => e.toString() as string);
