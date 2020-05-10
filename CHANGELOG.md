@@ -1,4 +1,4 @@
-# Nightly build 7 (0.1.0) (2020-05-10)
+# Nightly build 8 (0.1.0) (2020-05-10)
 
 ## Features
 
@@ -17,3 +17,5 @@
 * * packages ([bebfee2](https://github.com/weeb-cafe/MewChan/commit/bebfee2a5ed3efe4b60656b1bfc8230c1817eb9a), [f9d5934](https://github.com/weeb-cafe/MewChan/commit/f9d59340b9f0f91d6a0cf293c1b54024940de42b))
 * * * imports ([5b43eee](https://github.com/weeb-cafe/MewChan/commit/5b43eeeaaa7d084e987be79b9a136f5524ce091c), [025fca0](https://github.com/weeb-cafe/MewChan/commit/025fca03017429948f1557f17c996703b2f48015))
 * * Docker ([972ecc0](https://github.com/weeb-cafe/MewChan/commit/972ecc0ed00714b9e5dbf90e506bf1e6c26a6f7f))
+
+* legal stuff ([020b6ee](https://github.com/weeb-cafe/MewChan/commit/020b6ee573f437786fba42f96886606712cb4d43), [01f6a89](https://github.com/weeb-cafe/MewChan/commit/01f6a89c18b316284b4b5ed79798d8446395731f))
