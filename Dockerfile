@@ -11,7 +11,7 @@ RUN pnpm run build
 RUN rm -rf packages/**/src packages/**/lib
 
 FROM node:12-alpine
-LABEL name "Reika Bot"
+LABEL name "MewChan Bot"
 LABEL version "0.1.0"
 LABEL maintainer "didinele <didinele.dev@gmail.com>"
 ENV DISCORD_TOKEN= \
@@ -23,7 +23,7 @@ ENV DISCORD_TOKEN= \
   LOGGER_ID= \
   LOGGER_TOKEN= \
   TZ=
-WORKDIR /usr/reika
+WORKDIR /usr/MewChan
 COPY --from=0 /opt/appbuild/package.json /opt/appbuild/pnpm-lock.yaml /opt/appbuild/pnpm-workspace.yaml ./
 COPY --from=0 /opt/appbuild/packages/bot ./packages/bot
 COPY --from=0 /opt/appbuild/packages/common ./packages/common
