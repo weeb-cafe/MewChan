@@ -6,8 +6,8 @@ export interface SchedulerOptions {
 }
 
 export class Scheduler implements Required<SchedulerOptions> {
-  public readonly tasks = new Map<string, Task>();
   public readonly directory: string | null;
+  public readonly tasks = new Map<string, Task>();
   public interval: NodeJS.Timeout | null = null;
 
   public constructor(
@@ -19,27 +19,40 @@ export class Scheduler implements Required<SchedulerOptions> {
     this.directory = directory ?? null;
   }
 
-  private readonly _callback = async () => {
-    for (const [id, task] of this.tasks) {
-      if (task.runAt < Date.now()) continue;
+  private readonly _timeouts = new Map<string, NodeJS.Timeout>();
+  private readonly _intervals = new Map<string, NodeJS.Timeout>();
 
-      if (!task.once) task.runAt = Date.now() + task.period;
-      else this.tasks.delete(id);
+  public registerTimeout(label: string, time: number, cb: Function) {
+    this._timeouts.set(label, setTimeout(() => {
+      cb(...this.parameters);
+      this.clearTimeout(label);
+    }, time));
+  }
 
-      task.exec(...this.parameters);
-    }
-  };
+  public clearTimeout(label: string) {
+    const timeout = this._timeouts.get(label);
+    if (timeout) clearTimeout(timeout);
+    return this._timeouts.delete(label);
+  }
+
+  public refreshTimeout(label: string) {
+    const timeout = this._timeouts.get(label);
+    timeout?.refresh();
+  }
+
+  public registerInterval(label: string, time: number, cb: Function) {
+    this._intervals.set(label, setInterval(() => cb(...this.parameters), time));
+  }
+
+  public clearInterval(label: string) {
+    const interval = this._intervals.get(label);
+    if (interval) clearInterval(interval);
+    return this._intervals.delete(label);
+  }
 
   public load(task: Task) {
-    if (task.period) {
-      const period = task.period / 1000 / 60;
-      if (
-        period < 1 ||
-        period.toString().includes('.')
-      ) console.warn(`Imperfect value passed for Task<${task.id}>#period.`);
-    }
-
     this.tasks.set(task.id, task);
+    this[task.once ? 'registerTimeout' : 'registerInterval'](task.id, task.period, task.exec.bind(task));
   }
 
   public async loadAll() {
@@ -51,19 +64,5 @@ export class Scheduler implements Required<SchedulerOptions> {
         .then(resolveFromESModule));
 
     for await (const task of tasks) this.load(new task());
-  }
-
-  public refresh(id: string) {
-    const task = this.tasks.get(id);
-    if (!task?.once) {
-      throw new Error(`Failed to refresh Task${task?.id ? `<${task.id}>` : ''}, it either does not exist or it's not a timeout`);
-    }
-
-    task.runAt = Date.now() + task.period;
-  }
-
-  public async init() {
-    await this.loadAll();
-    this.interval = setInterval(this._callback, 60000);
   }
 }

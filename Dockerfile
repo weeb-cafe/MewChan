@@ -15,10 +15,14 @@ LABEL name "Reika Bot"
 LABEL version "0.1.0"
 LABEL maintainer "didinele <didinele.dev@gmail.com>"
 ENV DISCORD_TOKEN= \
-	COMMAND_PREFIX= \
-	OWNER= \
-	DB_URL= \
-	NODE_ENV=
+  COMMAND_PREFIX= \
+  OWNER= \
+  DB_URL= \
+  NODE_ENV= \
+  LOGGER_HOST= \
+  LOGGER_ID= \
+  LOGGER_TOKEN= \
+  TZ=
 WORKDIR /usr/reika
 COPY --from=0 /opt/appbuild/package.json /opt/appbuild/pnpm-lock.yaml /opt/appbuild/pnpm-workspace.yaml ./
 COPY --from=0 /opt/appbuild/packages/bot ./packages/bot

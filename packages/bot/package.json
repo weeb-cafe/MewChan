@@ -24,21 +24,21 @@
   "homepage": "https://github.com/weeb-cafe/reika#readme",
   "devDependencies": {
     "@types/common-tags": "^1.8.0",
-    "@types/ioredis": "^4.14.9",
-    "@types/node": "^13.11.1",
-    "@types/node-fetch": "^2.5.6",
-    "@types/ws": "^5.1.0",
+    "@types/ioredis": "^4.16.0",
+    "@types/node": "^13.13.4",
+    "@types/node-fetch": "^2.5.7",
+    "@types/ws": "^5.1.2",
     "typescript": "^3.8.3",
     "winston": "^3.2.1"
   },
   "dependencies": {
-    "@reika/common": "0.1.0",
+    "@reika/common": "workspace:0.1.0",
     "common-tags": "^1.8.0",
     "discord-akairo": "^8.0.0",
-    "discord.js": "^12.1.1",
-    "ioredis": "^4.16.2",
+    "discord.js": "^12.2.0",
+    "ioredis": "^4.16.3",
     "node-fetch": "^2.6.0",
-    "pg": "^8.0.2",
+    "pg": "^8.0.3",
     "tslib": "^1.11.1",
     "typeorm": "^0.2.24"
   }

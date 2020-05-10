@@ -85,12 +85,12 @@ export default class ReikaClient extends AkairoClient {
     }, {
       disableMentions: 'everyone'
     });
-
-    if (!PRODUCTION) process.on('unhandledRejection', (err: any) => this.logger.info(...LOGS.UNHANDLED_REJECTION(err.stack)));
   }
 
   private async init() {
-    this.logger = await createLogger('MewChan BOT');
+    this.logger = await createLogger('MewChan BOT', process.env.LOGGER_HOST!, process.env.LOGGER_ID!, process.env.LOGGER_TOKEN!);
+
+    if (!PRODUCTION) process.on('unhandledRejection', (err: any) => this.logger.info(...LOGS.UNHANDLED_REJECTION(err.stack)));
 
     this.commandHandler
       .useInhibitorHandler(this.inhibitorHandler)
@@ -107,7 +107,7 @@ export default class ReikaClient extends AkairoClient {
     this.logger.info(...LOGS.LOADED('InhibitorHandler'));
     this.listenerHandler.loadAll();
     this.logger.info(...LOGS.LOADED('ListenerHandler'));
-    await this.scheduler.init();
+    await this.scheduler.loadAll();
     this.logger.info(...LOGS.LOADED('Scheduler'));
 
     this.db = database.get('reika');

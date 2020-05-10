@@ -1,7 +1,7 @@
 import { createLogger, format, transports } from 'winston';
 import WSTransport from '@weeb-cafe/winston-ws';
 
-export default async (name: string) => createLogger({
+export default async (name: string, host: string, id: string, token: string) => createLogger({
   format: format.combine(
     format.errors({ stack: true }),
     format.label({ label: name.toUpperCase() }),
@@ -21,6 +21,6 @@ export default async (name: string) => createLogger({
     await new WSTransport({
       format: format.combine(format.timestamp(), format.json()),
       level: 'debug'
-    }).init(process.env.LOGGER_HOST!, process.env.LOGGER_ID!, process.env.LOGGER_TOKEN!) as any
+    }).init(host, id, token) as any
   ]
 });

@@ -24,16 +24,18 @@
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-angular": "^8.3.4",
-    "@typescript-eslint/eslint-plugin": "^2.24.0",
-    "@typescript-eslint/parser": "^2.24.0", 
+    "@typescript-eslint/eslint-plugin": "^2.30.0",
+    "@typescript-eslint/parser": "^2.30.0",
     "eslint": "^6.8.0",
     "eslint-config-marine": "^6.0.0",
-    "husky": "^4.2.3",
-    "lint-staged": "^10.0.8",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.2",
     "typescript": "^3.8.3"
   },
   "renovate": {
-    "extends": ["teal"]
+    "extends": [
+      "teal"
+    ]
   },
   "eslintConfig": {
     "extends": "marine/node",

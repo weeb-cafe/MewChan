@@ -7,7 +7,6 @@ export enum Actions {
   KICK,
   SOFTBAN,
   BAN,
-  UNMUTE,
   UNBAN
 }
 
@@ -19,13 +18,13 @@ export class Case<A extends Actions> {
   @PrimaryColumn('bigint')
   public guildID!: string;
 
-  @PrimaryColumn('bigint')
+  @PrimaryColumn('integer')
   public caseID!: number;
 
   @Column('bigint', { nullable: true })
   public message!: string | null;
 
-  @Column('bigint', { nullable: true })
+  @Column('integer', { nullable: true })
   public refID!: number | null;
 
   @Column('bigint')
@@ -43,7 +42,7 @@ export class Case<A extends Actions> {
   @Column('timestamptz', { 'default': () => 'now()' })
   public createdAt!: Date;
 
-  @Column('bigint', { nullable: true })
+  @Column('timestamptz', { nullable: true })
   public actionExpires!: Date | null;
 
   @Column('simple-array', { nullable: true })
