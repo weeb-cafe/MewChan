@@ -1,5 +1,5 @@
-import { Task, Case, Actions } from '@reika/common';
-import ReikaClient from '../client/ReikaClient';
+import { Task, Case, Actions } from '@mewchan/common';
+import MewchanClient from '../client/MewchanClient';
 import { Guild, TextChannel } from 'discord.js';
 import { stripIndent } from 'common-tags';
 import { TOPICS } from '../util/Constants';
@@ -12,12 +12,12 @@ export default class CyclePunishments extends Task {
     });
   }
 
-  public resolve(client: ReikaClient, cs: Case<Actions>) {
+  public resolve(client: MewchanClient, cs: Case<Actions>) {
     cs.resolved = true;
     return client.cases.save(cs);
   }
 
-  public async exec(client: ReikaClient) {
+  public async exec(client: MewchanClient) {
     const cases = await client.cases.find({ where: { resolved: false } });
 
     for (const cs of cases) {
@@ -42,7 +42,7 @@ export default class CyclePunishments extends Task {
 
         if (res !== null) {
           client.logger.warn(`${cs.caseID}: ${cs.guildID} failed to resolve due to ${res}`, { topic: TOPICS.TASK.WARN });
-          const modLogsChannel = (guild.client as ReikaClient).settings.get(guild.id, 'modLogsChannel');
+          const modLogsChannel = (guild.client as MewchanClient).settings.get(guild.id, 'modLogsChannel');
 
           if (res.length && modLogsChannel) {
             const channel = guild.channels.cache.get(modLogsChannel) as TextChannel | undefined;
@@ -62,7 +62,7 @@ export default class CyclePunishments extends Task {
 
   public async handleMute(guild: Guild, mute: Case<Actions.MUTE>): Promise<string | null> {
     const member = await guild.members.fetch(mute.targetID).catch(() => null);
-    const muteRole = (guild.client as ReikaClient).settings.get(guild.id, 'muteRole');
+    const muteRole = (guild.client as MewchanClient).settings.get(guild.id, 'muteRole');
 
     if (!muteRole || !member?.roles.cache.has(muteRole)) return 'Mute role does not exist anymore or user doesn\'t have it';
 

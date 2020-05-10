@@ -1,6 +1,6 @@
 import CaseAction, { OptionalData } from './Action';
 import { Message, GuildMember, User } from 'discord.js';
-import { Actions } from '@reika/common';
+import { Actions } from '@mewchan/common';
 
 export default class SoftbanAction extends CaseAction<Actions.SOFTBAN> {
   public readonly days: number;

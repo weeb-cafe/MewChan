@@ -1,6 +1,6 @@
 import Action, { OptionalData } from './Action';
 import { Message, User } from 'discord.js';
-import { Actions } from '@reika/common';
+import { Actions } from '@mewchan/common';
 import CyclePunishments from '../../tasks/CyclePunishments';
 
 export default class UnbanAction extends Action<Actions.UNBAN> {

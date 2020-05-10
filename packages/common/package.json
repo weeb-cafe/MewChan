@@ -1,7 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/package",
-  "name": "@reika/common",
-  "description": "Common stuff for reika",
+  "name": "@mewchan/common",
+  "description": "Common stuff for MewChan",
   "main": "./bin/index.js",
   "types": "./typings/index.d.ts",
   "version": "0.1.0",
@@ -13,15 +13,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/weeb-cafe/reika.git"
+    "url": "git+https://github.com/weeb-cafe/MewChan.git"
   },
   "contributors": [
     "didinele <didinele.dev@gmail.com> (https://github.com/didinele)"
   ],
   "bugs": {
-    "url": "https://github.com/weeb-cafe/reika/issues"
+    "url": "https://github.com/weeb-cafe/MewChan/issues"
   },
-  "homepage": "https://github.com/weeb-cafe/reika#readme",
+  "homepage": "https://github.com/weeb-cafe/MewChan#readme",
   "devDependencies": {
     "@types/node": "^13.13.4",
     "typescript": "^3.8.3"

@@ -12,7 +12,7 @@ import {
   Scheduler,
   createLogger,
   Actions
-} from '@reika/common';
+} from '@mewchan/common';
 import SettingsProvider from '../struct/SettingsProvider';
 import database from '../struct/Database';
 import { Connection, Repository } from 'typeorm';
@@ -38,7 +38,7 @@ declare module 'discord-akairo' {
   }
 }
 
-export default class ReikaClient extends AkairoClient {
+export default class MewchanClient extends AkairoClient {
   // public redis = redisClient;
 
   public scheduler: Scheduler = new Scheduler(
@@ -110,7 +110,7 @@ export default class ReikaClient extends AkairoClient {
     await this.scheduler.loadAll();
     this.logger.info(...LOGS.LOADED('Scheduler'));
 
-    this.db = database.get('reika');
+    this.db = database.get('mewchan');
 
     await this.db.connect();
     await this.db.synchronize();

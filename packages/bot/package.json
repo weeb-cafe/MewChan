@@ -1,7 +1,7 @@
 {
   "$schema": "http://json.schemastore.org/package",
-  "name": "@reika/bot",
-  "description": "The reika bot",
+  "name": "@mewchan/bot",
+  "description": "The MewChan bot",
   "main": "./bin/index.js",
   "types": "./typings/index.d.ts",
   "version": "0.1.0",
@@ -13,15 +13,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/weeb-cafe/reika.git"
+    "url": "git+https://github.com/weeb-cafe/MewChan.git"
   },
   "contributors": [
     "didinele <didinele.dev@gmail.com> (https://github.com/didinele)"
   ],
   "bugs": {
-    "url": "https://github.com/weeb-cafe/reika/issues"
+    "url": "https://github.com/weeb-cafe/MewChan/issues"
   },
-  "homepage": "https://github.com/weeb-cafe/reika#readme",
+  "homepage": "https://github.com/weeb-cafe/MewChan#readme",
   "devDependencies": {
     "@types/common-tags": "^1.8.0",
     "@types/ioredis": "^4.16.0",
@@ -32,7 +32,7 @@
     "winston": "^3.2.1"
   },
   "dependencies": {
-    "@reika/common": "workspace:0.1.0",
+    "@mewchan/common": "workspace:0.1.0",
     "common-tags": "^1.8.0",
     "discord-akairo": "^8.0.0",
     "discord.js": "^12.2.0",

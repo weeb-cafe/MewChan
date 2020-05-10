@@ -1,5 +1,5 @@
 import Action, { OptionalData } from './Action';
-import { Actions } from '@reika/common';
+import { Actions } from '@mewchan/common';
 import { Message, GuildMember } from 'discord.js';
 
 export default class KickAction extends Action<Actions.KICK> {

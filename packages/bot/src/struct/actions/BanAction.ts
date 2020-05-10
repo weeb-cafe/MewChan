@@ -1,6 +1,6 @@
 import Action, { OptionalData } from './Action';
 import { Message, GuildMember, User } from 'discord.js';
-import { Actions } from '@reika/common';
+import { Actions } from '@mewchan/common';
 import { confirm } from '../../util/Util';
 
 export default class BanAction extends Action<Actions.BAN> {

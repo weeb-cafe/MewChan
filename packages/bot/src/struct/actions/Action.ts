@@ -1,5 +1,5 @@
-import ReikaClient from '../../client/ReikaClient';
-import { Case, Actions, ms } from '@reika/common';
+import MewchanClient from '../../client/MewchanClient';
+import { Case, Actions, ms } from '@mewchan/common';
 import { Message, GuildMember, User, TextChannel, MessageEmbed, Constants as DjsConstants, Guild } from 'discord.js';
 import { permissionLevel } from '../../util/Util';
 import { MESSAGES } from '../../util/Constants';
@@ -31,7 +31,7 @@ export default abstract class Action<T extends Actions> {
   public static async history(target: User, guild: Guild, nsfw = false) {
     const history = new MessageEmbed();
 
-    const cases = await (target.client as ReikaClient).cases.find({
+    const cases = await (target.client as MewchanClient).cases.find({
       where: {
         guildID: guild.id,
         targetID: target.id
@@ -85,7 +85,7 @@ export default abstract class Action<T extends Actions> {
     if (mod) log.setAuthor(`${mod.user.tag} (${mod.id})`, mod.user.displayAvatarURL());
 
     let ref: Case<any> | undefined;
-    if (cs.refID) ref = await (target.client as ReikaClient).cases.findOne({ caseID: cs.refID, guildID: guild.id });
+    if (cs.refID) ref = await (target.client as MewchanClient).cases.findOne({ caseID: cs.refID, guildID: guild.id });
 
     log
       .addField('Member', `${target.tag} (${target.id})`)
@@ -93,7 +93,7 @@ export default abstract class Action<T extends Actions> {
     if (duration) log.addField('Duration', ms(duration, true));
     log.addField('Reason', cs.reason!);
     if (ref) {
-      const chan = (target.client as ReikaClient).settings.get(guild.id, 'modLogsChannel');
+      const chan = (target.client as MewchanClient).settings.get(guild.id, 'modLogsChannel');
       if (chan) log.addField('Reference', `[${ref.caseID}](https://discordapp.com/channels/${ref.guildID}/${chan}/${ref.message})`);
     }
 
@@ -129,7 +129,7 @@ export default abstract class Action<T extends Actions> {
 
   public readonly mod = this.msg.member!;
   public readonly case: Case<T>;
-  public readonly client = this.msg.client as ReikaClient;
+  public readonly client = this.msg.client as MewchanClient;
   public readonly guild = this.msg.guild!;
   public readonly duration?: number;
 

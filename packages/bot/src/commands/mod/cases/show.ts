@@ -1,7 +1,7 @@
 import { Command } from 'discord-akairo';
 import { MESSAGES } from '../../../util/Constants';
 import { Message, TextChannel } from 'discord.js';
-import { Case, Actions } from '@reika/common';
+import { Case, Actions } from '@mewchan/common';
 import Action from '../../../struct/actions/Action';
 import { oneLine, stripIndents } from 'common-tags';
 
