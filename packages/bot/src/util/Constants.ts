@@ -101,6 +101,11 @@ export const MESSAGES = {
         usage: '<emoji> <role> <message> [channel]',
         examples: ['👌 @Role 708659783141556276', ':hahaAFuny: 629305468673720350 708178952237088830 #welcome']
       },
+      DELETE_REACTION_ROLE: {
+        content: 'Deletes a reaction role',
+        usage: '<emoji> <message> [channel]',
+        examples: ['👌 708659783141556276', ':hahaAFuny: 708178952237088830 #welcome']
+      },
 
       // #MOD
       BAM: {
@@ -207,6 +212,14 @@ export const MESSAGES = {
       CREATE_REACTION_ROLE_MESSAGE: {
         start: 'Which message would you like to use?',
         retry: 'Please provide a valid message in the given text channel'
+      },
+      DELETE_REACTION_ROLE_EMOJI: {
+        start: 'What emoji are you targetting?',
+        retry: 'Please provide a valid emoji on the target message'
+      },
+      DELETE_REACTION_ROLE_MESSAGE: {
+        start: 'Which message would you like to delete from?',
+        retry: 'Please provide a valid message in the given text channeld'
       },
 
       // #MOD

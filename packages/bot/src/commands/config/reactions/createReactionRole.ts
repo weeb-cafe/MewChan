@@ -10,6 +10,7 @@ export default class CreateReactionRoleCommand extends Command {
       aliases: ['createReactionRole'],
       category: 'config',
       channel: 'guild',
+      clientPermissions: ['ADD_REACTIONS'],
       userPermissions: msg => can(msg, Permissions.ADMIN, 'MANAGE_ROLES')
     });
   }
@@ -57,7 +58,6 @@ export default class CreateReactionRoleCommand extends Command {
       message
     }: { emoji: GuildEmoji | string; role: Role; message: Message }
   ) {
-    console.log(emoji);
     let react;
 
     try {
