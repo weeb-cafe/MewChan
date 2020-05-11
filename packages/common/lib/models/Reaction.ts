@@ -8,7 +8,7 @@ export class Reaction {
   @PrimaryColumn('bigint')
   public message!: string;
 
-  @Column()
+  @PrimaryColumn()
   public identifier!: string;
 
   @Column('bigint')
