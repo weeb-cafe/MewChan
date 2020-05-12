@@ -1,12 +1,18 @@
 import { createLogger, format, transports } from 'winston';
-import * as DailyRotateFile from 'winston-daily-rotate-file';
-import { join } from 'path';
-import { existsSync, mkdirSync } from 'fs';
+import WSTransport from '@weeb-cafe/winston-ws';
 
-export default (name: string, path?: string) => {
-  path = path || join(process.cwd(), 'logs');
+export default async (name: string, host: string, id: string, token: string) => {
+  const used = [new transports.Console({
+    format: format.colorize({ level: true }),
+    level: 'info'
+  })];
 
-  if (!existsSync(path)) mkdirSync(path);
+  if (process.env.NODE_ENV === 'production') {
+    used.push(await new WSTransport({
+      format: format.combine(format.timestamp(), format.json()),
+      level: 'debug'
+    }).init(host, id, token) as any);
+  }
 
   return createLogger({
     format: format.combine(
@@ -20,18 +26,6 @@ export default (name: string, path?: string) => {
         }`;
       })
     ),
-    transports: [
-      new transports.Console({
-        format: format.colorize({ level: true }),
-        level: 'info'
-      }),
-      new DailyRotateFile({
-        format: format.combine(format.timestamp(), format.json()),
-        level: 'debug',
-        dirname: path,
-        filename: `${name}-%DATE%.log`,
-        maxFiles: '14d'
-      })
-    ]
+    transports: used
   });
 };

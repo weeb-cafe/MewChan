@@ -1,5 +1,5 @@
 {
-  "name": "@weeb-cafe/reika",
+  "name": "@weeb-cafe/mewchan",
   "version": "0.1.0",
   "private": true,
   "description": "A modular Discord bot",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/weeb-cafe/reika.git"
+    "url": "git+https://github.com/weeb-cafe/MewChan.git"
   },
   "contributors": [
     "didinele <didinele.dev@gmail.com> (https://github.com/didinele)"
@@ -18,22 +18,24 @@
   "author": "didinele",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/weeb-cafe/reika/issues"
+    "url": "https://github.com/weeb-cafe/MewChan/issues"
   },
-  "homepage": "https://github.com/weeb-cafe/reika#readme",
+  "homepage": "https://github.com/weeb-cafe/MewChan#readme",
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-angular": "^8.3.4",
-    "@typescript-eslint/eslint-plugin": "^2.24.0",
-    "@typescript-eslint/parser": "^2.24.0", 
+    "@typescript-eslint/eslint-plugin": "^2.30.0",
+    "@typescript-eslint/parser": "^2.30.0",
     "eslint": "^6.8.0",
     "eslint-config-marine": "^6.0.0",
-    "husky": "^4.2.3",
-    "lint-staged": "^10.0.8",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.2",
     "typescript": "^3.8.3"
   },
   "renovate": {
-    "extends": ["teal"]
+    "extends": [
+      "teal"
+    ]
   },
   "eslintConfig": {
     "extends": "marine/node",
