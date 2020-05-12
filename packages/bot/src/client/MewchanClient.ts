@@ -9,6 +9,7 @@ import {
 import {
   Case,
   Blacklist,
+  Reaction,
   Scheduler,
   createLogger,
   Actions
@@ -33,6 +34,7 @@ declare module 'discord-akairo' {
     settings: SettingsProvider;
     cases: Repository<Case<Actions>>;
     blacklist: Repository<Blacklist>;
+    reactions: Repository<Reaction>;
     logger: Logger;
     // redis: Redis;
   }
@@ -83,7 +85,8 @@ export default class MewchanClient extends AkairoClient {
     super({
       ownerID: process.env.OWNER!.split(',')
     }, {
-      disableMentions: 'everyone'
+      disableMentions: 'everyone',
+      partials: ['MESSAGE', 'REACTION']
     });
   }
 
@@ -124,6 +127,7 @@ export default class MewchanClient extends AkairoClient {
 
     this.cases = this.db.getRepository(Case);
     this.blacklist = this.db.getRepository(Blacklist);
+    this.reactions = this.db.getRepository(Reaction);
 
     this.logger.info(...LOGS.LOADED('Database shortcuts'));
   }
