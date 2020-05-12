@@ -1,4 +1,4 @@
-# Nightly build 8 (0.1.0) (2020-05-10)
+# Nightly build 9 (0.1.0) (2020-05-10)
 
 ## Features
 
@@ -11,6 +11,12 @@
 * punishment cycling task ([010c336](https://github.com/weeb-cafe/MewChan/commit/010c3361e6d1daddb8a238a601452434b3c62167))
 
 * commands ([0d838a5](https://github.com/weeb-cafe/MewChan/commit/0d838a5bee00e88570bc01d0694a6d3ee6eea181), [00a83ae](https://github.com/weeb-cafe/MewChan/commit/00a83ae45c671f8ea8b974681c8fa2737708a827), [b19cf8e](https://github.com/weeb-cafe/MewChan/commit/b19cf8ee0878693f51e7974f751069ba9b895eb1), [b1b06f7](https://github.com/weeb-cafe/MewChan/commit/b1b06f76a83053c5a5656579f185a619db8a26fe))
+
+
+### Reaction roles
+* model ([65a4b9a](https://github.com/weeb-cafe/MewChan/commit/65a4b9a783cbfd9bf0af1b8087880acb0b28aeaf))
+* commands ([3355ac4](https://github.com/weeb-cafe/MewChan/commit/3355ac46702c8417e68df84d2795d231a33b9736), [ddeadc3](https://github.com/weeb-cafe/MewChan/commit/ddeadc3ebb6f7db98ab47626fb234ce570895e02))
+* listeners ([0e8dfb0](https://github.com/weeb-cafe/MewChan/commit/0e8dfb03b0a8b5cf1a9ae6d3e0ef1e6372bf8cc4))
 
 ## Chores
 * rebrand to MewChan entirely
