@@ -85,7 +85,8 @@ export default class MewchanClient extends AkairoClient {
     super({
       ownerID: process.env.OWNER!.split(',')
     }, {
-      disableMentions: 'everyone'
+      disableMentions: 'everyone',
+      partials: ['MESSAGE', 'REACTION']
     });
   }
 

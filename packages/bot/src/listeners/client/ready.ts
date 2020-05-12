@@ -1,5 +1,5 @@
 import { Listener } from 'discord-akairo';
-import { LOGS } from '../util/Constants';
+import { LOGS } from '../../util/Constants';
 
 export default class ReadyListener extends Listener {
   public constructor() {
