@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@weeb-cafe/winston-ws": "github:weeb-cafe/winston-ws#build",
-    "tslib": "^1.11.1",
+    "tslib": "^2.0.0",
     "typeorm": "^0.2.24",
     "winston": "^3.2.1"
   }
