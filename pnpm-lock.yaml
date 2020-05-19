@@ -36,7 +36,7 @@ importers:
       '@types/ioredis': 4.16.0
       '@types/node': 13.13.4
       '@types/node-fetch': 2.5.7
-      '@types/ws': 5.1.2
+      '@types/ws': 7.2.4
       typescript: 3.8.3
       winston: 3.2.1
     specifiers:
@@ -45,7 +45,7 @@ importers:
       '@types/ioredis': ^4.16.0
       '@types/node': ^13.13.4
       '@types/node-fetch': ^2.5.7
-      '@types/ws': ^5.1.2
+      '@types/ws': ^7.0.0
       common-tags: ^1.8.0
       discord-akairo: ^8.0.0
       discord.js: ^12.2.0
@@ -287,10 +287,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-OCutwjDZ4aFS6PB1UZ988C4YgwlBHJd6wCeQqaLdmadZ/7e+w79+hbMUFC1QXDNCmdyoRfAFdm0RypzwR+Qpag==
-  /@types/events/3.0.0:
-    dev: true
-    resolution:
-      integrity: sha512-EaObqwIvayI5a8dCzhFrjKzVwKLxjoG9T6Ppd5CEo07LRKfQ8Yokw54r5+Wq7FaBQ+yXRvQAYPrHwya1/UFt9g==
   /@types/ioredis/4.16.0:
     dependencies:
       '@types/node': 13.13.4
@@ -316,13 +312,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
-  /@types/ws/5.1.2:
+  /@types/ws/7.2.4:
     dependencies:
-      '@types/events': 3.0.0
       '@types/node': 13.13.4
     dev: true
     resolution:
-      integrity: sha512-NkTXUKTYdXdnPE2aUUbGOXE1XfMK527SCvU/9bj86kyFF6kZ9ZnOQ3mK5jADn98Y2vEUD/7wKDgZa7Qst2wYOg==
+      integrity: sha512-9S6Ask71vujkVyeEXKxjBSUV8ZUB0mjL5la4IncBoheu04bDaYyUKErh1BQcY9+WzOUOiKqz/OnpJHYckbMfNg==
   /@typescript-eslint/eslint-plugin/2.30.0_696401c5c7047c2332f703e0635826dc:
     dependencies:
       '@typescript-eslint/experimental-utils': 2.30.0_eslint@6.8.0+typescript@3.8.3
