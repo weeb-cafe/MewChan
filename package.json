@@ -35,7 +35,8 @@
   "renovate": {
     "extends": [
       "teal"
-    ]
+    ],
+    "baseBranch": "nightly"
   },
   "eslintConfig": {
     "extends": "marine/node",
