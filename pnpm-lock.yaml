@@ -29,7 +29,7 @@ importers:
       ioredis: 4.16.3
       node-fetch: 2.6.0
       pg: 8.0.3_pg@8.0.3
-      tslib: 1.11.1
+      tslib: 2.0.0
       typeorm: 0.2.24
     devDependencies:
       '@types/common-tags': 1.8.0
@@ -52,14 +52,14 @@ importers:
       ioredis: ^4.16.3
       node-fetch: ^2.6.0
       pg: ^8.0.3
-      tslib: ^1.11.1
+      tslib: ^2.0.0
       typeorm: ^0.2.24
       typescript: ^3.8.3
       winston: ^3.2.1
   packages/common:
     dependencies:
       '@weeb-cafe/winston-ws': github.com/weeb-cafe/winston-ws/846b3ef056291d31f5d0cd6c482699c88b606738
-      tslib: 1.11.1
+      tslib: 2.0.0
       typeorm: 0.2.24
       winston: 3.2.1
     devDependencies:
@@ -68,7 +68,7 @@ importers:
     specifiers:
       '@types/node': ^13.13.4
       '@weeb-cafe/winston-ws': 'github:weeb-cafe/winston-ws#build'
-      tslib: ^1.11.1
+      tslib: ^2.0.0
       typeorm: ^0.2.24
       typescript: ^3.8.3
       winston: ^3.2.1
@@ -2973,6 +2973,10 @@ packages:
   /tslib/1.11.1:
     resolution:
       integrity: sha512-aZW88SY8kQbU7gpV19lN24LtXh/yD4ZZg6qieAJDDg+YBsJcSmLGK9QpnUjAKVG/xefmvJGd1WUmfpT/g6AJGA==
+  /tslib/2.0.0:
+    dev: false
+    resolution:
+      integrity: sha512-lTqkx847PI7xEDYJntxZH89L2/aXInsyF2luSafe/+0fHOMjlBNXdH6th7f70qxLDhul7KZK0zC8V5ZIyHl0/g==
   /tsutils/3.17.1_typescript@3.8.3:
     dependencies:
       tslib: 1.11.1
