@@ -64,11 +64,12 @@ export default class CyclePunishments extends Task {
     const member = await guild.members.fetch(mute.targetID).catch(() => null);
     const muteRole = (guild.client as MewchanClient).settings.get(guild.id, 'muteRole');
 
-    if (!muteRole || !member?.roles.cache.has(muteRole)) return 'Mute role does not exist anymore or user doesn\'t have it';
+    if (!member) return null;
 
+    if (!muteRole) return 'Mute role does not exist anymore';
     if (!member.manageable) return 'Cannot manage user\'s roles';
 
-    const res = await member.roles.set(mute.unmuteRoles ?? []).catch(e => e.toString() as string);
+    const res = await member.roles.set(mute.unmuteRoles ?? []).catch(e => e.toString());
     if (typeof res === 'string') return res;
 
     return null;
@@ -77,7 +78,7 @@ export default class CyclePunishments extends Task {
   public async handleBan(guild: Guild, ban: Case<Actions.BAN>): Promise<string | null> {
     if (!guild.me!.hasPermission('BAN_MEMBERS')) return 'Missing permission to unban';
 
-    const res = await guild.members.unban(ban.targetID).catch(e => e.toString() as string);
+    const res = await guild.members.unban(ban.targetID).catch(e => e.toString());
     if (typeof res === 'string') return res;
 
     return null;
