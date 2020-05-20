@@ -93,7 +93,15 @@ export default class MewchanClient extends AkairoClient {
   private async init() {
     this.logger = await createLogger('MewChan BOT', process.env.LOGGER_HOST!, process.env.LOGGER_ID!, process.env.LOGGER_TOKEN!);
 
-    if (!PRODUCTION) process.on('unhandledRejection', (err: any) => this.logger.info(...LOGS.UNHANDLED_REJECTION(err.stack)));
+    process.on('unhandledRejection', (err: any) => {
+      this.logger.info(...LOGS.UNHANDLED_REJECTION(err.stack));
+
+      /**
+       * ? Unhandled promise rejections are long deprecated anyway and at some point will begin naturally killing the process
+       * ? for now we do this
+       */
+      if (PRODUCTION) process.exit(1);
+    });
 
     this.commandHandler
       .useInhibitorHandler(this.inhibitorHandler)
