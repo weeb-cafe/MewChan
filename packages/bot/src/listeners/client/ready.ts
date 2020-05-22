@@ -22,6 +22,15 @@ export default class ReadyListener extends Listener {
           caseID: 'DESC'
         }
       }).then(d => d?.caseID ?? 1).catch(() => 1);
+
+      guild.lastTicket = await this.client.tickets.findOne({
+        where: {
+          guildID: guild.id
+        },
+        order: {
+          ticketID: 'DESC'
+        }
+      }).then(d => d?.ticketID ?? 1).catch(() => 1);
     }
   }
 }
