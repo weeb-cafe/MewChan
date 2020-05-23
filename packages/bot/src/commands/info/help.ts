@@ -1,6 +1,7 @@
 import { Command } from 'discord-akairo';
 import { Message, MessageEmbed } from 'discord.js';
 import { MESSAGES, COLORS } from '../../util/Constants';
+import MewchanClient from '../../client/MewchanClient';
 
 export default class HelpCommand extends Command {
   public constructor() {
@@ -10,7 +11,8 @@ export default class HelpCommand extends Command {
       args: [
         {
           id: 'command',
-          type: 'command'
+          type: (msg, phrase) =>
+            (msg.client as MewchanClient).commandHandler.modules.find(e => [e.id.toLowerCase(), e.id].includes(phrase))
         }
       ]
     });
@@ -43,12 +45,14 @@ export default class HelpCommand extends Command {
 
       id = id.replace(/__+/g, '_');
 
+      console.log(id);
+
       const data = MESSAGES.COMMANDS.HELP[id];
       const name = `${data.parent ? `${data.parent} ` : ''}${data.parent ? command.id.split('-')[1] : command.id}`;
 
       embed = new MessageEmbed()
         .setColor(3447003)
-        .setTitle(`\`${name} ${data.usage ? `${data.usage}` : ''}\``)
+        .setTitle(`\`${name}${data.usage ? ` ${data.usage}` : ''}\``)
         .addField('Description', data.content);
 
       if (command.aliases.length > 1) embed.addField('Aliases', `\`${command.aliases.join('` `')}\``, true);

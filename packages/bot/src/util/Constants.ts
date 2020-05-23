@@ -73,45 +73,45 @@ export const MESSAGES = {
           'muteRole muted'
         ]
       },
-      PREFIX: {
+      SET_PREFIX: {
         content: 'Sets the prefix for the server',
         parent: 'set'
       },
-      AUTODEL: {
+      SET_AUTODEL: {
         content: 'Toggles command auto deletion',
         parent: 'set'
       },
-      STAR_THRESHOLD: {
+      SET_STAR_THRESHOLD: {
         content: 'Sets the star threshold',
         parent: 'set'
       },
-      STAR_CHANNEL: {
+      SET_STAR_CHANNEL: {
         content: 'Sets the starboard channel',
         parent: 'set'
       },
-      MOD_LOGS_CHANNEL: {
+      SET_MOD_LOGS_CHANNEL: {
         content: 'Sets the mod logs channel',
         parent: 'set'
       },
-      ADMIN_ROLE: {
+      SET_ADMIN_ROLE: {
         content: 'Sets the admin role for the bot',
         parent: 'set'
       },
-      MOD_ROLE: {
+      SET_MOD_ROLE: {
         content: 'Sets the mod role for the bot',
         parent: 'set'
       },
-      MUTE_ROLE: {
+      SET_MUTE_ROLE: {
         content: 'Sets the mute role the bot is going to use',
         parent: 'set'
       },
 
-      CREATE_REACTION_ROLE: {
+      SET_CREATE_REACTION_ROLE: {
         content: 'Creates a new reaction role, whenever someone clicks on this reaction they get a role and vice versa',
         usage: '<emoji> <role> <message> [channel]',
         examples: ['👌 @Role 708659783141556276', ':hahaAFuny: 629305468673720350 708178952237088830 #welcome']
       },
-      DELETE_REACTION_ROLE: {
+      SET_DELETE_REACTION_ROLE: {
         content: 'Deletes a reaction role',
         usage: '<emoji> <message> [channel]',
         examples: ['👌 708659783141556276', ':hahaAFuny: 708178952237088830 #welcome']

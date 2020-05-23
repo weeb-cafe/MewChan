@@ -4,7 +4,7 @@ import { MESSAGES } from '../../util/Constants';
 
 export default class StarChannelCommand extends Command {
   public constructor() {
-    super('set-starchannel', {
+    super('set-starChannel', {
       category: 'config',
       args: [
         {
