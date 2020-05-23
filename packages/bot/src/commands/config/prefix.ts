@@ -4,7 +4,7 @@ import { Message } from 'discord.js';
 
 export default class PrefixCommand extends Command {
   public constructor() {
-    super('prefix', {
+    super('set-prefix', {
       category: 'config',
       args: [
         {

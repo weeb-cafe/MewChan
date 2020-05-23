@@ -4,7 +4,7 @@ import { MESSAGES } from '../../util/Constants';
 
 export default class MuteRoleCommand extends Command {
   public constructor() {
-    super('muteRole', {
+    super('set-muteRole', {
       category: 'config',
       args: [
         {
