@@ -4,7 +4,7 @@ import { MESSAGES } from '../../util/Constants';
 
 export default class ModLogsChannelCommand extends Command {
   public constructor() {
-    super('modLogsChannel', {
+    super('set-modlogschannel', {
       category: 'config',
       args: [
         {

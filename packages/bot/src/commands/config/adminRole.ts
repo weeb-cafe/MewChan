@@ -4,7 +4,7 @@ import { MESSAGES } from '../../util/Constants';
 
 export default class AdminRoleCommand extends Command {
   public constructor() {
-    super('adminRole', {
+    super('set-adminrole', {
       category: 'config',
       args: [
         {

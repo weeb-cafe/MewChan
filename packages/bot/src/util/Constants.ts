@@ -4,6 +4,10 @@ import { stripIndents } from 'common-tags';
 
 export const PRODUCTION = process.env.NODE_ENV === 'production';
 
+export const COLORS = {
+  BLUE: '#6fc6e2'
+};
+
 interface Help {
   content: string;
   usage?: string;
@@ -37,6 +41,12 @@ export const MESSAGES = {
       // #INFO
       PING: {
         content: 'Posts the current response time of the bot'
+      },
+
+      HELP: {
+        content: 'What else, helps you!',
+        usage: '[command]',
+        examples: ['ban', 'case', 'case-delete']
       },
 
       // #CONFIG
@@ -108,7 +118,7 @@ export const MESSAGES = {
       },
 
       // #MOD
-      BAM: {
+      BAN: {
         content: 'Bans one more people from the server',
         usage: '<...users> [--days=number] [--ref=number] [--nsfw] [...reason]',
         exmaples: ['@didinele', '@Plushie dumb', '@Plushie @didinele plebs', '471289471289471 --days=1 uwu']
