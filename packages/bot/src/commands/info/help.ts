@@ -11,8 +11,7 @@ export default class HelpCommand extends Command {
       args: [
         {
           id: 'command',
-          type: (msg, phrase) =>
-            (msg.client as MewchanClient).commandHandler.modules.find(e => [e.id.toLowerCase(), e.id].includes(phrase))
+          type: (msg, phrase) => (msg.client as MewchanClient).commandHandler.modules.find(e => [e.id.toLowerCase(), e.id].includes(phrase))
         }
       ]
     });
@@ -44,8 +43,6 @@ export default class HelpCommand extends Command {
       }
 
       id = id.replace(/__+/g, '_');
-
-      console.log(id);
 
       const data = MESSAGES.COMMANDS.HELP[id];
       const name = `${data.parent ? `${data.parent} ` : ''}${data.parent ? command.id.split('-')[1] : command.id}`;
