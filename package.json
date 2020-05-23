@@ -27,7 +27,7 @@
     "@typescript-eslint/eslint-plugin": "^2.30.0",
     "@typescript-eslint/parser": "^2.30.0",
     "eslint": "^7.0.0",
-    "eslint-config-marine": "^6.0.0",
+    "eslint-config-marine": "^7.0.0",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.2",
     "typescript": "^3.8.3"
