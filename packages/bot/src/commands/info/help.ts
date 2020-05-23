@@ -1,6 +1,6 @@
 import { Command } from 'discord-akairo';
 import { Message, MessageEmbed } from 'discord.js';
-import { MESSAGES, COLORS } from '../../util/constants';
+import { MESSAGES, COLORS } from '../../util/Constants';
 
 export default class HelpCommand extends Command {
   public constructor() {
