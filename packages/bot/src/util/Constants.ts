@@ -50,6 +50,13 @@ export const MESSAGES = {
         examples: ['ban', 'case', 'case-delete']
       },
 
+      // #UTIL
+      SAY: {
+        content: 'Make the bot send something',
+        usage: '<json or content>',
+        examples: ['hi!', '{ "description": "hi!", "title": "boop" }']
+      },
+
       // #CONFIG
       SET: {
         content: stripIndents`Possible variables:
@@ -181,6 +188,11 @@ export const MESSAGES = {
       // #DEV
       EVAL: {
         start: 'What do you wanna run?'
+      },
+
+      // #UTIL
+      SAY: {
+        start: 'Please give me something to send'
       },
 
       // #CONFIG
