@@ -4,7 +4,7 @@ import { MESSAGES } from '../../util/Constants';
 
 export default class ModLogsChannelCommand extends Command {
   public constructor() {
-    super('modLogsChannel', {
+    super('set-modLogsChannel', {
       category: 'config',
       args: [
         {
@@ -19,6 +19,6 @@ export default class ModLogsChannelCommand extends Command {
   public async exec(msg: Message, { channel }: { channel: TextChannel }) {
     this.client.settings.set(msg.guild!.id, 'modLogsChannel', channel.id);
 
-    return msg.util!.send(`Got it, I will now post mod logs in ${channel.toString()}`);
+    return msg.util!.send(`Got it, I will now post mod logs in ${channel}`);
   }
 }

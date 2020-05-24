@@ -4,7 +4,7 @@ import { MESSAGES } from '../../util/Constants';
 
 export default class ModRoleCommand extends Command {
   public constructor() {
-    super('modRole', {
+    super('set-modRole', {
       category: 'config',
       args: [
         {

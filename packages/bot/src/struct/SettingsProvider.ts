@@ -41,13 +41,13 @@ export default class SettingsProvider extends Provider {
   }
 
   public set<K extends keyof Setting>(id: string, key: K, val: Setting[K]): this {
-    const data = this.items.get(id) || new Setting();
+    const data = this.items.get(id) ?? new Setting();
 
     data.id = id;
     data[key] = val;
     this.items.set(id, data);
 
-    this.repo.save(data);
+    void this.repo.save(data);
     return this;
   }
 
@@ -62,7 +62,7 @@ export default class SettingsProvider extends Provider {
       // @ts-ignore
       data[key] = null;
 
-      this.repo.save(data);
+      void this.repo.save(data);
       this.items.set(id, data);
     }
 
@@ -71,7 +71,7 @@ export default class SettingsProvider extends Provider {
 
   public clear(id: string): this {
     if (this.items.has(id)) {
-      this.repo.delete({ id });
+      void this.repo.delete({ id });
       this.items.delete(id);
     }
 

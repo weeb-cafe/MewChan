@@ -3,7 +3,7 @@ import { Message } from 'discord.js';
 
 export default class AutodelCommand extends Command {
   public constructor() {
-    super('autodel', {
+    super('set-autodel', {
       category: 'config'
     });
   }

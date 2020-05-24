@@ -13,4 +13,4 @@ client
   .on('shardError', (err, id) => client.logger.error(err.stack ?? err.message, { topic: TOPICS.DISCORD.ERROR(id) }))
   .on('warn', info => client.logger.warn(info, { topic: TOPICS.DISCORD.WARN }));
 
-client.start();
+void client.start();

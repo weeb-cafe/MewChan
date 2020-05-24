@@ -11,7 +11,7 @@ export default class KickAction extends Action<Actions.KICK> {
     super(Actions.KICK, msg, target, optional);
   }
 
-  protected async prepare() {
+  protected prepare() {
     if (!(this.target as GuildMember).kickable) return 'I cannot kick this member';
     return super.prepare();
   }
