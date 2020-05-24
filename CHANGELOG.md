@@ -1,4 +1,4 @@
-# Next build 21 (0.2.0) (2020-05-19)
+# Next build 27 (0.2.0) (2020-05-23)
 
 ## Fixes
 
@@ -11,3 +11,8 @@
 
 ## Chores
 - various major package updates ([6885ba2](https://github.com/weeb-cafe/MewChan/commit/6885ba2cb9855ba685bba5d95ba951e29748f9dc), [31f1916](https://github.com/weeb-cafe/MewChan/commit/31f19165697f6485038d9d8d0ac5fe49d88be2bc), [0615295](https://github.com/weeb-cafe/MewChan/commit/0615295cf5a80973509c4efa28bf278cd1da577c))
+
+## Features
+
+### Bot
+- help command ([0de4fd9](https://github.com/weeb-cafe/MewChan/pull/24/commits/0de4fd92091ed51c18a558549d8be2bd02ee1d92))

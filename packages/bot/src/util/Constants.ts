@@ -4,6 +4,10 @@ import { stripIndents } from 'common-tags';
 
 export const PRODUCTION = process.env.NODE_ENV === 'production';
 
+export const COLORS = {
+  BLUE: '#6fc6e2'
+};
+
 interface Help {
   content: string;
   usage?: string;
@@ -39,6 +43,12 @@ export const MESSAGES = {
         content: 'Posts the current response time of the bot'
       },
 
+      HELP: {
+        content: 'What else, helps you!',
+        usage: '[command]',
+        examples: ['ban', 'case', 'case-delete']
+      },
+
       // #CONFIG
       SET: {
         content: stripIndents`Possible variables:
@@ -63,52 +73,52 @@ export const MESSAGES = {
           'muteRole muted'
         ]
       },
-      PREFIX: {
+      SET_PREFIX: {
         content: 'Sets the prefix for the server',
         parent: 'set'
       },
-      AUTODEL: {
+      SET_AUTODEL: {
         content: 'Toggles command auto deletion',
         parent: 'set'
       },
-      STAR_THRESHOLD: {
+      SET_STAR_THRESHOLD: {
         content: 'Sets the star threshold',
         parent: 'set'
       },
-      STAR_CHANNEL: {
+      SET_STAR_CHANNEL: {
         content: 'Sets the starboard channel',
         parent: 'set'
       },
-      MOD_LOGS_CHANNEL: {
+      SET_MOD_LOGS_CHANNEL: {
         content: 'Sets the mod logs channel',
         parent: 'set'
       },
-      ADMIN_ROLE: {
+      SET_ADMIN_ROLE: {
         content: 'Sets the admin role for the bot',
         parent: 'set'
       },
-      MOD_ROLE: {
+      SET_MOD_ROLE: {
         content: 'Sets the mod role for the bot',
         parent: 'set'
       },
-      MUTE_ROLE: {
+      SET_MUTE_ROLE: {
         content: 'Sets the mute role the bot is going to use',
         parent: 'set'
       },
 
-      CREATE_REACTION_ROLE: {
+      SET_CREATE_REACTION_ROLE: {
         content: 'Creates a new reaction role, whenever someone clicks on this reaction they get a role and vice versa',
         usage: '<emoji> <role> <message> [channel]',
         examples: ['👌 @Role 708659783141556276', ':hahaAFuny: 629305468673720350 708178952237088830 #welcome']
       },
-      DELETE_REACTION_ROLE: {
+      SET_DELETE_REACTION_ROLE: {
         content: 'Deletes a reaction role',
         usage: '<emoji> <message> [channel]',
         examples: ['👌 708659783141556276', ':hahaAFuny: 708178952237088830 #welcome']
       },
 
       // #MOD
-      BAM: {
+      BAN: {
         content: 'Bans one more people from the server',
         usage: '<...users> [--days=number] [--ref=number] [--nsfw] [...reason]',
         exmaples: ['@didinele', '@Plushie dumb', '@Plushie @didinele plebs', '471289471289471 --days=1 uwu']
