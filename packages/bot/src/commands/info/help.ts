@@ -17,7 +17,7 @@ export default class HelpCommand extends Command {
     });
   }
 
-  public async exec(msg: Message, { command }: { command: Command }) {
+  public async exec(msg: Message, { command }: { command?: Command }) {
     let embed: MessageEmbed;
 
     if (!command) {

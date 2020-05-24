@@ -14,7 +14,7 @@ export default class SoftbanAction extends CaseAction<Actions.SOFTBAN> {
     this.days = optional.days ?? 1;
   }
 
-  protected async prepare() {
+  protected prepare() {
     if (!this.guild.me!.hasPermission('BAN_MEMBERS')) return 'I am lacking the `BAN_MEMBERS` permission';
     if (this.target instanceof GuildMember && !this.target.manageable) return 'I cannot softban this person, sad';
 

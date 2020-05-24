@@ -15,7 +15,7 @@ export default class MuteAction extends Action<Actions.MUTE> {
     return this.client.settings.get(this.guild.id, 'muteRole');
   }
 
-  protected async prepare() {
+  protected prepare() {
     if (!this.muteRole) return 'There is no mute role set for this server.';
     if (!(this.target as GuildMember).manageable) return 'I cannot mute this user.';
 

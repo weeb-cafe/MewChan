@@ -31,7 +31,7 @@ export default class DeleteReactionRoleCommand extends Command {
       type: (_: Message, phrase: string) => {
         const reaction = message.reactions.cache.find(e => e.emoji.toString() === phrase);
 
-        return reaction?.emoji.toString() || null;
+        return reaction?.emoji.toString() ?? null;
       },
       prompt: MESSAGES.COMMANDS.PROMPTS.DELETE_REACTION_ROLE_EMOJI
     };

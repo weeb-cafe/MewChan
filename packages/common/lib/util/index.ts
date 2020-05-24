@@ -31,7 +31,7 @@ export function parseEnv(path?: string): { [key: string]: string } | never {
     throw new Error(`Path "${path}" is invalid.`);
   }
 
-  const final = {} as { [key: string]: string };
+  const final: { [key: string]: string } = {};
 
   for (const item of items) {
     const data = item.split('=');

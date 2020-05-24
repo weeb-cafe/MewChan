@@ -27,6 +27,7 @@ export const MESSAGES = {
       OTHERWISE: ''
     },
 
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     HELP: {
       // #DEV
       EVAL: {
@@ -302,10 +303,12 @@ export const TOPICS = {
 };
 
 export const LOGS = {
-  LOADED: (str: string): [string, object] => [`${str} loaded`, { topic: TOPICS.BOT.INIT }],
-  LOGIN: ['Client logged in', { topic: TOPICS.BOT.INIT }] as [string, object],
-  UNHANDLED_REJECTION: (e: string): [string, object] => [e, { topic: TOPICS.UNHANDLED_REJECTION }],
-  WEIRD_CAN: (meta: { msg: Message; level: Permissions; permission?: PermissionResolvable | PermissionResolvable[]}): [string, object] => [
+  LOADED: (str: string): [string, Record<string, unknown>] => [`${str} loaded`, { topic: TOPICS.BOT.INIT }],
+  LOGIN: ['Client logged in', { topic: TOPICS.BOT.INIT }] as [string, Record<string, unknown>],
+  UNHANDLED_REJECTION: (e: string): [string, Record<string, unknown>] => [e, { topic: TOPICS.UNHANDLED_REJECTION }],
+  WEIRD_CAN: (
+    meta: { msg: Message; level: Permissions; permission?: PermissionResolvable | PermissionResolvable[] }
+  ): [string, Record<string, unknown>] => [
     'Odd permission verification occured, aborting',
     {
       topic: TOPICS.BOT.WARN,

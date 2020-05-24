@@ -14,7 +14,7 @@ export default class PingCommand extends Command {
     const m = await msg.util!.send('Let\'s see..');
 
     return msg.util!.send(stripIndents`
-      Pong! Responded in ${(m.editedTimestamp || m.createdTimestamp) - (msg.editedTimestamp || msg.createdTimestamp)}ms
+      Pong! Responded in ${(m.editedTimestamp ?? m.createdTimestamp) - (msg.editedTimestamp ?? msg.createdTimestamp)}ms
       Gateway is beating at ${Math.round(this.client.ws.ping)}ms.
     `);
   }

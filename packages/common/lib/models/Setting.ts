@@ -5,7 +5,7 @@ export class Setting {
   @PrimaryColumn('bigint')
   public id!: string;
 
-  @Column({ 'default': process.env.COMMAND_PREFIX || 'c!' })
+  @Column({ 'default': process.env.COMMAND_PREFIX ?? 'c!' })
   public prefix!: string;
 
   @Column({ 'default': false })
