@@ -22,7 +22,7 @@ export class Scheduler implements Required<SchedulerOptions> {
   private readonly _timeouts = new Map<string, NodeJS.Timeout>();
   private readonly _intervals = new Map<string, NodeJS.Timeout>();
 
-  public registerTimeout(label: string, time: number, cb: Function) {
+  public registerTimeout(label: string, time: number, cb: (...args: any[]) => any) {
     this._timeouts.set(label, setTimeout(() => {
       cb(...this.parameters);
       this.clearTimeout(label);
@@ -40,7 +40,7 @@ export class Scheduler implements Required<SchedulerOptions> {
     timeout?.refresh();
   }
 
-  public registerInterval(label: string, time: number, cb: Function) {
+  public registerInterval(label: string, time: number, cb: (...args: any[]) => any) {
     this._intervals.set(label, setInterval(() => cb(...this.parameters), time));
   }
 

@@ -58,6 +58,8 @@ export default abstract class Action<T extends Actions> {
         case Actions.BAN:
           severity += 2;
           break;
+        default:
+          break;
       }
 
       actions[cs.action]++;
@@ -148,12 +150,7 @@ export default abstract class Action<T extends Actions> {
 
     const cs = new Case<T>();
 
-    if (msg.guild!.lastCase == null) {
-      msg.channel.send('Something went wrong here, for some reason this server does not have a set last case ID, please inform developer.');
-      this._dead = true;
-    }
-
-    cs.caseID = (msg.guild!.lastCase ?? 0) + 1;
+    cs.caseID = msg.guild!.lastCase + 1;
     cs.action = action;
     cs.guildID = msg.guild!.id;
     cs.createdAt = new Date();
@@ -185,6 +182,7 @@ export default abstract class Action<T extends Actions> {
   public async execute(): Promise<string | null> {
     try {
       const failure = await this.prepare();
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (failure !== null) return failure;
       await this.run();
       await this.finish();
@@ -195,7 +193,7 @@ export default abstract class Action<T extends Actions> {
     }
   }
 
-  protected async prepare(): Promise<any> {
+  protected prepare(): any {
     if (this._dead) return 'Something went wrong at some point, there\'s likely more output above';
     if (!(this.target instanceof GuildMember)) return null;
 
@@ -213,7 +211,7 @@ export default abstract class Action<T extends Actions> {
 
   protected async finish(): Promise<any> {
     const settings = this.client.settings.get(this.guild.id);
-    const { modLogsChannel } = settings || {};
+    const { modLogsChannel } = settings ?? {};
 
     if (modLogsChannel) {
       const embed = await Action.logCase(this.targetUser, this.guild, this.case, this.mod, this.nsfw, this.duration);

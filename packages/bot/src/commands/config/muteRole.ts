@@ -48,6 +48,8 @@ export default class MuteRoleCommand extends Command {
           case 'voice':
             overwrite.CONNECT = false;
             break;
+          default:
+            break;
         }
 
         try {
