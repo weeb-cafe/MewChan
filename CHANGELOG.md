@@ -1,4 +1,4 @@
-# Next build 27 (0.2.0) (2020-05-23)
+# Next build 28 (0.2.0) (2020-05-24)
 
 ## Fixes
 
@@ -16,3 +16,8 @@
 
 ### Bot
 - help command ([0de4fd9](https://github.com/weeb-cafe/MewChan/pull/24/commits/0de4fd92091ed51c18a558549d8be2bd02ee1d92))
+
+## Chores
+
+### Repo
+- update @typescript-eslint to v3 & eslint-config-marine to v7
