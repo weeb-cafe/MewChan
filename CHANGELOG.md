@@ -15,6 +15,7 @@
 ## Features
 
 ### Bot
+- reaction roles ([eae5869](https://github.com/weeb-cafe/MewChan/commit/eae586977a1d3bb1c581eeb3bcb4303cdf1beb44))
 - help command ([0de4fd9](https://github.com/weeb-cafe/MewChan/pull/24/commits/0de4fd92091ed51c18a558549d8be2bd02ee1d92))
 
 ## Chores
