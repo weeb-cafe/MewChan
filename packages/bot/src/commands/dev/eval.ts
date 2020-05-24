@@ -23,7 +23,7 @@ export default class EvalCommand extends Command {
   }
 
   private async _clean(text: any) {
-    if (text && text.then && text.catch) text = await text;
+    if (text?.then && text.catch) text = await text;
     if (typeof text !== 'string') text = inspect(text, { depth: 0 });
 
     return (text as string)

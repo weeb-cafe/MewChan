@@ -4,7 +4,7 @@ import { MESSAGES } from '../../util/Constants';
 
 export default class StarThresholdCommand extends Command {
   public constructor() {
-    super('starThreshold', {
+    super('set-starThreshold', {
       category: 'config',
       args: [
         {

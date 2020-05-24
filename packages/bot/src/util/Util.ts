@@ -44,7 +44,7 @@ export const permissionLevel = (member: GuildMember) => {
   if (client.isOwner(member)) return Permissions.DEV;
 
   const settings = client.settings.get(member.guild.id);
-  const { adminRole, modRole } = settings || {};
+  const { adminRole, modRole } = settings ?? {};
 
   if (member.guild.ownerID === member.id) return Permissions.OWNER;
   if ((adminRole && member.roles.cache.has(adminRole)) || member.hasPermission('ADMINISTRATOR')) return Permissions.ADMIN;
