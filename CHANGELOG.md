@@ -1,4 +1,4 @@
-# Next build 28 (0.2.0) (2020-05-24)
+# Next build 34 (0.2.0) (2020-05-24)
 
 ## Fixes
 
@@ -20,3 +20,4 @@
 ### Bot
 - reaction roles ([eae5869](https://github.com/weeb-cafe/MewChan/commit/eae586977a1d3bb1c581eeb3bcb4303cdf1beb44))
 - help command ([0de4fd9](https://github.com/weeb-cafe/MewChan/pull/24/commits/0de4fd92091ed51c18a558549d8be2bd02ee1d92))
+- say command ([7a20a98](https://github.com/weeb-cafe/MewChan/commit/7a20a987f550fab1b4fa4f7547757b3ea343efd3))
