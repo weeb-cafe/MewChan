@@ -29,6 +29,6 @@ export default class TicketHandler {
     if (!channel) return 'No mod mail channel has been set for that server';
     const embed = TicketHandler.makeEmbed(guild, data);
 
-    return channel?.send(embed);
+    return channel.send(embed);
   }
 }
