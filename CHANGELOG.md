@@ -1,4 +1,4 @@
-# Next build 34 (0.2.0) (2020-05-24)
+# Next build 35 (0.2.0) (2020-05-27)
 
 ## Fixes
 
@@ -8,6 +8,7 @@
 ### Bot
 - properly re-add mute role when someone rejoins the server ([4ed18d8](https://github.com/weeb-cafe/MewChan/commit/4ed18d85a508f1b3329623c44da1210529fae132))
 - actually exit process if on unhandled rejection if in prod ([b294f14](https://github.com/weeb-cafe/MewChan/commit/b294f14a1ffdef11f763a1680f2d23dfe0b0cb91))
+- actually delete commands if autodel is on ([0ba9832](https://github.com/weeb-cafe/MewChan/commit/0ba983276ab8424640338174e0c01a5bec79993f))
 
 ## Chores
 

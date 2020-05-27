@@ -30,6 +30,6 @@ export default class SetCommand extends Command {
       }
     };
 
-    return Flag.continue(variable);
+    return Flag.continue(`set-${variable}`);
   }
 }
