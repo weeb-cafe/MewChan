@@ -17,4 +17,3 @@ export default class ReadyListener extends Listener {
     if (autodel && msg.guild?.me!.hasPermission('MANAGE_MESSAGES')) await msg.delete().catch(() => null);
   }
 }
-
