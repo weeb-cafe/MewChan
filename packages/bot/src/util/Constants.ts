@@ -101,6 +101,10 @@ export const MESSAGES = {
         content: 'Sets the mod logs channel',
         parent: 'set'
       },
+      SET_MOD_MAIL_CHANNEL: {
+        content: 'Sets the mod mail channel',
+        parent: 'set'
+      },
       SET_ADMIN_ROLE: {
         content: 'Sets the admin role for the bot',
         parent: 'set'
@@ -181,6 +185,22 @@ export const MESSAGES = {
         usage: '<id>',
         examples: ['latest', '10'],
         parent: 'case'
+      },
+
+      // #MODMAIL
+      TICKET: {
+        content: stripIndents`Possible actions:
+        • submit <server> <...content>
+        `,
+        usage: '<action> <...data>',
+        examples: [
+          'submit LeagueHub Hi! The user didinele#0001 (223703707118731264) is being a total idiot.',
+          'submit 23812938129839128312 Hi, could you guys add an LFG channel?'
+        ]
+      },
+      TICKET_SUBMIT: {
+        content: 'Submits a ticket',
+        parent: 'ticket'
       }
     } as { [key: string]: Help },
 
@@ -210,6 +230,10 @@ export const MESSAGES = {
       },
       MOD_LOGS_CHANNEL: {
         start: 'What should be the new mod logs channel?',
+        retry: 'Please provide a valid text channel'
+      },
+      MOD_MAIL_CHANNEL: {
+        start: 'What should be the new mod mail channel?',
         retry: 'Please provide a valid text channel'
       },
       ADMIN_ROLE: {
@@ -278,6 +302,12 @@ export const MESSAGES = {
       CASE_DELETE: {
         start: 'Which case would you like to delete?',
         retry: 'Please provide a valid case'
+      },
+
+      // #MODMAIL
+      TICKET_SUBMIT_GUILD: {
+        start: 'What server is this ticket targetted to?',
+        retry: 'Please provide a valid server'
       }
     }
   },

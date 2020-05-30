@@ -1,4 +1,4 @@
-import { Command, Flag } from 'discord-akairo';
+import { Command, Flag, PrefixSupplier } from 'discord-akairo';
 import { can, Permissions } from '../../../util/Util';
 import { Message } from 'discord.js';
 
@@ -19,7 +19,7 @@ export default class CaseCommand extends Command {
         ['delete']
       ],
       otherwise: (msg: Message) => {
-        const prefix = this.client.settings.get(msg.guild!.id, 'prefix', process.env.COMMAND_PREFIX!);
+        const prefix = (this.client.commandHandler.prefix as PrefixSupplier)(msg);
         return `That is not a valid operation, please see the available ones using \`${prefix}help case\``;
       }
     };
