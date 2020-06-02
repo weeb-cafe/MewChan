@@ -20,7 +20,7 @@ export default class SetCommand extends Command {
         ['starThreshold'],
         ['starChannel'],
         ['modLogsChannel'],
-        ['modMailChannel'],
+        ['modMailCategory'],
         ['adminRole'],
         ['modRole'],
         ['muteRole']

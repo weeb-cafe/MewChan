@@ -12,7 +12,8 @@ export default class TicketCommand extends Command {
   public *args() {
     const action = yield {
       type: [
-        ['submit']
+        ['submit'],
+        ['close']
       ],
       otherwise: (msg: Message) => {
         const prefix = (this.client.commandHandler.prefix as PrefixSupplier)(msg);

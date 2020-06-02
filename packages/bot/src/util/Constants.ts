@@ -72,6 +72,7 @@ export const MESSAGES = {
           • starThreshold <amount>
           • starChannel <channel>
           • modLogsChannel <channel>
+          • modMailCategory <category>
           • adminRole <role>
           • modRole <role>
           • muteRole <role>
@@ -198,6 +199,7 @@ export const MESSAGES = {
       TICKET: {
         content: stripIndents`Possible actions:
         • submit <server> <...content>
+        • close <id> [--resolve]
         `,
         usage: '<action> <...data>',
         examples: [
@@ -207,6 +209,10 @@ export const MESSAGES = {
       },
       TICKET_SUBMIT: {
         content: 'Submits a ticket',
+        parent: 'ticket'
+      },
+      TICKET_CLOSE: {
+        content: 'Closes a ticket',
         parent: 'ticket'
       }
     } as { [key: string]: Help },
@@ -315,6 +321,10 @@ export const MESSAGES = {
       TICKET_SUBMIT_GUILD: {
         start: 'What server is this ticket targetted to?',
         retry: 'Please provide a valid server'
+      },
+      TICKET_CLOSE_TICKET: {
+        start: 'What ticket should be closed?',
+        retry: 'Please provide an existing ticket that belongs to this server'
       }
     }
   },

@@ -13,22 +13,26 @@ export default class TicketHandler {
     }
   }
 
-  public static makeTicketEmbed(user: User | { id: string }, data: Ticket) {
+  public static makeTicketEmbed(id: number, user: User | { id: string }, data: Ticket) {
     return new MessageEmbed()
       .setDescription(data.issue)
       .setAuthor(user instanceof User ? `${user.tag} (${user.id})` : user.id, user instanceof User ? user.displayAvatarURL() : undefined)
-      .setFooter(`Ticket ${data.id}`)
+      .setFooter(`Ticket ${id}`)
       .setColor(TicketHandler.getStatusColor(data.status))
       .setTimestamp();
   }
-
-  public readonly tickets = this.client.tickets;
 
   public constructor(
     public readonly client: MewchanClient
   ) {}
 
   public async submit(guild: Guild, msg: Message, data: Ticket) {
+    const id = await this.client.tickets.findOne({
+      order: {
+        id: 'DESC'
+      }
+    }).then(d => (d?.id ?? 0) + 1);
+
     data.guildID = guild.id;
     data.status = TicketStatus.PENDING;
 
@@ -36,15 +40,13 @@ export default class TicketHandler {
     const category = (modMailCategory ? (guild.channels.cache.get(modMailCategory) ?? null) : null) as CategoryChannel | null;
 
     if (!category) return 'No mod mail category has been set for this server';
-    const embed = TicketHandler.makeTicketEmbed(msg.author, data);
+    const embed = TicketHandler.makeTicketEmbed(id, msg.author, data);
 
     const confirmation = await confirm(msg, 'You should be more decisive', 'Do you really want to submit this ticket? [y/n]', embed);
     if (confirmation) return confirmation;
 
     try {
-      guild.lastTicket++;
-
-      const channel = await guild.channels.create(`ticket-${data.id}`, {
+      const channel = await guild.channels.create(`ticket-${id}`, {
         parent: category,
         type: 'text',
         permissionOverwrites: [{
@@ -53,12 +55,11 @@ export default class TicketHandler {
         }]
       });
 
+      data = await this.client.tickets.save(data);
       await channel.send(embed);
-      await msg.channel.send(`Done, submitted ticket with ID ${data.id}, you may talk with staff in ${channel}`);
-      await this.client.tickets.save(data);
+      await msg.channel.send(`Done, submitted ticket with ID ${id}, you may talk with staff in ${channel}`);
       return null;
     } catch (e) {
-      guild.lastTicket--;
       return `Failed to send ticket, please tell staff about this:\n${e}`;
     }
   }
@@ -87,7 +88,7 @@ export default class TicketHandler {
 
       if (!archivesChannel) return `Uh-oh, couldn't find an archives channel & couldn't create one either.`;
 
-      let messages = channel.messages.cache;
+      let messages = channel.messages.cache.filter(m => !m.author.bot);
       const confirmation = await confirm(msg, 'Okay... hold on.', `I have ${messages.size} messages, looks good?`);
 
       let shouldContinue = true;
@@ -106,20 +107,21 @@ export default class TicketHandler {
         await msg.util!.send(secondConfirmation);
       }
 
-      await this.tickets.save(data);
+      await this.client.tickets.save(data);
 
       if (shouldContinue) {
-        let contents = `Ticket ${data.id}`;
+        let contents = `Ticket ${data.id}\n`;
 
         for (const message of messages.values()) {
           contents +=
-            `${message.author.tag} (${message.author.id})[${message.author.id === data.authorID ? 'OP' : 'STAFF'}]:${message.content}`;
+            `${message.author.tag} (${message.author.id})[${message.author.id === data.authorID ? 'OP' : 'STAFF'}]:${message.content}\n`;
         }
 
-        await archivesChannel.send({ files: [Buffer.from(contents)] });
+        await archivesChannel.send({ files: [{ name: `ticket-${data.id}.txt`, attachment: Buffer.from(contents) }] });
         await channel.delete();
       }
 
+      await msg.util!.sendNew(`Done, ticket ${data.id} was closed!`);
       return null;
     } catch (e) {
       return `Failed to close ticket:\n${e}`;
