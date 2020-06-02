@@ -13,8 +13,7 @@ import {
   Scheduler,
   createLogger,
   Actions,
-  Ticket,
-  TicketReply
+  Ticket
 } from '@mewchan/common';
 import SettingsProvider from '../struct/SettingsProvider';
 import database from '../struct/Database';
@@ -40,7 +39,6 @@ declare module 'discord-akairo' {
     blacklist: Repository<Blacklist>;
     reactions: Repository<Reaction>;
     tickets: Repository<Ticket>;
-    ticketReplies: Repository<TicketReply>;
     logger: Logger;
     // redis: Redis;
   }
@@ -146,7 +144,6 @@ export default class MewchanClient extends AkairoClient {
     this.blacklist = this.db.getRepository(Blacklist);
     this.reactions = this.db.getRepository(Reaction);
     this.tickets = this.db.getRepository(Ticket);
-    this.ticketReplies = this.db.getRepository(TicketReply);
 
     this.logger.info(...LOGS.LOADED('Database shortcuts'));
   }

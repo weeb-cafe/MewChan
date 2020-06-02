@@ -21,7 +21,7 @@ export class Setting {
   public modLogsChannel!: string | null;
 
   @Column('bigint', { nullable: true })
-  public modMailChannel!: string | null;
+  public modMailCategory!: string | null;
 
   @Column('bigint', { nullable: true })
   public adminRole!: string | null;

@@ -5,7 +5,14 @@ import { stripIndents } from 'common-tags';
 export const PRODUCTION = process.env.NODE_ENV === 'production';
 
 export const COLORS = {
-  BLUE: '#6fc6e2'
+  BRAND: {
+    BLUE: '#6fc6e2'
+  },
+  MODMAIL: {
+    GREEN: '#ebff8b',
+    YELLOW: '#49ff64',
+    RED: '#ff4b4f'
+  }
 };
 
 interface Help {
@@ -308,6 +315,10 @@ export const MESSAGES = {
       TICKET_SUBMIT_GUILD: {
         start: 'What server is this ticket targetted to?',
         retry: 'Please provide a valid server'
+      },
+      TICKET_REPLY_TICKET: {
+        start: 'Which ticket would you like to reply to?',
+        retry: 'Please provide a valid ticket id'
       }
     }
   },

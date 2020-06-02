@@ -1,21 +1,28 @@
 import MewchanClient from '../client/MewchanClient';
-import { Ticket, TicketReplyEnd } from '@mewchan/common';
-import { Guild, TextChannel, MessageEmbed, User, Message } from 'discord.js';
+import { Ticket, TicketStatus } from '@mewchan/common';
+import { Guild, CategoryChannel, MessageEmbed, User, Message, TextChannel } from 'discord.js';
 import { confirm } from '../util/Util';
 import { COLORS } from '../util/Constants';
 
 export default class TicketHandler {
-  public static makeTicketEmbed(user: User, data: Ticket) {
+  public static getStatusColor(status: TicketStatus) {
+    switch (status) {
+      case TicketStatus.PENDING: return COLORS.MODMAIL.YELLOW;
+      case TicketStatus.DENIED: return COLORS.MODMAIL.RED;
+      case TicketStatus.RESOLVED: return COLORS.MODMAIL.GREEN;
+    }
+  }
+
+  public static makeTicketEmbed(user: User | { id: string }, data: Ticket) {
     return new MessageEmbed()
       .setDescription(data.issue)
-      .setAuthor(`${user.tag} (${user.id})`, user.displayAvatarURL())
-      .setFooter(`Ticket ${data.ticketID}`)
-      .setColor(COLORS.BLUE)
+      .setAuthor(user instanceof User ? `${user.tag} (${user.id})` : user.id, user instanceof User ? user.displayAvatarURL() : undefined)
+      .setFooter(`Ticket ${data.id}`)
+      .setColor(TicketHandler.getStatusColor(data.status))
       .setTimestamp();
   }
 
   public readonly tickets = this.client.tickets;
-  public readonly replies = this.client.ticketReplies;
 
   public constructor(
     public readonly client: MewchanClient
@@ -23,28 +30,97 @@ export default class TicketHandler {
 
   public async submit(guild: Guild, msg: Message, data: Ticket) {
     data.guildID = guild.id;
-    data.ticketID = guild.lastTicket + 1;
-    data.last = TicketReplyEnd.USER;
-    data.resolved = false;
+    data.status = TicketStatus.PENDING;
 
-    const modMailChannel = this.client.settings.get(guild.id, 'modMailChannel');
-    const channel = (modMailChannel ? (guild.channels.cache.get(modMailChannel) ?? null) : null) as TextChannel | null;
+    const modMailCategory = this.client.settings.get(guild.id, 'modMailCategory');
+    const category = (modMailCategory ? (guild.channels.cache.get(modMailCategory) ?? null) : null) as CategoryChannel | null;
 
-    if (!channel) return 'No mod mail channel has been set for this server';
+    if (!category) return 'No mod mail category has been set for this server';
     const embed = TicketHandler.makeTicketEmbed(msg.author, data);
 
     const confirmation = await confirm(msg, 'You should be more decisive', 'Do you really want to submit this ticket? [y/n]', embed);
     if (confirmation) return confirmation;
 
     try {
-      await channel.send(embed);
-      await msg.channel.send(`Done, submitted ticket with ID ${data.ticketID}`);
-      await this.client.tickets.save(data);
       guild.lastTicket++;
+
+      const channel = await guild.channels.create(`ticket-${data.id}`, {
+        parent: category,
+        type: 'text',
+        permissionOverwrites: [{
+          id: msg.author.id,
+          allow: 'VIEW_CHANNEL'
+        }]
+      });
+
+      await channel.send(embed);
+      await msg.channel.send(`Done, submitted ticket with ID ${data.id}, you may talk with staff in ${channel}`);
+      await this.client.tickets.save(data);
       return null;
     } catch (e) {
       guild.lastTicket--;
       return `Failed to send ticket, please tell staff about this:\n${e}`;
     }
+  }
+
+  public async close(guild: Guild, msg: Message, data: Ticket, resolved: boolean) {
+    data.status = resolved ? TicketStatus.RESOLVED : TicketStatus.DENIED;
+
+    const modMailCategory = this.client.settings.get(guild.id, 'modMailCategory');
+    const category = (modMailCategory ? (guild.channels.cache.get(modMailCategory) ?? null) : null) as CategoryChannel | null;
+
+    if (!category) return 'Boop, mod mail category no longer configured, hello?';
+
+    try {
+      await msg.util!.send('Okay... lemme do my magic and I\'ll delete the channel.');
+
+      const channel = category.children.find(c => c.name === `ticket-${data.id}`) as TextChannel | undefined;
+      if (!channel) return `Uh, is the channel gone? I'm looking for \`ticket-${data.id}\` but I can't quite find it.`;
+
+      let archivesChannel = (category.children.find(c => c.name === 'archives') ?? null) as TextChannel | null;
+      if (!archivesChannel) {
+        archivesChannel = await guild.channels.create('archives', {
+          parent: category,
+          type: 'text'
+        }).catch(() => null);
+      }
+
+      if (!archivesChannel) return `Uh-oh, couldn't find an archives channel & couldn't create one either.`;
+
+      let messages = channel.messages.cache;
+      const confirmation = await confirm(msg, 'Okay... hold on.', `I have ${messages.size} messages, looks good?`);
+
+      let shouldContinue = true;
+
+      if (confirmation) {
+        messages = await channel.messages.fetch({ limit: 100 }).then(m => m.filter(mes => !mes.author.bot));
+        const secondConfirmation = await confirm(
+          msg,
+          'Okay, I\'ll continue doing my thing then.',
+          `I now have ${messages.size} messages, like it or not, I can't get more! Would you like manual intervention?`
+        );
+
+        // ? To refresh on tired brains, if the variable is null it means the user replied with yes (would like manual intervention)
+        // ? In which case, we shouldn't continue with the archiving, just save the ticket data and exit the function
+        if (!secondConfirmation) shouldContinue = false;
+        await msg.util!.send(secondConfirmation);
+      }
+
+      await this.tickets.save(data);
+
+      if (shouldContinue) {
+        let contents = `Ticket ${data.id}`;
+
+        for (const message of messages.values()) {
+          contents +=
+            `${message.author.tag} (${message.author.id})[${message.author.id === data.authorID ? 'OP' : 'STAFF'}]:${message.content}`;
+        }
+
+        await archivesChannel.send({ files: [Buffer.from(contents)] });
+        await channel.delete();
+      }
+
+      return null;
+    } catch {}
   }
 }

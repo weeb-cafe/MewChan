@@ -1,27 +1,25 @@
-import { Entity, PrimaryGeneratedColumn, PrimaryColumn, Column, Index } from 'typeorm';
-import { TicketReplyEnd } from './TicketReply';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+
+export enum TicketStatus {
+  PENDING,
+  DENIED,
+  RESOLVED
+}
 
 @Entity('tickets')
 export class Ticket {
   @PrimaryGeneratedColumn()
   public id!: number;
 
-  @PrimaryColumn()
-  @Index()
-  public ticketID!: number;
-
-  @PrimaryColumn('bigint')
+  @Column('bigint')
   public guildID!: string;
 
   @Column('bigint')
   public authorID!: string;
 
-  @Column()
-  public resolved!: boolean;
+  @Column('smallint')
+  public status!: TicketStatus;
 
   @Column()
   public issue!: string;
-
-  @Column('smallint')
-  public last!: TicketReplyEnd;
 }

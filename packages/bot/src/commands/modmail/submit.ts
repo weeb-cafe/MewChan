@@ -24,6 +24,8 @@ export default class TicketSubmitCommand extends Command {
   }
 
   public async exec(msg: Message, { guild, content }: { guild: Guild; content: string }) {
+    if (!guild.available) return msg.util!.send('Oh no! This server seems to be under an outage, please wait for a while.');
+
     const ticket = new Ticket();
 
     ticket.authorID = msg.author.id;
