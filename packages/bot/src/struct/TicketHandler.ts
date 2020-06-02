@@ -121,6 +121,8 @@ export default class TicketHandler {
       }
 
       return null;
-    } catch {}
+    } catch (e) {
+      return `Failed to close ticket:\n${e}`;
+    }
   }
 }
