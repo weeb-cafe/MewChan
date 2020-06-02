@@ -108,8 +108,8 @@ export const MESSAGES = {
         content: 'Sets the mod logs channel',
         parent: 'set'
       },
-      SET_MOD_MAIL_CHANNEL: {
-        content: 'Sets the mod mail channel',
+      SET_MOD_MAIL_CATEGORY: {
+        content: 'Sets the mod mail category',
         parent: 'set'
       },
       SET_ADMIN_ROLE: {
@@ -239,9 +239,9 @@ export const MESSAGES = {
         start: 'What should be the new mod logs channel?',
         retry: 'Please provide a valid text channel'
       },
-      MOD_MAIL_CHANNEL: {
-        start: 'What should be the new mod mail channel?',
-        retry: 'Please provide a valid text channel'
+      MOD_MAIL_CATEGORY: {
+        start: 'What should be the new mod mail category?',
+        retry: 'Please provide a valid category'
       },
       ADMIN_ROLE: {
         start: 'What role do you want to represent your admins?',
@@ -315,10 +315,6 @@ export const MESSAGES = {
       TICKET_SUBMIT_GUILD: {
         start: 'What server is this ticket targetted to?',
         retry: 'Please provide a valid server'
-      },
-      TICKET_REPLY_TICKET: {
-        start: 'Which ticket would you like to reply to?',
-        retry: 'Please provide a valid ticket id'
       }
     }
   },
