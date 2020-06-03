@@ -26,7 +26,7 @@ export default class HelpCommand extends Command {
         : process.env.COMMAND_PREFIX!;
 
       embed = new MessageEmbed()
-        .setColor(COLORS.BLUE)
+        .setColor(COLORS.BRAND.BLUE)
         .addField('Commands', `This is, but a simple list of commands, for more details on a single one use \`${prefix}help <command>\``);
 
       for (const category of this.handler.categories.values()) {

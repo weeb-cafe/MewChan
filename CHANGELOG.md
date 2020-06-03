@@ -1,4 +1,4 @@
-# Next build 35 (0.2.0) (2020-05-27)
+# Next build 37 (0.2.0) (2020-06-03)
 
 ## Fixes
 
@@ -22,3 +22,4 @@
 - reaction roles ([eae5869](https://github.com/weeb-cafe/MewChan/commit/eae586977a1d3bb1c581eeb3bcb4303cdf1beb44))
 - help command ([0de4fd9](https://github.com/weeb-cafe/MewChan/pull/24/commits/0de4fd92091ed51c18a558549d8be2bd02ee1d92))
 - say command ([7a20a98](https://github.com/weeb-cafe/MewChan/commit/7a20a987f550fab1b4fa4f7547757b3ea343efd3))
+- modmail

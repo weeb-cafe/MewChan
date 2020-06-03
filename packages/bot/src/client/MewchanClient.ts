@@ -12,7 +12,8 @@ import {
   Reaction,
   Scheduler,
   createLogger,
-  Actions
+  Actions,
+  Ticket
 } from '@mewchan/common';
 import SettingsProvider from '../struct/SettingsProvider';
 import database from '../struct/Database';
@@ -23,18 +24,21 @@ import { Logger } from 'winston';
 // import redisClient from '../struct/Redis';
 // import { Redis } from 'ioredis';
 import { LOGS, PRODUCTION, MESSAGES } from '../util/Constants';
+import TicketHandler from '../struct/TicketHandler';
 
 declare module 'discord-akairo' {
   export interface AkairoClient {
+    scheduler: Scheduler;
     inhibitorHandler: InhibitorHandler;
     listenerHandler: ListenerHandler;
     commandHandler: CommandHandler;
-    scheduler: Scheduler;
+    ticketHandler: TicketHandler;
     db: Connection;
     settings: SettingsProvider;
     cases: Repository<Case<Actions>>;
     blacklist: Repository<Blacklist>;
     reactions: Repository<Reaction>;
+    tickets: Repository<Ticket>;
     logger: Logger;
     // redis: Redis;
   }
@@ -60,7 +64,8 @@ export default class MewchanClient extends AkairoClient {
 
   public commandHandler: CommandHandler = new CommandHandler(this, {
     directory: join(__dirname, '..', 'commands'),
-    prefix: (msg: Message) => this.settings.get(msg.guild!.id, 'prefix', process.env.COMMAND_PREFIX!),
+    prefix: (msg: Message) =>
+      msg.guild ? this.settings.get(msg.guild.id, 'prefix', process.env.COMMAND_PREFIX!) : process.env.COMMAND_PREFIX!,
     aliasReplacement: /-/g,
     allowMention: true,
     handleEdits: true,
@@ -80,6 +85,8 @@ export default class MewchanClient extends AkairoClient {
       otherwise: MESSAGES.COMMANDS.DEFAULTS.OTHERWISE
     }
   });
+
+  public ticketHandler = new TicketHandler(this);
 
   public constructor() {
     super({
@@ -136,6 +143,7 @@ export default class MewchanClient extends AkairoClient {
     this.cases = this.db.getRepository(Case);
     this.blacklist = this.db.getRepository(Blacklist);
     this.reactions = this.db.getRepository(Reaction);
+    this.tickets = this.db.getRepository(Ticket);
 
     this.logger.info(...LOGS.LOADED('Database shortcuts'));
   }

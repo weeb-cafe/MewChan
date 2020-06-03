@@ -5,7 +5,14 @@ import { stripIndents } from 'common-tags';
 export const PRODUCTION = process.env.NODE_ENV === 'production';
 
 export const COLORS = {
-  BLUE: '#6fc6e2'
+  BRAND: {
+    BLUE: '#6fc6e2'
+  },
+  MODMAIL: {
+    GREEN: '#49ff64',
+    YELLOW: '#ebff8b',
+    RED: '#ff4b4f'
+  }
 };
 
 interface Help {
@@ -65,6 +72,7 @@ export const MESSAGES = {
           • starThreshold <amount>
           • starChannel <channel>
           • modLogsChannel <channel>
+          • modMailCategory <category>
           • adminRole <role>
           • modRole <role>
           • muteRole <role>
@@ -99,6 +107,10 @@ export const MESSAGES = {
       },
       SET_MOD_LOGS_CHANNEL: {
         content: 'Sets the mod logs channel',
+        parent: 'set'
+      },
+      SET_MOD_MAIL_CATEGORY: {
+        content: 'Sets the mod mail category',
         parent: 'set'
       },
       SET_ADMIN_ROLE: {
@@ -181,6 +193,32 @@ export const MESSAGES = {
         usage: '<id>',
         examples: ['latest', '10'],
         parent: 'case'
+      },
+
+      // #MODMAIL
+      TICKET: {
+        content: stripIndents`Possible actions:
+        • submit <server> <...content>
+        • close <id> [--resolve]
+        • get <id>
+        `,
+        usage: '<action> <...data>',
+        examples: [
+          'submit LeagueHub Hi! The user didinele#0001 (223703707118731264) is being a total idiot.',
+          'submit 23812938129839128312 Hi, could you guys add an LFG channel?'
+        ]
+      },
+      TICKET_SUBMIT: {
+        content: 'Submits a ticket',
+        parent: 'ticket'
+      },
+      TICKET_CLOSE: {
+        content: 'Closes a ticket',
+        parent: 'ticket'
+      },
+      TICKET_GET: {
+        content: 'Gets a ticket',
+        parent: 'ticket'
       }
     } as { [key: string]: Help },
 
@@ -211,6 +249,10 @@ export const MESSAGES = {
       MOD_LOGS_CHANNEL: {
         start: 'What should be the new mod logs channel?',
         retry: 'Please provide a valid text channel'
+      },
+      MOD_MAIL_CATEGORY: {
+        start: 'What should be the new mod mail category?',
+        retry: 'Please provide a valid category'
       },
       ADMIN_ROLE: {
         start: 'What role do you want to represent your admins?',
@@ -278,6 +320,20 @@ export const MESSAGES = {
       CASE_DELETE: {
         start: 'Which case would you like to delete?',
         retry: 'Please provide a valid case'
+      },
+
+      // #MODMAIL
+      TICKET_SUBMIT_GUILD: {
+        start: 'What server is this ticket targetted to?',
+        retry: 'Please provide a valid server'
+      },
+      TICKET_CLOSE_TICKET: {
+        start: 'What ticket should be closed?',
+        retry: 'Please provide an existing ticket that belongs to this server'
+      },
+      TICKET_GET_TICKET: {
+        start: 'What ticket do you want me to get?',
+        retry: 'Please provide a valid ticket that you can actually get'
       }
     }
   },
