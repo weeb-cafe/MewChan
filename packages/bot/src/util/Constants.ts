@@ -9,8 +9,8 @@ export const COLORS = {
     BLUE: '#6fc6e2'
   },
   MODMAIL: {
-    GREEN: '#ebff8b',
-    YELLOW: '#49ff64',
+    GREEN: '#49ff64',
+    YELLOW: '#ebff8b',
     RED: '#ff4b4f'
   }
 };
@@ -200,6 +200,7 @@ export const MESSAGES = {
         content: stripIndents`Possible actions:
         • submit <server> <...content>
         • close <id> [--resolve]
+        • get <id>
         `,
         usage: '<action> <...data>',
         examples: [
@@ -213,6 +214,10 @@ export const MESSAGES = {
       },
       TICKET_CLOSE: {
         content: 'Closes a ticket',
+        parent: 'ticket'
+      },
+      TICKET_GET: {
+        content: 'Gets a ticket',
         parent: 'ticket'
       }
     } as { [key: string]: Help },
@@ -325,6 +330,10 @@ export const MESSAGES = {
       TICKET_CLOSE_TICKET: {
         start: 'What ticket should be closed?',
         retry: 'Please provide an existing ticket that belongs to this server'
+      },
+      TICKET_GET_TICKET: {
+        start: 'What ticket do you want me to get?',
+        retry: 'Please provide a valid ticket that you can actually get'
       }
     }
   },
