@@ -120,7 +120,7 @@ export default class BanCommand extends Command {
 
     let str = '';
 
-    if (died.length) str += `Done, banned \`${lived.join(', ')}\``;
+    if (died.length) str += `Done, banned \`${died.join(', ')}\``;
     if (lived.length) {
       str += stripIndents`${str.length ? '\n' : ''}Oops, the following incidents occured (those users were either not banned or something else went wrong):
         ${lived.join('\n')}
