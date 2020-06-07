@@ -13,7 +13,8 @@ import {
   Scheduler,
   createLogger,
   Actions,
-  Ticket
+  Ticket,
+  Setting
 } from '@mewchan/common';
 import SettingsProvider from '../struct/SettingsProvider';
 import database from '../struct/Database';
@@ -25,6 +26,7 @@ import { Logger } from 'winston';
 // import { Redis } from 'ioredis';
 import { LOGS, PRODUCTION, MESSAGES } from '../util/Constants';
 import TicketHandler from '../struct/TicketHandler';
+import { BlacklistManager } from '../struct/BlacklistManager';
 
 declare module 'discord-akairo' {
   export interface AkairoClient {
@@ -35,6 +37,7 @@ declare module 'discord-akairo' {
     ticketHandler: TicketHandler;
     db: Connection;
     settings: SettingsProvider;
+    blacklistManager: BlacklistManager;
     cases: Repository<Case<Actions>>;
     blacklist: Repository<Blacklist>;
     reactions: Repository<Reaction>;
@@ -135,10 +138,15 @@ export default class MewchanClient extends AkairoClient {
 
     this.logger.info(...LOGS.LOADED('Database'));
 
-    this.settings = new SettingsProvider(this.db);
+    this.settings = new SettingsProvider(this.db.getRepository(Setting));
     await this.settings.init();
 
     this.logger.info(...LOGS.LOADED('Settings'));
+
+    this.blacklistManager = new BlacklistManager(this.db.getRepository(Blacklist));
+    await this.blacklistManager.init();
+
+    this.logger.info(...LOGS.LOADED('blacklistManager'));
 
     this.cases = this.db.getRepository(Case);
     this.blacklist = this.db.getRepository(Blacklist);

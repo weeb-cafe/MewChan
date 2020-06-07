@@ -27,6 +27,8 @@ export default class TicketHandler {
   ) {}
 
   public async submit(guild: Guild, msg: Message, data: Ticket) {
+    if (this.client.blacklistManager.has(`${guild.id}-${msg.author.id}`)) return null;
+
     const id = await this.client.tickets.findOne({
       order: {
         id: 'DESC'
