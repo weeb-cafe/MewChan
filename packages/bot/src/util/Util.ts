@@ -9,6 +9,7 @@ import {
 } from 'discord.js';
 import MewchanClient from '../client/MewchanClient';
 import { LOGS } from './Constants';
+import { Status } from '../struct/CommandOverwriteHandler';
 
 export enum Permissions {
   NONE,
@@ -19,7 +20,7 @@ export enum Permissions {
 }
 
 /**
- * Props to https://1Computer1/hoshi
+ * Props to https://github.com/1Computer1/hoshi
  */
 export const missingPermissions = (
   channel: GuildChannel,
@@ -55,17 +56,24 @@ export const permissionLevel = (member: GuildMember) => {
 export const can = (
   level: Permissions,
   permission?: PermissionResolvable | PermissionResolvable[]
-) => (msgOrMember: Message | GuildMember): string | null => {
-  const member = msgOrMember instanceof Message ? msgOrMember.member : msgOrMember;
+) => async (msg: Message): Promise<string | null> => {
+  const { member, client } = msg as { member: GuildMember | null; client: MewchanClient } & Message;
   if (!member) {
-    (msgOrMember.client as MewchanClient).logger.warn(...LOGS.WEIRD_CAN({ msg: msgOrMember as Message, level, permission }));
+    client.logger.warn(...LOGS.WEIRD_CAN({ msg: msg, level, permission }));
     return 'Internal issue';
   }
 
-  if (permission && member.hasPermission(permission)) return null;
-  const has = permissionLevel(member);
+  const command = client.commandHandler.modules.findKey(e => e.aliases.some(alias => msg.content.includes(alias)));
 
-  return has >= level ? null : 'Permission denied';
+  const overwrite = command ? await client.commandOverwriteHandler.processOverwrites(msg, command) : Status.NETURAL;
+
+  switch (overwrite) {
+    case Status.ALLOWED: return null;
+    case Status.DENIED: return 'Denied by overwrites';
+    case Status.NETURAL:
+      if (permission && member.hasPermission(permission)) return null;
+      return permissionLevel(member) >= level ? null : 'Permission denied';
+  }
 };
 
 export const confirm = async (msg: Message, no: string, content?: string, extra?: MessageOptions): Promise<null | string> => {

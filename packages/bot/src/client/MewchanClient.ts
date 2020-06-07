@@ -14,7 +14,8 @@ import {
   createLogger,
   Actions,
   Ticket,
-  Setting
+  Setting,
+  PermissionOverwrite
 } from '@mewchan/common';
 import SettingsProvider from '../struct/SettingsProvider';
 import database from '../struct/Database';
@@ -27,6 +28,7 @@ import { Logger } from 'winston';
 import { LOGS, PRODUCTION, MESSAGES } from '../util/Constants';
 import TicketHandler from '../struct/TicketHandler';
 import { BlacklistManager } from '../struct/BlacklistManager';
+import CommandOverwriteHandler from '../struct/CommandOverwriteHandler';
 
 declare module 'discord-akairo' {
   export interface AkairoClient {
@@ -38,8 +40,10 @@ declare module 'discord-akairo' {
     db: Connection;
     settings: SettingsProvider;
     blacklistManager: BlacklistManager;
+    commandOverwriteHandler: CommandOverwriteHandler;
     cases: Repository<Case<Actions>>;
     blacklist: Repository<Blacklist>;
+    permissionOverwrites: Repository<PermissionOverwrite>;
     reactions: Repository<Reaction>;
     tickets: Repository<Ticket>;
     logger: Logger;
@@ -143,17 +147,23 @@ export default class MewchanClient extends AkairoClient {
 
     this.logger.info(...LOGS.LOADED('Settings'));
 
-    this.blacklistManager = new BlacklistManager(this.db.getRepository(Blacklist));
-    await this.blacklistManager.init();
-
-    this.logger.info(...LOGS.LOADED('blacklistManager'));
-
     this.cases = this.db.getRepository(Case);
-    this.blacklist = this.db.getRepository(Blacklist);
+    /* eslint-disable no-multi-assign */
+    const blacklist = this.blacklist = this.db.getRepository(Blacklist);
+    const permissionOverwrites = this.permissionOverwrites = this.db.getRepository(PermissionOverwrite);
     this.reactions = this.db.getRepository(Reaction);
     this.tickets = this.db.getRepository(Ticket);
 
     this.logger.info(...LOGS.LOADED('Database shortcuts'));
+
+    this.blacklistManager = new BlacklistManager(blacklist);
+    await this.blacklistManager.init();
+
+    this.logger.info(...LOGS.LOADED('blacklistManager'));
+
+    this.commandOverwriteHandler = new CommandOverwriteHandler(permissionOverwrites);
+
+    this.logger.info(...LOGS.LOADED('commandOverwriteHandler'));
   }
 
   public async start() {

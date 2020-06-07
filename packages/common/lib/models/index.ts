@@ -3,3 +3,4 @@ export * from './Case';
 export * from './Blacklist';
 export * from './Reaction';
 export * from './Ticket';
+export * from './PermissionOverwrite';

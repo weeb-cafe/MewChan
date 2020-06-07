@@ -1,4 +1,4 @@
-import { Entity, Column } from 'typeorm';
+import { Entity, PrimaryColumn } from 'typeorm';
 
 export enum OverwriteType {
   DENY,
@@ -14,18 +14,18 @@ export enum OverwriteTarget {
 
 @Entity('permission_overwrites')
 export class PermissionOverwrite {
-  @Column('bigint')
+  @PrimaryColumn('bigint')
   public guildID!: string;
 
-  @Column()
+  @PrimaryColumn()
   public commandID!: string;
 
-  @Column('tinyint')
+  @PrimaryColumn('smallint')
   public type!: OverwriteType;
 
-  @Column('tinyint')
+  @PrimaryColumn('smallint')
   public target!: OverwriteTarget;
 
-  @Column('bigint')
+  @PrimaryColumn('bigint')
   public targetID!: string;
 }
