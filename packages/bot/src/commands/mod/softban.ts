@@ -10,7 +10,7 @@ export default class SoftbanCommand extends Command {
       aliases: ['softban'],
       category: 'mod',
       channel: 'guild',
-      userPermissions: msg => can(msg, Permissions.MOD, 'KICK_MEMBERS'),
+      userPermissions: can(Permissions.MOD, 'KICK_MEMBERS'),
       args: [
         {
           id: 'member',

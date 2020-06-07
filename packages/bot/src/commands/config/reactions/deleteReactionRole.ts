@@ -9,7 +9,7 @@ export default class DeleteReactionRoleCommand extends Command {
       aliases: ['deleteReactionRole'],
       category: 'config',
       channel: 'guild',
-      userPermissions: msg => can(msg, Permissions.ADMIN, 'MANAGE_ROLES')
+      userPermissions: can(Permissions.ADMIN, 'MANAGE_ROLES')
     });
   }
 

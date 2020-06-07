@@ -10,7 +10,7 @@ export default class BlacklistCommand extends Command {
       aliases: ['blacklist'],
       category: 'mod',
       channel: 'guild',
-      userPermissions: msg => can(msg, Permissions.MOD),
+      userPermissions: can(Permissions.MOD),
       args: [
         {
           id: 'user',

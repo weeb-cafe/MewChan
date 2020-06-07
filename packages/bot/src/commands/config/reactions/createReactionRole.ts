@@ -11,7 +11,7 @@ export default class CreateReactionRoleCommand extends Command {
       category: 'config',
       channel: 'guild',
       clientPermissions: ['ADD_REACTIONS'],
-      userPermissions: msg => can(msg, Permissions.ADMIN, 'MANAGE_ROLES')
+      userPermissions: can(Permissions.ADMIN, 'MANAGE_ROLES')
     });
   }
 

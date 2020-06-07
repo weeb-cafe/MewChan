@@ -8,7 +8,7 @@ export default class SetCommand extends Command {
       aliases: ['set', 'config'],
       category: 'config',
       channel: 'guild',
-      userPermissions: msg => can(msg, Permissions.ADMIN)
+      userPermissions: can(Permissions.ADMIN)
     });
   }
 

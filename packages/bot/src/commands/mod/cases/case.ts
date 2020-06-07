@@ -8,7 +8,7 @@ export default class CaseCommand extends Command {
       aliases: ['case'],
       category: 'mod',
       channel: 'guild',
-      userPermissions: msg => can(msg, Permissions.MOD, 'MANAGE_GUILD')
+      userPermissions: can(Permissions.MOD, 'MANAGE_GUILD')
     });
   }
 

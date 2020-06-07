@@ -53,10 +53,9 @@ export const permissionLevel = (member: GuildMember) => {
 };
 
 export const can = (
-  msgOrMember: Message | GuildMember,
   level: Permissions,
   permission?: PermissionResolvable | PermissionResolvable[]
-) => {
+) => (msgOrMember: Message | GuildMember): string | null => {
   const member = msgOrMember instanceof Message ? msgOrMember.member : msgOrMember;
   if (!member) {
     (msgOrMember.client as MewchanClient).logger.warn(...LOGS.WEIRD_CAN({ msg: msgOrMember as Message, level, permission }));

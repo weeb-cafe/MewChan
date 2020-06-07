@@ -10,7 +10,7 @@ export default class UnbanCommand extends Command {
       aliases: ['unban'],
       category: 'mod',
       channel: 'guild',
-      userPermissions: msg => can(msg, Permissions.MOD, 'BAN_MEMBERS'),
+      userPermissions: can(Permissions.MOD, 'BAN_MEMBERS'),
       args: [
         {
           id: 'user',

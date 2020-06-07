@@ -9,7 +9,7 @@ export default class PingCommand extends Command {
       aliases: ['say'],
       category: 'util',
       channel: 'guild',
-      userPermissions: msg => can(msg, Permissions.ADMIN, 'MANAGE_GUILD'),
+      userPermissions: can(Permissions.ADMIN, 'MANAGE_GUILD'),
       clientPermissions: 'SEND_MESSAGES',
       args: [
         {

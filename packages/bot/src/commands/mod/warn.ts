@@ -10,7 +10,7 @@ export default class WarnCommand extends Command {
       aliases: ['warn'],
       category: 'mod',
       channel: 'guild',
-      userPermissions: msg => can(msg, Permissions.MOD),
+      userPermissions: can(Permissions.MOD),
       args: [
         {
           id: 'member',

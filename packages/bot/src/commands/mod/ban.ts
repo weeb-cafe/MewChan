@@ -10,7 +10,7 @@ export default class BanCommand extends Command {
       aliases: ['ban', 'bean'],
       category: 'mod',
       channel: 'guild',
-      userPermissions: msg => can(msg, Permissions.MOD, 'BAN_MEMBERS')
+      userPermissions: can(Permissions.MOD, 'BAN_MEMBERS')
     });
   }
 
