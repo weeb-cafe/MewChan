@@ -45,6 +45,41 @@ export const MESSAGES = {
       RELOAD: {
         content: 'Reloads the commandHandler, the listenerHandler & the inhibitorHandler'
       },
+      GLOBAL: {
+        content: stripIndents`Possible Actions:
+        • blacklist-guild <id> <...reason>
+        • unblacklist-guild <id>
+        • blacklist-user <id> <...reason>
+        • unblacklist-user <id>
+      `,
+        usage: '<action> <...args>',
+        examples: [
+          'blacklist-guild 222078108977594368 i dont have a good reason lol',
+          'unblacklist-guild 222078108977594368',
+          'blacklist-user 223703707118731264 just imagine not being able to use your own bot OMEGALUL',
+          'unblacklist-guild 222078108977594368'
+        ]
+      },
+      GLOBAL_BLACKLIST_GUILD: {
+        content: 'Blacklists a guild',
+        usage: '<id> <...reason>',
+        examples: ['450027243251695616 why not']
+      },
+      GLOBAL_UNBLACKLIST_GUILD: {
+        content: 'Unblacklists a guild',
+        usage: '<id>',
+        examples: ['526906946209447939']
+      },
+      GLOBAL_BLACKLIST_USER: {
+        content: 'Blacklists the given user, disallowing them from running commands globally',
+        usage: '<user> <...reason>',
+        examples: ['453961126351339530 imagine not being able to use the bot']
+      },
+      GLOBAL_UNBLACKLIST_USER: {
+        content: 'Unblacklists the given user',
+        usage: '<user>',
+        examples: ['453961126351339530']
+      },
 
       // #INFO
       PING: {
@@ -173,6 +208,16 @@ export const MESSAGES = {
         usage: '<user>',
         examples: ['1231234124219412', '@Plushie']
       },
+      BLACKLIST: {
+        content: 'Blocks someone from using commands from the bot',
+        usage: '<user> <...reason>',
+        examples: ['@didinele#0001 lolrekt', '248912678461247612 mod abuse tbh']
+      },
+      UNBLACKLIST: {
+        content: 'Removes someone from the local blacklist',
+        usage: '<user>',
+        examples: ['@didinele#0001']
+      },
 
       CASE: {
         content: stripIndents`Operates on a case. Current operations:
@@ -226,6 +271,22 @@ export const MESSAGES = {
       // #DEV
       EVAL: {
         start: 'What do you wanna run?'
+      },
+      GLOBAL_BLACKLIST_GUILD: {
+        start: 'What guild would you like me to block?',
+        retry: 'Please provide a valid guild'
+      },
+      GLOBAL_UNBLACKLIST_GUILD: {
+        start: 'What guild would like me to unblock?',
+        retry: 'Please provide a valid guild'
+      },
+      GLOBAL_BLACKLIST_USER: {
+        start: 'Who do you want to blacklist?',
+        retry: 'Please provide a valid user'
+      },
+      GLOBAL_UNBLACKLIST_USER: {
+        start: 'Who do you want me to unblacklist?',
+        retry: 'Please provide a valid user'
       },
 
       // #UTIL
@@ -311,6 +372,14 @@ export const MESSAGES = {
       WARN: {
         start: 'Who do you want me to warn?',
         retry: 'Please provide a valid member'
+      },
+      BLACKLIST: {
+        start: 'Who would you like to blacklist?',
+        retry: 'Please provide a valid member'
+      },
+      UNBLACKLIST: {
+        start: 'Who would you like to free?',
+        retry: 'Please provide a valid user'
       },
 
       CASE_SHOW: {
