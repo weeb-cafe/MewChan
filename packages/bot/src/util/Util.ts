@@ -54,25 +54,31 @@ export const permissionLevel = (member: GuildMember) => {
 };
 
 export const can = (
-  level: Permissions,
+  required: Permissions,
   permission?: PermissionResolvable | PermissionResolvable[]
 ) => async (msg: Message): Promise<string | null> => {
-  const { member, client } = msg as { member: GuildMember | null; client: MewchanClient } & Message;
+  const { member, client } = msg as { member: GuildMember | null; client: MewchanClient } & Message; ``;
   if (!member) {
-    client.logger.warn(...LOGS.WEIRD_CAN({ msg: msg, level, permission }));
+    client.logger.warn(...LOGS.WEIRD_CAN({ msg, level: required, permission }));
     return 'Internal issue';
   }
 
-  const command = client.commandHandler.modules.findKey(e => e.aliases.some(alias => msg.content.includes(alias)));
+  if (client.isOwner(member)) return null;
 
+  const command = msg.util!.parsed?.command?.id;
   const overwrite = command ? await client.commandOverwriteHandler.processOverwrites(msg, command) : Status.NETURAL;
+
+  const level = permissionLevel(member);
 
   switch (overwrite) {
     case Status.ALLOWED: return null;
-    case Status.DENIED: return 'Denied by overwrites';
+    case Status.DENIED:
+      if (!client.isOwner(member) && level !== Permissions.ADMIN && required > Permissions.ADMIN) {
+        return 'Denied by overwrites';
+      }
     case Status.NETURAL:
       if (permission && member.hasPermission(permission)) return null;
-      return permissionLevel(member) >= level ? null : 'Permission denied';
+      return level >= required ? null : 'Permission denied';
   }
 };
 
