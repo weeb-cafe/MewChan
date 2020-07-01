@@ -13,4 +13,7 @@ export class Reaction {
 
   @Column('bigint')
   public role!: string;
+
+  @Column({ 'default': false })
+  public unremoveable!: boolean;
 }

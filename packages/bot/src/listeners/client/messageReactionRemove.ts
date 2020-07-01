@@ -27,6 +27,8 @@ export default class MessageReactionRemoveListener extends Listener {
     });
 
     if (react) {
+      if (react.unremoveable) return;
+
       try {
         const member = await message.guild.members.fetch(user.id);
         await member.roles.remove(react.role);

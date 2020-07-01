@@ -18,17 +18,24 @@ export default class MessageReactionAddListener extends Listener {
     const identifier = reaction.emoji.toString();
     const guildID = message.guild.id;
 
-    const react = await this.client.reactions.findOne({
+    const reactions = await this.client.reactions.find({
       where: {
         guildID,
-        message: message.id,
-        identifier
+        message: message.id
       }
     });
 
+    const react = reactions.find(r => r.identifier === identifier);
+
     if (react) {
       try {
+        const unique = await this.client.reactionMessages.findOne(message.id).then(d => d?.unique ?? false);
         const member = await message.guild.members.fetch(user.id);
+
+        if (unique && reactions.some(r => r.role !== react.role && member.roles.cache.has(r.role))) {
+          return member.user.send('You can only get one role from that message');
+        }
+
         await member.roles.add(react.role);
       } catch {}
     }

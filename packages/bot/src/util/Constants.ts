@@ -161,15 +161,20 @@ export const MESSAGES = {
         parent: 'set'
       },
 
-      SET_CREATE_REACTION_ROLE: {
+      CREATE_REACTION_ROLE: {
         content: 'Creates a new reaction role, whenever someone clicks on this reaction they get a role and vice versa',
-        usage: '<emoji> <role> <message> [channel]',
+        usage: '<emoji> <role> <message> [channel] [--unremoveable]',
         examples: ['👌 @Role 708659783141556276', ':hahaAFuny: 629305468673720350 708178952237088830 #welcome']
       },
-      SET_DELETE_REACTION_ROLE: {
+      DELETE_REACTION_ROLE: {
         content: 'Deletes a reaction role',
         usage: '<emoji> <message> [channel]',
         examples: ['👌 708659783141556276', ':hahaAFuny: 708178952237088830 #welcome']
+      },
+      MARK_REACTION_GROUP: {
+        content: 'Toggles whether or not a message\'s reaction roles are a group, meaning you can only pick ONE one of the roles',
+        usage: '<message> [channel]',
+        examples: ['2893721839712893721', '727813912460001342 #welcome']
       },
 
       // #MOD
@@ -346,6 +351,10 @@ export const MESSAGES = {
       DELETE_REACTION_ROLE_MESSAGE: {
         start: 'Which message would you like to delete from?',
         retry: 'Please provide a valid message in the given text channeld'
+      },
+      MARK_REACTION_GROUP: {
+        start: 'Which message\'s reaction roles do you want to mark/unmark as a group?',
+        retry: 'Please provide a valid message in the given channel'
       },
 
       // #MOD

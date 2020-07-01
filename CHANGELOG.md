@@ -20,7 +20,7 @@
 ## Features
 
 ### Bot
-- reaction roles ([eae5869](https://github.com/weeb-cafe/MewChan/commit/eae586977a1d3bb1c581eeb3bcb4303cdf1beb44))
+- reaction roles ([eae5869](https://github.com/weeb-cafe/MewChan/commit/eae586977a1d3bb1c581eeb3bcb4303cdf1beb44), [295a09](https://github.com/weeb-cafe/MewChan/pull/32/commits/295a096389b5070db7df75a05e525b50e96ce7f0))
 - help command ([0de4fd9](https://github.com/weeb-cafe/MewChan/pull/24/commits/0de4fd92091ed51c18a558549d8be2bd02ee1d92))
 - say command ([7a20a98](https://github.com/weeb-cafe/MewChan/commit/7a20a987f550fab1b4fa4f7547757b3ea343efd3))
 - modmail ([a12d3a0](https://github.com/weeb-cafe/MewChan/commit/a12d3a092f2f322706694541ee2d75f29b0ff249))
