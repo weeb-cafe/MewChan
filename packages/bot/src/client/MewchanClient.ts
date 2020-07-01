@@ -14,6 +14,7 @@ import {
   Actions,
   Ticket,
   Setting,
+  Afk,
   Scheduler,
   createLogger
 } from '@mewchan/common';
@@ -28,6 +29,7 @@ import { Logger } from 'winston';
 import { LOGS, PRODUCTION, MESSAGES } from '../util/Constants';
 import TicketHandler from '../struct/TicketHandler';
 import { BlacklistManager } from '../struct/BlacklistManager';
+import AfkManager from '../struct/AfkManager';
 
 declare module 'discord-akairo' {
   export interface AkairoClient {
@@ -44,6 +46,8 @@ declare module 'discord-akairo' {
     reactions: Repository<Reaction>;
     reactionMessages: Repository<ReactionMessage>;
     tickets: Repository<Ticket>;
+    afks: Repository<Afk>;
+    afkManager: AfkManager;
     logger: Logger;
     // redis: Redis;
   }
@@ -150,11 +154,17 @@ export default class MewchanClient extends AkairoClient {
 
     this.logger.info(...LOGS.LOADED('blacklistManager'));
 
+    this.afkManager = new AfkManager(this.db.getRepository(Afk));
+    await this.afkManager.init();
+
+    this.logger.info(...LOGS.LOADED('afkManager'));
+
     this.cases = this.db.getRepository(Case);
     this.blacklist = this.db.getRepository(Blacklist);
     this.reactions = this.db.getRepository(Reaction);
     this.reactionMessages = this.db.getRepository(ReactionMessage);
     this.tickets = this.db.getRepository(Ticket);
+    this.afks = this.db.getRepository(Afk);
 
     this.logger.info(...LOGS.LOADED('Database shortcuts'));
   }

@@ -6,7 +6,7 @@ export const PRODUCTION = process.env.NODE_ENV === 'production';
 
 export const COLORS = {
   BRAND: {
-    BLUE: '#6fc6e2'
+    BLUE: '#90d5ff'
   },
   MODMAIL: {
     GREEN: '#49ff64',
