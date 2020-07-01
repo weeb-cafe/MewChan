@@ -4,3 +4,4 @@ export * from './Blacklist';
 export * from './Reaction';
 export * from './ReactionMessage';
 export * from './Ticket';
+export * from './Afk';
