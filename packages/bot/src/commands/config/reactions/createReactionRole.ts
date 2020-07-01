@@ -47,7 +47,12 @@ export default class CreateReactionRoleCommand extends Command {
       prompt: MESSAGES.COMMANDS.PROMPTS.CREATE_REACTION_ROLE_MESSAGE
     };
 
-    return { emoji, role, message };
+    const unremoveable = yield {
+      match: 'flag',
+      flag: ['--unremoveable']
+    };
+
+    return { emoji, role, message, unremoveable };
   }
 
   public async exec(
@@ -55,8 +60,9 @@ export default class CreateReactionRoleCommand extends Command {
     {
       emoji,
       role,
-      message
-    }: { emoji: GuildEmoji | string; role: Role; message: Message }
+      message,
+      unremoveable
+    }: { emoji: GuildEmoji | string; role: Role; message: Message; unremoveable: boolean }
   ) {
     let react;
 
@@ -71,6 +77,7 @@ export default class CreateReactionRoleCommand extends Command {
     reaction.guildID = msg.guild!.id;
     reaction.role = role.id;
     reaction.identifier = react.emoji.toString();
+    reaction.unremoveable = unremoveable;
 
     await this.client.reactions.save(reaction);
 
