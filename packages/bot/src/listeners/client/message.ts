@@ -29,7 +29,7 @@ export default class MessageListener extends Listener {
         .embed()
         .setTimestamp()
         .setColor(COLORS.BRAND.BLUE)
-        .setTitle('User is AFK')
+        .setTitle(`${user.tag} is AFK`)
         .setDescription(entry.reason ?? 'No reason provided');
 
       await msg.channel.send(embed);
