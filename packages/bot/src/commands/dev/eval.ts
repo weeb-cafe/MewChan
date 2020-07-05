@@ -34,7 +34,7 @@ export default class EvalCommand extends Command {
   }
 
   private _tooLong(body: string): Promise<string> {
-    return fetch('https://paste.discord.land/documents', { method: 'POST', body })
+    return fetch('https://hasteb.in/documents', { method: 'POST', body })
       .then(d => d.json()
         .then(v => v.key));
   }
@@ -52,7 +52,7 @@ export default class EvalCommand extends Command {
 
       if (final.length > 2000) {
         const key = await this._tooLong(clean);
-        return msg.util!.send(`Output exceeded 2000 characters (${final.length}). https://paste.discord.land/${key}.js`);
+        return msg.util!.send(`Output exceeded 2000 characters (${final.length}). https://hasteb.in/${key}.js`);
       }
 
       await msg.util!.send(final);
@@ -66,7 +66,7 @@ export default class EvalCommand extends Command {
 
       if (final.length > 2000) {
         const key = await this._tooLong(clean);
-        return msg.util!.send(`Error exceeded 2000 characters (${final.length}). https://paste.discord.land/${key}.js`);
+        return msg.util!.send(`Error exceeded 2000 characters (${final.length}). https://hasteb.in/${key}.js`);
       }
 
       await msg.util!.send(final);

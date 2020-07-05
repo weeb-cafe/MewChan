@@ -1,4 +1,4 @@
-# Next build 42 (0.2.0) (2020-07-1)
+# Next build 43 (0.2.0) (2020-07-5)
 
 ## Fixes
 
@@ -26,3 +26,4 @@
 - modmail ([a12d3a0](https://github.com/weeb-cafe/MewChan/commit/a12d3a092f2f322706694541ee2d75f29b0ff249))
 - blacklists ([be0a1f0](https://github.com/weeb-cafe/MewChan/pull/30/commits/be0a1f02dec8697bc9576a75f686653bc29b51f1))
 - afking ([6d0f645](https://github.com/weeb-cafe/MewChan/commit/6d0f64526c26384a0115340eaa9cc869db6b6731))
+- reminders ([fda345](https://github.com/weeb-cafe/MewChan/pull/34/commits/fda345c40cf8568fc1b46b61080eec3c44ac1178))
