@@ -5,10 +5,12 @@ import {
   PermissionResolvable,
   GuildMember,
   Message,
-  MessageOptions
+  MessageOptions,
+  MessageEmbed
 } from 'discord.js';
 import MewchanClient from '../client/MewchanClient';
-import { LOGS } from './Constants';
+import { LOGS, COLORS } from './Constants';
+import { Reminder, ms } from '@mewchan/common';
 
 export enum Permissions {
   NONE,
@@ -84,4 +86,30 @@ export const confirm = async (msg: Message, no: string, content?: string, extra?
   if (!response) return 'I don\'t have time for this, either reply in time or don\'t run the command';
   if (!/^y(?:e(?:a|s)?)?$/i.test(response.content)) return no;
   return null;
+};
+
+export const createReminderEmbed = async (author: User, reminder: Reminder, remindingAt = false) => {
+  const embed = new MessageEmbed()
+    .setColor(COLORS.BRAND.BLUE)
+    .setTimestamp(reminder.createdAt);
+
+  const user = reminder.userID === author.id
+    ? author
+    : await author.client.users.fetch(reminder.userID).catch(() => null);
+
+  if (user) embed.setAuthor(user.tag, user.displayAvatarURL());
+
+  let footer = `Reminder ${reminder.id}`;
+
+  if (reminder.userID !== author.id) footer += ` | Requested by ${author.tag}`;
+
+  embed
+    .setFooter(footer)
+    .setDescription(reminder.content)
+    .addField(
+      `Reminding ${remindingAt ? 'at' : 'in'}`,
+      remindingAt ? reminder.remindAt.toString() : ms(reminder.remindAt.valueOf() - Date.now(), true)
+    );
+
+  return embed;
 };

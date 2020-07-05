@@ -98,6 +98,53 @@ export const MESSAGES = {
         usage: '<json or content>',
         examples: ['hi!', '{ "description": "hi!", "title": "boop" }']
       },
+      AFK: {
+        content: 'Marks you as afk, letting anyone that pings you know what\'s up',
+        usage: '[...reason]',
+        examples: ['getting food']
+      },
+      REMINDER: {
+        content: stripIndents`Possible actions:
+        • list
+        • show <id | "last">
+        • create <time> [...reminder]
+        • delete <id | "last">
+      `,
+        usage: '<action> <...args>',
+        examples: [
+          'list',
+          'show',
+          'show 10',
+          'create 1d5h watch anime',
+          'delete',
+          'delete 10'
+        ]
+      },
+      REMINDER_LIST: {
+        content: 'Lists all of your active reminders',
+        parent: 'reminder'
+      },
+      REMINDER_SHOW: {
+        content: 'Show a reminder\'s information, by default the last active one you made',
+        usage: '<id>',
+        examples: ['last', '15'],
+        parent: 'reminder'
+      },
+      REMINDER_CREATE: {
+        content: 'Creates a reminder',
+        usage: '<time> [...reminder]',
+        examples: [
+          '1w watch today\'s Kaguya-sama episode',
+          '5d ban everyone'
+        ],
+        parent: 'reminder'
+      },
+      REMINDER_DELETE: {
+        content: 'Deletes a reminder, cancelling it, by default the last active one you made',
+        usage: '<id>',
+        examples: ['5', 'latest', 'l'],
+        parent: 'reminder'
+      },
 
       // #CONFIG
       SET: {
@@ -297,6 +344,21 @@ export const MESSAGES = {
       // #UTIL
       SAY: {
         start: 'Please give me something to send'
+      },
+      REMINDER_SHOW: {
+        start: 'Which reminder would you like to view?',
+        retry: 'Please provide a valid reminder that you can view'
+      },
+      REMINDER_CREATE_TIME: {
+        start: 'How long should I wait until I post this reminder?',
+        retry: 'Please provide a valid amount'
+      },
+      REMINDER_CREATE_REMINDER: {
+        retry: 'What do you want me to remind you?'
+      },
+      REMINDER_DELETE: {
+        start: 'Which reminder would you like to delete?',
+        retry: 'Please provide a valid reminder that you can delete'
       },
 
       // #CONFIG
