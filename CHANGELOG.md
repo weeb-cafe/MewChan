@@ -16,6 +16,7 @@
 ### Repo
 - update @typescript-eslint to v3 & eslint-config-marine to v7
 - various major package updates ([6885ba2](https://github.com/weeb-cafe/MewChan/commit/6885ba2cb9855ba685bba5d95ba951e29748f9dc), [31f1916](https://github.com/weeb-cafe/MewChan/commit/31f19165697f6485038d9d8d0ac5fe49d88be2bc), [0615295](https://github.com/weeb-cafe/MewChan/commit/0615295cf5a80973509c4efa28bf278cd1da577c))
+- update commitlint monorepo to v9 ([2ec8848](https://github.com/weeb-cafe/MewChan/pull/31/commits/2ec8848f7cd0f13c90fad9de2b847bf4bff92092))
 
 ## Features
 
