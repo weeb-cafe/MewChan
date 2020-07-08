@@ -6,3 +6,5 @@ export * from './ReactionMessage';
 export * from './Ticket';
 export * from './Afk';
 export * from './Reminder';
+export * from './Autorole';
+export * from './AutoPendingRemoval';

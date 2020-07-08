@@ -224,6 +224,12 @@ export const MESSAGES = {
         examples: ['2893721839712893721', '727813912460001342 #welcome']
       },
 
+      CREATE_AUTO_ROLE: {
+        content: 'Create an auto role, potentially make it automatically remove after a while',
+        usage: '<role> [--remove-after=time]',
+        examples: ['Members --remove-after=1w', 'Plebs']
+      },
+
       // #MOD
       BAN: {
         content: 'Bans one more people from the server',
@@ -417,6 +423,11 @@ export const MESSAGES = {
       MARK_REACTION_GROUP: {
         start: 'Which message\'s reaction roles do you want to mark/unmark as a group?',
         retry: 'Please provide a valid message in the given channel'
+      },
+
+      CREATE_AUTO_ROLE: {
+        start: 'Which role would you like to mark as an auto role?',
+        retry: 'Please provide a valid role?'
       },
 
       // #MOD
