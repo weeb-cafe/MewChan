@@ -16,8 +16,10 @@ import {
   Setting,
   Afk,
   Scheduler,
-  createLogger,
-  Reminder
+  Reminder,
+  Autorole,
+  AutoPendingRemoval,
+  createLogger
 } from '@mewchan/common';
 import SettingsProvider from '../struct/SettingsProvider';
 import database from '../struct/Database';
@@ -49,6 +51,8 @@ declare module 'discord-akairo' {
     tickets: Repository<Ticket>;
     afks: Repository<Afk>;
     reminders: Repository<Reminder>;
+    autoroles: Repository<Autorole>;
+    autoPendingRemovals: Repository<AutoPendingRemoval>;
     afkManager: AfkManager;
     logger: Logger;
     // redis: Redis;
@@ -168,6 +172,8 @@ export default class MewchanClient extends AkairoClient {
     this.tickets = this.db.getRepository(Ticket);
     this.afks = this.db.getRepository(Afk);
     this.reminders = this.db.getRepository(Reminder);
+    this.autoroles = this.db.getRepository(Autorole);
+    this.autoPendingRemovals = this.db.getRepository(AutoPendingRemoval);
 
     this.logger.info(...LOGS.LOADED('Database shortcuts'));
   }

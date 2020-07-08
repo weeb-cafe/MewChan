@@ -27,3 +27,4 @@
 - blacklists ([be0a1f0](https://github.com/weeb-cafe/MewChan/pull/30/commits/be0a1f02dec8697bc9576a75f686653bc29b51f1))
 - afking ([6d0f645](https://github.com/weeb-cafe/MewChan/commit/6d0f64526c26384a0115340eaa9cc869db6b6731))
 - reminders ([fda345](https://github.com/weeb-cafe/MewChan/pull/34/commits/fda345c40cf8568fc1b46b61080eec3c44ac1178))
+- auto roles ([ed6e17a](https://github.com/weeb-cafe/MewChan/commit/ed6e17a1c410e5c69af12fed22e4e8f89761b2c8))
