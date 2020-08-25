@@ -24,7 +24,7 @@
   "homepage": "https://github.com/weeb-cafe/MewChan#readme",
   "devDependencies": {
     "@types/node": "^13.13.4",
-    "typescript": "^3.8.3"
+    "typescript": "^4.0.0"
   },
   "dependencies": {
     "@weeb-cafe/winston-ws": "github:weeb-cafe/winston-ws#build",
