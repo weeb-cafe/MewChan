@@ -1,4 +1,4 @@
-FROM node:12-alpine
+FROM node:16-alpine
 WORKDIR /opt/appbuild
 COPY . .
 RUN apk add --update \
@@ -10,7 +10,7 @@ RUN apk add --update \
 RUN pnpm run build
 RUN rm -rf packages/**/src packages/**/lib
 
-FROM node:12-alpine
+FROM node:16-alpine
 LABEL name "MewChan Bot"
 LABEL version "0.1.0"
 LABEL maintainer "didinele <didinele.dev@gmail.com>"
