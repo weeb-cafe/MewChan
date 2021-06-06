@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/weeb-cafe/MewChan#readme",
   "devDependencies": {
-    "@types/node": "^13.13.4",
+    "@types/node": "^14.0.0",
     "typescript": "^3.8.3"
   },
   "dependencies": {
